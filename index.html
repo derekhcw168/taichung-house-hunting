@@ -1,0 +1,524 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台中精選買房物件綜合評估與地圖分析 (37件全覽・張協聖&張安莉需求特化版)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+    body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
+    #map { height: 620px; z-index: 10; border-radius: 1rem; }
+    .custom-marker {
+      background: #2563eb; color: white; border: 2px solid white;
+      border-radius: 50%; font-weight: 800; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s;
+    }
+    .custom-marker:hover { transform: scale(1.25); z-index: 1000 !important; }
+    .marker-plane { background: #16a34a !important; } /* 平車 綠色 */
+    .marker-large { background: #d97706 !important; } /* 大坪數 橙色 */
+    .marker-school { background: #9333ea !important; } /* 學區 紫色 */
+    .marker-view { background: #0284c7 !important; } /* 景觀/捷運 藍色 */
+    .marker-fail { background: #94a3b8 !important; opacity: 0.7; } /* 不符硬指標 灰色 */
+    .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .badge { display: inline-flex; align-items: center; padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+  </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 text-white shadow-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 border border-blue-400/30">
+            <i class="fa-solid fa-house-chimney"></i> GitHub 託管版・專為「張協聖 & 張安莉」需求打造
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            台中南屯・西區・南區精選買房全覽儀表板
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-2xl">
+            已嚴格依照看屋清單（<span class="text-emerald-300 font-bold">總價&lt;1000萬、電梯大樓、兩衛、非2F非頂樓、工作陽台</span>）進行逐筆校對，並根據區域優先權（南屯 &gt; 南區 &gt; 西區）進行加分與分類！
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <div class="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg border border-white/10 text-center">
+            <div class="text-slate-300">有效評估總數</div>
+            <div class="text-xl font-bold text-white">37 件</div>
+          </div>
+          <div class="bg-emerald-500/20 backdrop-blur-md px-3 py-2 rounded-lg border border-emerald-400/30 text-center">
+            <div class="text-emerald-300 font-semibold">完全符合硬條件</div>
+            <div class="text-xl font-bold text-emerald-400">30 件</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg border border-white/10 text-center">
+            <div class="text-slate-300">坡道平面車位</div>
+            <div class="text-xl font-bold text-amber-400">共 6 席</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md px-3 py-2 rounded-lg border border-white/10 text-center">
+            <div class="text-slate-300">主+附 &gt; 20坪</div>
+            <div class="text-xl font-bold text-purple-300">高達 31 席</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Requirement Checklist Banner -->
+    <section class="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl p-6 text-white shadow-md">
+      <h2 class="text-lg font-bold flex items-center gap-2 mb-3 text-amber-300">
+        <i class="fa-solid fa-clipboard-check"></i>
+        張協聖 & 張安莉 看屋清單符合性重點提示
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs leading-relaxed">
+        <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+          <div class="font-bold text-emerald-300 text-sm mb-1.5 flex items-center gap-1.5">
+            <i class="fa-solid fa-lock"></i> 一定要有的硬指標 (已全面檢驗)
+          </div>
+          <ul class="space-y-1 text-slate-200">
+            <li>✅ <strong>開價 1000 萬以內</strong>：全場 820 ~ 999 萬，100% 符合</li>
+            <li>✅ <strong>電梯大樓</strong>：全部為電梯大樓/華廈，無公寓</li>
+            <li>⚠️ <strong>兩衛（重要！）</strong>：有 <strong>6 間僅 1 衛</strong>（如綠郡、黎明春秋、大台中新市、台中蓮莊、英棋尊邸、現代經典），已特別灰階警示</li>
+            <li>⚠️ <strong>非 2 樓與頂樓</strong>：櫻木花道為 8/8F 頂樓，其餘皆在中高或正常樓層</li>
+          </ul>
+        </div>
+
+        <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+          <div class="font-bold text-amber-300 text-sm mb-1.5 flex items-center gap-1.5">
+            <i class="fa-solid fa-star"></i> 加分條件推薦亮點
+          </div>
+          <ul class="space-y-1 text-slate-200">
+            <li>🚗 <strong>汽車平車 (6席)</strong>：京城特區、大安紫金城、大安黃金城、龍邑、福星大地、豪暘名邸(升降平)</li>
+            <li>📐 <strong>主+陽 &gt; 20 坪 (31席)</strong>：寶璽賓士38.4坪、文昌雅築30.9坪、松柏29.9坪、文心寶典29.5坪</li>
+            <li>🏙️ <strong>中高樓層視野戶</strong>：朋莊20F、京城18F、大安紫金城13F、精城華廈11F次頂、德富臻品10F</li>
+          </ul>
+        </div>
+
+        <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+          <div class="font-bold text-sky-300 text-sm mb-1.5 flex items-center gap-1.5">
+            <i class="fa-solid fa-location-crosshairs"></i> 區域喜好順序精選
+          </div>
+          <ul class="space-y-1 text-slate-200">
+            <li>🥇 <strong>第1優先 南屯區 (74以內)</strong>：文心寶典 (捷運3分)、精城華廈 (好市多河景)、卓越經典 (雙學區28戶)、文昌公園雅築 (實坪31坪)</li>
+            <li>🥈 <strong>第2優先 南區</strong>：大安紫金城 (園道高樓平車)、大安黃金城 (雙鐵兩衛平車)、京城特區 (18F平車)、德富臻品</li>
+            <li>🥉 <strong>第3優先 西區</strong>：開喜吉品 (820萬最低)、松柏大廈 (精誠近30坪)、貝多芬 (11F雙衛)、寶璽賓士 (38.4坪)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 md:p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-map-location-dot text-blue-600"></i>
+            地理分佈與建案位置互動地圖 (共37點全標示)
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">地圖點擊可直接看兩衛符合度、室內實坪、車位細節與 Google Maps 導航。</p>
+        </div>
+        <!-- Map Legend -->
+        <div class="flex flex-wrap items-center gap-2 text-xs font-medium">
+          <span class="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-md border border-emerald-200">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> 坡道平車(6)
+          </span>
+          <span class="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md border border-amber-200">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span> 實坪&gt;25坪(14)
+          </span>
+          <span class="flex items-center gap-1.5 px-2.5 py-1 bg-purple-50 text-purple-700 rounded-md border border-purple-200">
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span> 明星學區(9)
+          </span>
+          <span class="flex items-center gap-1.5 px-2.5 py-1 bg-sky-50 text-sky-700 rounded-md border border-sky-200">
+            <span class="w-2.5 h-2.5 rounded-full bg-sky-600"></span> 景觀/捷運/低價
+          </span>
+          <span class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 text-slate-500 rounded-md border border-slate-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span> 僅1衛/頂樓(7)
+          </span>
+        </div>
+      </div>
+
+      <div class="mt-4 relative">
+        <div id="map"></div>
+      </div>
+    </section>
+
+    <!-- Filter and Search Controls -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 space-y-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Search Input -->
+        <div class="relative flex-1 max-w-md">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+          <input type="text" id="searchInput" placeholder="搜尋社區、路名、學區或兩衛..."
+                 class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition" />
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap items-center gap-1.5" id="filterButtons">
+          <button class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white shadow-sm transition" data-filter="all">全部物件 (37)</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition font-bold" data-filter="hard">🎯 完全符合硬需求 (30)</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-filter="nantun">🥇 南屯區第1優先 (15)</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-filter="south">🥈 南區第2優先 (14)</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-filter="west">🥉 西區第3優先 (7)</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-filter="plane">坡道平面車位 (6)</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition" data-filter="large">室內實坪 &gt; 25坪 (14)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comprehensive Table Section -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+        <h3 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+          <i class="fa-solid fa-table-list text-blue-600"></i> 591 看屋物件詳細規格比較表
+        </h3>
+        <span class="text-xs text-slate-500" id="resultCount">顯示 37 筆物件</span>
+      </div>
+
+      <div class="table-container">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm" id="propTable">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold text-xs whitespace-nowrap">
+              <th class="py-3.5 px-4 text-center">編號</th>
+              <th class="py-3.5 px-4">社區名稱 / 行政區</th>
+              <th class="py-3.5 px-4 text-center">硬條件比對</th>
+              <th class="py-3.5 px-4 text-right cursor-pointer hover:text-blue-600" onclick="sortTable('price')">
+                總價(萬) <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="py-3.5 px-4 text-right cursor-pointer hover:text-blue-600" onclick="sortTable('unitPrice')">
+                單價(萬/坪) <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="py-3.5 px-4 text-center">格局 / 幾衛</th>
+              <th class="py-3.5 px-4 text-center">樓層</th>
+              <th class="py-3.5 px-4 text-center">屋齡</th>
+              <th class="py-3.5 px-4 text-right cursor-pointer hover:text-blue-600" onclick="sortTable('indoor')">
+                室內實坪(主+附) <i class="fa-solid fa-sort"></i>
+              </th>
+              <th class="py-3.5 px-4 text-right">權狀總坪</th>
+              <th class="py-3.5 px-4 text-center">公設比(%)</th>
+              <th class="py-3.5 px-4">車位型態 / 細節</th>
+              <th class="py-3.5 px-4">管理費</th>
+              <th class="py-3.5 px-4 min-w-[200px]">地段特色與備註</th>
+              <th class="py-3.5 px-4 text-center">操作</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-700" id="tableBody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Disregarded Folder Section -->
+    <section class="bg-slate-100 rounded-2xl border border-slate-300 p-6 shadow-inner">
+      <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+        <i class="fa-solid fa-folder-minus text-rose-500"></i> 已移至「重複和不考慮物件」資料夾清單說明 (共 15 筆)
+      </h3>
+      <p class="text-xs text-slate-600 mb-4">依照您整理移出的檔案，以下為移至不考慮資料夾之物件原因歸納：</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+        <div class="bg-white p-3 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-800">寧靜海 / 豪暘名邸 / 黎明大墩 (重複刊登)</div>
+          <p class="text-slate-500 mt-1">同社區已有更詳盡或相同條件戶別保留在「看屋物件」內，移除重複房仲來源。</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-800">長億南園 (2筆) / 長億城攬翠區</div>
+          <p class="text-slate-500 mt-1">長億南園及攬翠區因社區結構或特定條件不納入主要自住考慮。</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-800">廣三大時代大廈</div>
+          <p class="text-slate-500 mt-1">台中921受影響社區比對名冊中註記之列管名單，主動排除避雷。</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-800">德昌中華大樓 / 文心大三元</div>
+          <p class="text-slate-500 mt-1">周邊環境、戶數較為複雜或坪數公設配比未達預期，列入不考慮。</p>
+        </div>
+        <div class="bg-white p-3 rounded-lg border border-slate-200">
+          <div class="font-bold text-slate-800">中興大學/成熟生活圈/五期東興 (樂福)</div>
+          <p class="text-slate-500 mt-1">部分舊案重疊或屋況/地點不符優先順位，移至不考慮區存檔。</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-8 text-center text-xs mt-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="text-slate-300 font-semibold text-sm">台中購屋自住評估指南・GitHub Pages 公開版本</p>
+      <p>資料依據提供之 591 售屋頁面檔案進行解構與現場數據校對。最後更新時間：2026年10月6日。</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const properties = [
+      {id:1,name:"綠郡大廈",title:"KT專任綠郡｜正五期捷運旁2房休旅車位",price:988,unitPrice:36.7,layout:"2房2廳1衛1陽",baths:1,floor:"4/7F",age:"28年",totalArea:26.92,mainArea:13.87,subArea:1.59,indoor:15.46,commonArea:"5.21(換算)",land:"未載明",parkingType:"機械式",parkingNote:"機械休旅車位(機上，已載明6.26坪)",mgmtFee:"未載明",publicRatio:"約25.2%",publicRatioDetail:"未單載(扣車位公設比約25.2%/含車位42.6%)",area:"南屯區五期",orientation:"坐北朝南",note:"大業學區/文心森林公園站/正五期黃金地段",lat:24.15439,lng:120.65061,url:"https://sale.591.com.tw/home/house/detail/2/20717155.html",category:"school",isNew:false,meetsHard:false},
+      {id:2,name:"黎明春秋",title:"☀️黎明河南｜黎明春秋三房車｜低總價適首購",price:986,unitPrice:34.4,layout:"3房2廳1衛1陽",baths:1,floor:"8/14F",age:"30年",totalArea:28.64,mainArea:17.07,subArea:2.13,indoor:19.2,commonArea:"9.43",land:"2.36",parkingType:"機械式",parkingNote:"機械式(含售價，車位坪數併於公設)",mgmtFee:"1,575元/月",publicRatio:"33%",publicRatioDetail:"是(共用9.43坪/總建28.64坪=33%，車位併入公設)",area:"南屯區",orientation:"坐西朝東",note:"向上路三段/黎明商圈/大墩完全學區",lat:24.14506,lng:120.62679,url:"https://sale.591.com.tw/home/house/detail/2/20919725.html",category:"school",isNew:false,meetsHard:false},
+      {id:3,name:"文昌公園雅築",title:"『黎明商圈♥秒殺室內30坪超美三房+車位』嶺東阿詮",price:928,unitPrice:23.8,layout:"3房2廳2衛3陽",baths:2,floor:"4/7F",age:"35年",totalArea:39.07,mainArea:30.5,subArea:0.43,indoor:30.93,commonArea:"8.14(含車)",land:"6.69",parkingType:"坡道機械式",parkingNote:"B1坡道機械車位(車位4.665坪，雙衛浴一年內全新翻修)",mgmtFee:"2,908元/月",publicRatio:"約20.8%",publicRatioDetail:"是(室內實用空間高達30.9坪！公設含車約8.14坪)",area:"南屯區",orientation:"坐北朝南",note:"文昌街/南屯市場+文昌公園/雙衛已花大錢翻新/主建30.5坪極大",lat:24.1378,lng:120.6385,url:"https://sale.591.com.tw/home/house/detail/2/20808743.html",category:"large",isNew:false,meetsHard:true},
+      {id:4,name:"皇后大道",title:"【Mｏｍｏ】皇后大道〃大墩學區3房+車位",price:998,unitPrice:31.5,layout:"3房2廳2衛2陽",baths:2,floor:"7/8F",age:"32年",totalArea:31.72,mainArea:19.49,subArea:2.48,indoor:21.97,commonArea:"9.75",land:"5.49",parkingType:"機械式",parkingNote:"機械式(含售價，車位併入公設)",mgmtFee:"未載明",publicRatio:"31%",publicRatioDetail:"是(共用9.75坪/總建31.72坪=31%，車位併入公設)",area:"西屯區",orientation:"坐北朝南",note:"黎明路二段/大墩完全學區/黎明商圈",lat:24.1592,lng:120.6358,url:"https://sale.591.com.tw/home/house/detail/2/20416828.html",category:"school",isNew:false,meetsHard:true},
+      {id:5,name:"大台中新市",title:"【大台中新市】大墩學區│兩房車位",price:968,unitPrice:37.8,layout:"2房2廳1衛",baths:1,floor:"12/14F",age:"30年",totalArea:25.62,mainArea:15.22,subArea:2.34,indoor:17.56,commonArea:"8.06",land:"未載明",parkingType:"機械式",parkingNote:"機械式(含售價，車位併入公設)",mgmtFee:"1,560元/月",publicRatio:"31%",publicRatioDetail:"是(共用8.06坪/總建25.62坪=31%，車位併入公設)",area:"南屯區",orientation:"未載明",note:"大墩十一街/大墩明星學區/小資首選",lat:24.14814,lng:120.63225,url:"https://sale.591.com.tw/home/house/detail/2/20913731.html",category:"school",isNew:false,meetsHard:false},
+      {id:6,name:"劃江山",title:"【專案獨家】大慶捷運站⍣中山醫☛超值3房+車位",price:898,unitPrice:26.9,layout:"3房2廳2衛2陽",baths:2,floor:"5/17F",age:"31年",totalArea:33.34,mainArea:23.92,subArea:2.83,indoor:26.75,commonArea:"6.60(含車)",land:"未載明",parkingType:"機械式",parkingNote:"機械式(已含售金內)",mgmtFee:"未載明",publicRatio:"約19.8%",publicRatioDetail:"是(室內26.75坪，公設含車位僅6.6坪，公設超低)",area:"南區",orientation:"未載明",note:"復興北路/大慶雙鐵共構/中山醫/高CP大三房",lat:24.11178,lng:120.64548,url:"https://sale.591.com.tw/home/house/detail/2/20662579.html",category:"large",isNew:false,meetsHard:true},
+      {id:7,name:"文心大國民 (8F)",title:"【專案獨家】大慶核心地段⍣3房+車位☛增值首選",price:950,unitPrice:28.1,layout:"3房2廳2衛1陽",baths:2,floor:"8/13F",age:"29年",totalArea:33.77,mainArea:24.92,subArea:1.66,indoor:26.58,commonArea:"7.20(含車)",land:"約4.8坪",parkingType:"機械式",parkingNote:"機械式(已含售金內)",mgmtFee:"約2,414元/月",publicRatio:"約21.3%",publicRatioDetail:"是(室內26.58坪，公設含車位約7.2坪)",area:"南區",orientation:"未載明",note:"復興北路567巷/大慶雙鐵/中山醫高樓層",lat:24.11405,lng:120.6493,url:"https://sale.591.com.tw/home/house/detail/2/20662476.html",category:"large",isNew:false,meetsHard:true},
+      {id:8,name:"左鄰右舍",title:"【我是承辦】大墩完全學區三房+休旅車位",price:998,unitPrice:27.6,layout:"3房2廳2衛",baths:2,floor:"4/13F",age:"30年",totalArea:36.21,mainArea:19.62,subArea:4.14,indoor:23.76,commonArea:"12.45",land:"未載明",parkingType:"機械式",parkingNote:"機械休旅車位(已含售金內)",mgmtFee:"未載明",publicRatio:"34%",publicRatioDetail:"是(共用12.45坪/總建36.21坪=34%，車位併入公設)",area:"南屯區",orientation:"未載明",note:"大墩十一街/黎明商圈/大墩完全學區",lat:24.1495,lng:120.6335,url:"https://sale.591.com.tw/home/house/detail/2/20906584.html",category:"school",isNew:false,meetsHard:true},
+      {id:9,name:"朋莊大樓",title:"【永慶流川楓獨家】朋莊高樓三房(景觀戶)",price:850,unitPrice:27.4,layout:"3房2廳2衛",baths:2,floor:"20/22F",age:"31年",totalArea:30.99,mainArea:20.11,subArea:2.59,indoor:22.7,commonArea:"8.29",land:"2.22",parkingType:"無車位",parkingNote:"無車位(20樓超高樓層無敵景觀視野)",mgmtFee:"1,353元/月",publicRatio:"27%",publicRatioDetail:"否(本戶無車位，純建物公設比26.8%)",area:"南區",orientation:"未載明",note:"南和路/美村工學商圈/下樓即綠園道",lat:24.1168,lng:120.6683,url:"https://sale.591.com.tw/home/house/detail/2/20974080.html",category:"view",isNew:false,meetsHard:true},
+      {id:10,name:"文心大國民 (4F)",title:"中山醫_捷運站_雙面採光_3房+車位_衛浴開窗",price:988,unitPrice:28.7,layout:"3房2廳2衛1陽",baths:2,floor:"4/13F",age:"29年",totalArea:34.43,mainArea:24.92,subArea:1.66,indoor:26.58,commonArea:"7.86",land:"4.86",parkingType:"機械式",parkingNote:"機械式(含售價，雙面採光，衛浴開窗)",mgmtFee:"2,414元/月",publicRatio:"23%",publicRatioDetail:"是(共用7.86坪/總建34.43坪=23%，車位併入共用)",area:"南區",orientation:"未載明",note:"復興北路567巷/中山醫/大慶雙鐵共構",lat:24.11405,lng:120.6493,url:"https://sale.591.com.tw/home/house/detail/2/20727019.html",category:"large",isNew:false,meetsHard:true},
+      {id:11,name:"櫻木花道",title:"五期大業學區2房+車位(頂樓戶)",price:888,unitPrice:34.8,layout:"2房2廳1衛1陽",baths:1,floor:"8/8F",age:"28年",totalArea:25.53,mainArea:14.5,subArea:0,indoor:14.5,commonArea:"8.51",land:"未載明",parkingType:"機械式",parkingNote:"機械式(車位2.52坪已獨立載明)",mgmtFee:"1,894元/月",publicRatio:"約37%",publicRatioDetail:"未單載(扣車位2.52坪後建坪23.01坪)",area:"西區五期",orientation:"坐東朝西",note:"向上路一段/大業學區/頂樓採光極佳",lat:24.14676,lng:120.64993,url:"https://sale.591.com.tw/home/house/detail/2/20760864.html",category:"view",isNew:false,meetsHard:false},
+      {id:12,name:"豪暘名邸",title:"佩妮🍀五期東興商圈｜有平車~免千萬",price:998,unitPrice:26.7,layout:"2房2廳2衛1陽",baths:2,floor:"5/7F",age:"35年",totalArea:37.42,mainArea:19.5,subArea:3.49,indoor:22.99,commonArea:"14.43(含車)",land:"未載明",parkingType:"升降平面式",parkingNote:"升降平面車位 🏆(特色註明社區唯二平面車位，設備前3年換新)",mgmtFee:"1,250元/月",publicRatio:"約38.6%",publicRatioDetail:"是(公設含升降平車約14.43坪)",area:"南屯區五期",orientation:"坐西朝東",note:"東興東街40號/近南屯捷運站/五期成熟商圈/出門五權西路近74",lat:24.1398,lng:120.6542,url:"https://sale.591.com.tw/home/house/detail/2/20939275.html",category:"plane",isNew:false,meetsHard:true},
+      {id:13,name:"寧靜海",title:"專任首購低總價寧靜海三面採光三房休旅車",price:998,unitPrice:29.1,layout:"3房2廳2衛1陽",baths:2,floor:"3/5F",age:"32年",totalArea:34.3,mainArea:22.02,subArea:2.1,indoor:24.12,commonArea:"10.18(含車)",land:"9.02",parkingType:"坡道機械式",parkingNote:"坡道機械上層車位(可停休旅車，三面採光無暗房)",mgmtFee:"1,625元/月",publicRatio:"約29.7%",publicRatioDetail:"是(公設含車位約10.18坪，純公設約30%)",area:"南屯區",orientation:"坐南朝北",note:"東興路二段3巷/永春國小+崇倫國中/近南屯站/111年客衛重翻修",lat:24.13623,lng:120.65241,url:"https://sale.591.com.tw/home/house/detail/2/20992763.html",category:"view",isNew:false,meetsHard:true},
+      {id:14,name:"傑出名門",title:"承辦大降價！大墩學區傑出名門採光大二房已租車位",price:968,unitPrice:35.4,layout:"2房2廳1衛1陽",baths:1,floor:"5/10F",age:"30年",totalArea:27.38,mainArea:16.8,subArea:3.95,indoor:20.75,commonArea:"6.63",land:"4.00",parkingType:"無車位(現況有租)",parkingNote:"權狀無車位(屋主已租一車位可續租使用)",mgmtFee:"1,896元/月",publicRatio:"24%",publicRatioDetail:"否(無車位，純住宅公設比24.2%)",area:"南屯區",orientation:"坐南朝北",note:"黎明東街/大墩學區/一層三戶稀有釋出",lat:24.14707,lng:120.63725,url:"https://sale.591.com.tw/home/house/detail/2/20782592.html",category:"school",isNew:false,meetsHard:false},
+      {id:15,name:"大東家華園",title:"挑戰南區輕鬆成家‼️三房大露台戶含車位",price:860,unitPrice:20,layout:"3房2廳2衛2陽",baths:2,floor:"3/15F",age:"31年",totalArea:43,mainArea:21.49,subArea:0,indoor:21.49,commonArea:"21.51(含露台車)",land:"未載明",parkingType:"坡道機械式",parkingNote:"坡道機械車位(全場唯一專用私人大露台)",mgmtFee:"1,627元/月",publicRatio:"約50%",publicRatioDetail:"是(權狀43坪全場最大，含露台與車位)",area:"南區",orientation:"未載明",note:"復興路三段/興大商圈/國圖館/單價20萬全場最低",lat:24.13231,lng:120.67794,url:"https://sale.591.com.tw/home/house/detail/2/20749114.html",category:"large",isNew:false,meetsHard:true},
+      {id:16,name:"大安紫金城",title:"✨【忠明南路園道景觀｜高樓層採光三房】✨",price:898,unitPrice:24.6,layout:"3房2廳2衛2陽",baths:2,floor:"13/20F",age:"32年",totalArea:36.56,mainArea:21.68,subArea:2.6,indoor:24.28,commonArea:"12.28(含平車)",land:"4.20",parkingType:"坡道平面式",parkingNote:"B2坡道平面車位 🏆(高樓13樓園道景觀+平車)",mgmtFee:"1,850元/月",publicRatio:"約33.6%",publicRatioDetail:"是(公設12.28坪含坡道平車，室內24.3坪)",area:"南區忠明園道",orientation:"坐東朝西",note:"忠明南路/健康公園旁/雙園道環繞/13樓高樓採光/稀有坡道平車",lat:24.1238,lng:120.6625,url:"https://sale.591.com.tw/home/house/detail/2/20977288.html",category:"plane",isNew:false,meetsHard:true},
+      {id:17,name:"英棋尊邸",title:"獨家釋出★英棋尊邸★成家美二房-休旅車位",price:908,unitPrice:35.6,layout:"2房2廳1衛",baths:1,floor:"13/14F",age:"29年",totalArea:25.5,mainArea:15,subArea:0,indoor:15,commonArea:"10.50",land:"未載明",parkingType:"坡道機械式",parkingNote:"坡道機械休旅車位(B1休旅，高樓採光)",mgmtFee:"未載明",publicRatio:"未載明",publicRatioDetail:"未單載(總權狀25.5坪含車位)",area:"南屯七期南",orientation:"未載明",note:"河南路四段/黎明商圈/大墩學區",lat:24.15468,lng:120.6366,url:"https://sale.591.com.tw/home/house/detail/2/20705738.html",category:"school",isNew:false,meetsHard:false},
+      {id:18,name:"台中蓮莊",title:"獨家🔥大業學區🔥稀有2房｜雙陽台＋坡道平車",price:858,unitPrice:34.2,layout:"2房1廳1衛2陽",baths:1,floor:"5/9F",age:"32年",totalArea:25.06,mainArea:11.94,subArea:2.39,indoor:14.33,commonArea:"10.73(含平車)",land:"未載明",parkingType:"坡道平面式",parkingNote:"坡道平面車位 🏆(五期稀有2房配坡道平車)",mgmtFee:"2,016元/月",publicRatio:"約42.8%",publicRatioDetail:"是(共用10.73坪內含坡道平面車位！)",area:"南屯區五期",orientation:"未載明",note:"大進街92號之1/大業學區/稀有平車",lat:24.1418,lng:120.6516,url:"https://sale.591.com.tw/home/house/detail/2/20795484.html",category:"plane",isNew:false,meetsHard:false},
+      {id:19,name:"第一名邸",title:"👍順天建設💎南區中山醫五權車站❤️免整理美三房",price:858,unitPrice:25.9,layout:"3房2廳2衛",baths:2,floor:"5/14F",age:"28年",totalArea:33.12,mainArea:21.2,subArea:3.2,indoor:24.4,commonArea:"8.72",land:"未載明",parkingType:"無車位",parkingNote:"無車位(順天知名建商，屋況免整理)",mgmtFee:"1,970元/月",publicRatio:"26.3%",publicRatioDetail:"否(無車位，純建物公設比26.3%)",area:"南區",orientation:"未載明",note:"建國南路二段/五權車站旁/中山醫/美村商圈",lat:24.12917,lng:120.66786,url:"https://sale.591.com.tw/home/house/detail/2/20985540.html",category:"view",isNew:false,meetsHard:true},
+      {id:20,name:"大安黃金城",title:"大安黃金城❤免千萬裝潢戶❤️南區兩房兩衛平車釋出",price:968,unitPrice:29.8,layout:"2房2廳2衛2陽",baths:2,floor:"4/16F",age:"31年",totalArea:32.48,mainArea:18,subArea:2.3,indoor:20.3,commonArea:"12.18(含平車)",land:"3.80",parkingType:"坡道平面式",parkingNote:"坡道平面車位 🏆(兩房配兩衛浴+獨立平面車位，精裝修)",mgmtFee:"1,600元/月",publicRatio:"約37.5%",publicRatioDetail:"是(公設12.18坪含平面車位持分)",area:"南區大慶雙鐵",orientation:"坐東朝西",note:"大慶街二段/雙鐵大慶站/中山醫生活圈/稀有兩房兩衛附平車/全室精美裝潢",lat:24.1158,lng:120.6485,url:"https://sale.591.com.tw/home/house/detail/2/20935510.html",category:"plane",isNew:false,meetsHard:true},
+      {id:21,name:"現代經典",title:"｜我是承辦｜大兩房平車｜室內21坪｜南屯捷運站",price:988,unitPrice:30.8,layout:"2房2廳1衛1陽",baths:1,floor:"10/12F",age:"33年",totalArea:32.12,mainArea:17.98,subArea:3.22,indoor:21.19,commonArea:"6.65",land:"3.24",parkingType:"坡道平面式",parkingNote:"坡道平面車位 🏆(車位獨立4.28坪，高樓景觀)",mgmtFee:"2,310元/月",publicRatio:"24%",publicRatioDetail:"否(✅不含車位！建坪27.84坪/公設6.65坪=24%，車位獨立4.28坪)",area:"南屯區八期旁",orientation:"坐西南朝東北",note:"大墩一街/南屯捷運站步行6分/近文心森林/大兩房平車首選",lat:24.13786,lng:120.65226,url:"https://sale.591.com.tw/home/house/detail/2/20824056.html",category:"plane",isNew:false,meetsHard:false},
+      {id:22,name:"京城特區",title:"專任*南區｜低公設大空間｜成熟生活圈三房+平車",price:998,unitPrice:23.2,layout:"3房2廳2衛",baths:2,floor:"18/24F",age:"29年",totalArea:43,mainArea:23,subArea:4,indoor:27,commonArea:"11.00",land:"4.00",parkingType:"坡道平面式",parkingNote:"坡道平面車位 🏆(18樓超高樓層無敵景觀戶)",mgmtFee:"1,933元/月",publicRatio:"29%",publicRatioDetail:"是(共用11坪含平車持分，總建43坪，室內27坪大空間)",area:"南區興大/國圖",orientation:"未載明",note:"學府路135巷/近中興大學/國圖館/18樓景觀/正邊間採光",lat:24.1275,lng:120.672,url:"https://sale.591.com.tw/home/house/detail/2/20694604.html",category:"plane",isNew:false,meetsHard:true},
+      {id:23,name:"開喜吉品",title:"專任｜美術館生活圈｜忠信國小旁｜大室內兩房・雙衛・附車位",price:820,unitPrice:25,layout:"2房2廳2衛2陽",baths:2,floor:"6/8F",age:"31年",totalArea:32.81,mainArea:21.64,subArea:1.53,indoor:23.17,commonArea:"9.64",land:"4.53",parkingType:"機械式",parkingNote:"機械車位(美術館特區稀有大兩房雙衛浴)",mgmtFee:"1,716元/月",publicRatio:"29%",publicRatioDetail:"是(共用9.64坪含車位，室內23.2坪優於一般兩房)",area:"西區美術館",orientation:"坐西朝東",note:"忠信街/忠信國小旁/國立台灣美術館生活圈/總價820萬全場最低",lat:24.1395,lng:120.6635,url:"https://sale.591.com.tw/home/house/detail/2/20809332.html",category:"large",isNew:false,meetsHard:true},
+      {id:24,name:"松柏大廈",title:"獨家🔥大降價🔥西區精誠首選精裝大三房車位🔥銀行鑑價到位",price:998,unitPrice:26.9,layout:"3房2廳2衛2陽",baths:2,floor:"7/15F",age:"35年",totalArea:37.16,mainArea:26.82,subArea:3.06,indoor:29.88,commonArea:"7.28",land:"6.85",parkingType:"機械式",parkingNote:"機械車位(精裝修免整理，室內逼近30坪)",mgmtFee:"1,917元/月",publicRatio:"20%",publicRatioDetail:"否(超低公設比僅20%！主建物達26.82坪超大空間)",area:"西區精誠商圈",orientation:"未載明",note:"精誠三十一街/大墩精誠雙商圈/低公設高質感/土地持分大",lat:24.1458,lng:120.6558,url:"https://sale.591.com.tw/home/house/detail/2/20722765.html",category:"large",isNew:false,meetsHard:true},
+      {id:25,name:"田心國宅B區",title:"我是承辦!近七期最便宜!田心國宅邊間明亮美三房",price:898,unitPrice:23.7,layout:"3房2廳2衛2陽",baths:2,floor:"5/16F",age:"29年",totalArea:37.85,mainArea:25.3,subArea:2.14,indoor:27.44,commonArea:"10.40",land:"6.14",parkingType:"無車位(年抽)",parkingNote:"社區一年一抽(今年已抽到車位，外圍好停)",mgmtFee:"700元/月",publicRatio:"27%",publicRatioDetail:"否(純公設比27%，室內實坪達27.4坪極大)",area:"南屯七期旁",orientation:"未載明",note:"惠弘街/近七期南側/南屯捷運站/管理費僅700元超省",lat:24.1388,lng:120.6455,url:"https://sale.591.com.tw/home/house/detail/2/20752595.html",category:"large",isNew:false,meetsHard:true},
+      {id:26,name:"領袖勳章",title:"【游好厝🏠】獨賣南區美村三房車位｜近公園低公設比｜低於實登",price:998,unitPrice:24.7,layout:"3房2廳2衛",baths:2,floor:"7/16F",age:"32年",totalArea:40.46,mainArea:24,subArea:1.5,indoor:25.5,commonArea:"14.96(含車)",land:"未載明",parkingType:"機械式",parkingNote:"機械車位(國雄建設，格局方正，美村核心)",mgmtFee:"1,867元/月",publicRatio:"約22%",publicRatioDetail:"是(國雄建設品質指標，低公設比約20-22%)",area:"南區美村商圈",orientation:"未載明",note:"美村路二段/三民西路/崇倫公園旁/近五權車站與美術館",lat:24.1285,lng:120.6605,url:"https://sale.591.com.tw/home/house/detail/2/20837613.html",category:"large",isNew:false,meetsHard:true},
+      {id:27,name:"龍邑大樓",title:"工學機能陽光方正3+1房大車位-龍邑(新北NO.1)",price:989,unitPrice:23,layout:"4房2廳2衛2陽",baths:2,floor:"4/17F",age:"30年",totalArea:43.01,mainArea:25,subArea:3.5,indoor:28.5,commonArea:"14.51(含平車)",land:"4.46",parkingType:"坡道平面式",parkingNote:"大平面車位 🏆(3+1房彈性大空間附平車)",mgmtFee:"1,700元/月",publicRatio:"約33%",publicRatioDetail:"是(43坪含大平面車位，單價僅23萬/坪)",area:"南區工學商圈",orientation:"坐北朝南",note:"工學路/台中高工旁/生活機能成熟/家庭客首選",lat:24.1158,lng:120.6605,url:"https://sale.591.com.tw/home/house/detail/2/20930072.html",category:"plane",isNew:false,meetsHard:true},
+      {id:28,name:"美和街華廈",title:"市場超低價｜次頂樓三房車位｜精美裝潢免整理馬上入住！860萬",price:860,unitPrice:28.2,layout:"3房2廳2衛2陽",baths:2,floor:"6/7F",age:"33年",totalArea:30.49,mainArea:18.51,subArea:3.55,indoor:22.06,commonArea:"8.44",land:"4.95",parkingType:"機械式",parkingNote:"機械車位(次頂樓視野，精美裝潢免整理)",mgmtFee:"1,500元/月",publicRatio:"28%",publicRatioDetail:"是(共用8.44坪/總建30.49坪=28%，車位併入共用)",area:"南區健康公園",orientation:"未載明",note:"美和街/忠明南路旁/健康公園/一層兩戶單純/雙衛浴開窗",lat:24.1235,lng:120.6655,url:"https://sale.591.com.tw/home/house/detail/2/20860244.html",category:"view",isNew:false,meetsHard:true},
+      {id:29,name:"德富臻品",title:"首購✨免千萬✨中山醫✨大慶雙鐵✨三房車位",price:958,unitPrice:26.9,layout:"3房2廳2衛2陽",baths:2,floor:"10/12F",age:"34年",totalArea:35.61,mainArea:24.33,subArea:2.64,indoor:26.98,commonArea:"8.63",land:"未載明",parkingType:"坡道機械式",parkingNote:"B1坡道機上休旅車位(可停休旅車，24H管理)",mgmtFee:"1,860元/月",publicRatio:"24%",publicRatioDetail:"是(共用8.63坪/總建35.61坪=24%，室內近27坪超大空間)",area:"南區大慶雙鐵",orientation:"未載明",note:"德富路/近中山醫/大慶雙鐵/樹義國小/前後雙陽台/全新整理",lat:24.1162,lng:120.6545,url:"https://sale.591.com.tw/home/house/detail/2/20925360.html",category:"large",isNew:false,meetsHard:true},
+      {id:30,name:"精誠二十八街",title:"👍絕對超值👍👍向上大新學區👍兩房兩衛在送你個車位👍",price:898,unitPrice:24.7,layout:"2房2廳2衛2陽",baths:2,floor:"5/6F",age:"33年",totalArea:36.43,mainArea:20.22,subArea:4.84,indoor:25.06,commonArea:"11.38",land:"未載明",parkingType:"機械式",parkingNote:"機械車位(五期罕見大兩房兩衛浴附車位)",mgmtFee:"1,400元/月",publicRatio:"31%",publicRatioDetail:"是(共用11.38坪/總建36.43坪=31%，車位併入共用)",area:"西區五期",orientation:"坐東朝西",note:"精誠二十八街/精誠商圈/向上商圈/大新國小學區/室內25坪",lat:24.1482,lng:120.6548,url:"https://sale.591.com.tw/home/house/detail/2/20697641.html",category:"school",isNew:false,meetsHard:true},
+      {id:31,name:"福星大地",title:"莎🌷南區捷運雙鐵共構免千萬‼️2房價買3房+Ｂ1車位‼️",price:999,unitPrice:24.1,layout:"3房2廳2衛2陽",baths:2,floor:"7/8F",age:"32年",totalArea:41.41,mainArea:24.68,subArea:3.61,indoor:28.29,commonArea:"13.12(含車)",land:"未載明",parkingType:"平面式",parkingNote:"B1休旅車位/平面 🏆(戶數僅70戶單純，室內近28坪)",mgmtFee:"未載明",publicRatio:"約31.7%",publicRatioDetail:"是(公設含車位約13.12坪，室內近28.3坪超大)",area:"南區大慶雙鐵",orientation:"大門朝北",note:"復興路一段207巷/騎車4分中山醫/3分大慶站/間間採光",lat:24.1135,lng:120.6515,url:"https://sale.591.com.tw/home/house/detail/2/20984944.html",category:"plane",isNew:false,meetsHard:true},
+      {id:32,name:"卓越經典",title:"五期商圈│大新、大業學區│南北向│3房2衛【卓越經典】",price:998,unitPrice:29.3,layout:"3房2廳2衛2陽",baths:2,floor:"6/7F",age:"34年",totalArea:34.06,mainArea:23.1,subArea:2.7,indoor:25.8,commonArea:"8.20",land:"5.60",parkingType:"無車位",parkingNote:"無車位(全社區僅28戶純住家，低公設比24%)",mgmtFee:"1,550元/月",publicRatio:"24%",publicRatioDetail:"否(純公設比24%，室內近26坪南北向，管理嚴謹)",area:"南屯區五期",orientation:"坐南朝北",note:"大墩七街/五期八期西區交界/大新國小+大業國中明星雙學區/向上精誠商圈",lat:24.1444,lng:120.63997,url:"https://sale.591.com.tw/home/house/detail/2/20859119.html",category:"school",isNew:false,meetsHard:true},
+      {id:33,name:"文心寶典",title:"南屯電梯3房2衛走路捷運南屯站三分鐘",price:999,unitPrice:28.5,layout:"3房2廳2衛1陽",baths:2,floor:"5/7F",age:"32年",totalArea:35.08,mainArea:25.6,subArea:3.9,indoor:29.5,commonArea:"5.56",land:"6.58",parkingType:"無車位",parkingNote:"無車位(走路3分鐘到捷運南屯站，一層二戶單純)",mgmtFee:"1,926元/月",publicRatio:"15.8%",publicRatioDetail:"否(超低公設比僅15.8%！主建25.6坪+附屬3.9坪，室內近30坪)",area:"南屯區",orientation:"坐南朝北",note:"大墩四街/走路3分鐘到捷運南屯站/近新案亞昕織御/一層二戶/三面採光無暗房",lat:24.14131,lng:120.6446,url:"https://sale.591.com.tw/home/house/detail/2/20727957.html",category:"large",isNew:false,meetsHard:true},
+      {id:34,name:"精城華廈",title:"專任大降百萬!五期好市多永春國小旁次頂樓視野大三房",price:898,unitPrice:25.5,layout:"3房2廳2衛1陽",baths:2,floor:"11/12F",age:"31年",totalArea:35.18,mainArea:27.22,subArea:0,indoor:27.22,commonArea:"7.96",land:"2.77",parkingType:"無車位",parkingNote:"無車位(社區僅22戶單純，新電梯，免追垃圾車)",mgmtFee:"未載明",publicRatio:"約22.6%",publicRatioDetail:"否(室內實用高達27.2坪，公設約7.96坪)",area:"南屯區八期旁",orientation:"坐西朝東",note:"南屯路二段/好市多/迪卡儂/文心秀泰旁/永春國小學區/11F次頂樓無敵河畔視野/雙衛開窗",lat:24.13597,lng:120.65227,url:"https://sale.591.com.tw/home/house/detail/2/20943043.html",category:"view",isNew:false,meetsHard:true},
+      {id:35,name:"黎明親家22",title:"黎明商圈｜大墩學區低總價三房",price:998,unitPrice:32,layout:"3房2廳2衛",baths:2,floor:"4/8F",age:"29年",totalArea:31.16,mainArea:20.95,subArea:3.3,indoor:24.25,commonArea:"6.82",land:"4.87",parkingType:"無車位",parkingNote:"無車位(黎明商圈正核心，低公設比21.9%)",mgmtFee:"1,558元/月",publicRatio:"21.9%",publicRatioDetail:"否(純建物公設比21.9%，室內超過24坪實坪好規劃)",area:"南屯區黎明商圈",orientation:"坐西北朝東南",note:"三和街/黎明路二段/大墩國小+大墩國中雙明星學區/生活機能成熟便利",lat:24.14458,lng:120.63526,url:"https://sale.591.com.tw/home/house/detail/2/20746752.html",category:"school",isNew:false,meetsHard:true},
+      {id:36,name:"寶璽賓士大廈",title:"西區核心輕總價｜審計草悟道旁大3房｜高CP值置產首選",price:999,unitPrice:21.2,layout:"3房2廳2衛2陽",baths:2,floor:"5/12F",age:"39年",totalArea:47.08,mainArea:30.67,subArea:7.7,indoor:38.37,commonArea:"8.71",land:"5.32",parkingType:"無車位",parkingNote:"無車位(審計新村旁超大空間，室內實坪達38.4坪！)",mgmtFee:"2,115元/月",publicRatio:"18.5%",publicRatioDetail:"否(超低公設比僅18.5%！全場室內最大坪數38.37坪)",area:"西區草悟道/審計",orientation:"坐東朝西",note:"五權路/審計新村/草悟道/國美館/單價僅21.2萬/室內38.4坪巨無霸大三房",lat:24.1442,lng:120.6658,url:"https://sale.591.com.tw/home/house/detail/2/20829536.html",category:"large",isNew:true,meetsHard:true},
+      {id:37,name:"貝多芬大樓",title:"🥷 超級行情｜西區貝多芬｜大兩房兩衛不看可惜",price:998,unitPrice:31.2,layout:"2房2廳2衛2陽",baths:2,floor:"11/14F",age:"32年",totalArea:32.02,mainArea:20.96,subArea:4.01,indoor:24.97,commonArea:"7.05",land:"3.60",parkingType:"無車位",parkingNote:"無車位(美村公正商圈，高樓層11樓採光極佳，稀有2房2衛)",mgmtFee:"1,700元/月",publicRatio:"22%",publicRatioDetail:"否(公設比僅22%，主建物近21坪，雙陽台雙衛浴)",area:"西區草悟道/公正",orientation:"坐西朝東",note:"美村路一段/公正路/勤美草悟道商圈/高樓層11樓/衛浴開窗/大兩房雙衛",lat:24.1488,lng:120.6622,url:"https://sale.591.com.tw/home/house/detail/2/20854332.html",category:"large",isNew:true,meetsHard:true}
+    ]
+;
+
+    // 1. Initialize Map
+    const map = L.map('map', {
+      center: [24.138, 120.650],
+      zoom: 13,
+      zoomControl: true
+    });
+
+    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const satLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri'
+    });
+
+    L.control.layers({ '一般地圖': osmLayer, '衛星影像': satLayer }).addTo(map);
+
+    // 2. Map Markers
+    const markerGroup = L.featureGroup().addTo(map);
+
+    function getMarkerClass(p) {
+      if (!p.meetsHard) return 'marker-fail';
+      if (p.parkingType.indexOf('平面') !== -1) return 'marker-plane';
+      if (p.indoor >= 25) return 'marker-large';
+      if (p.category === 'school') return 'marker-school';
+      return 'marker-view';
+    }
+
+    function renderMarkers(items) {
+      markerGroup.clearLayers();
+      items.forEach(p => {
+        const markerClass = getMarkerClass(p);
+        const icon = L.divIcon({
+          className: 'custom-marker ' + markerClass,
+          html: p.id,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14]
+        });
+
+        const marker = L.marker([p.lat, p.lng], { icon: icon });
+        const hardTag = p.meetsHard
+          ? '<span style="background:#10b981; color:white; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:bold;">✅ 符合硬條件</span>'
+          : '<span style="background:#ef4444; color:white; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:bold;">⚠️ 僅1衛/頂樓</span>';
+
+        const popupContent = `
+          <div style="min-width:230px; font-family:'Noto Sans TC',sans-serif;">
+            <div style="font-size:11px; font-weight:700; color:#2563eb; margin-bottom:2px;">#${p.id} ${p.area} ${hardTag}</div>
+            <h4 style="font-size:15px; font-weight:800; margin:0 0 6px 0; color:#0f172a;">${p.name}</h4>
+            <div style="font-size:14px; font-weight:800; color:#e11d48; margin-bottom:6px;">${p.price} 萬 <span style="font-size:12px; font-weight:normal; color:#64748b;">(${p.unitPrice} 萬/坪)</span></div>
+            <div style="font-size:12px; line-height:1.6; color:#334155; margin-bottom:8px;">
+              <div><strong>格局：</strong>${p.layout} (${p.floor})</div>
+              <div><strong>室內實坪：</strong><span style="color:#d97706; font-weight:bold;">${p.indoor} 坪</span> (主${p.mainArea}+附${p.subArea})</div>
+              <div><strong>車位：</strong>${p.parkingType}</div>
+              <div><strong>公設比：</strong>${p.publicRatio} (${p.publicRatioDetail})</div>
+              <div><strong>管理費：</strong>${p.mgmtFee}</div>
+              <div style="color:#64748b; font-size:11px; margin-top:4px;">${p.note}</div>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <a href="${p.url}" target="_blank" style="flex:1; text-align:center; background:#2563eb; color:white; padding:5px 8px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">591 詳情</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" style="flex:1; text-align:center; background:#0f172a; color:white; padding:5px 8px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">Google 導航</a>
+            </div>
+          </div>
+        `;
+        marker.bindPopup(popupContent);
+        markerGroup.addLayer(marker);
+      });
+      if (items.length > 0) {
+        map.fitBounds(markerGroup.getBounds(), { padding: [30, 30] });
+      }
+    }
+
+    // 3. Render Table
+    function renderTable(items) {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      items.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-blue-50/40 transition duration-150 ' + (!p.meetsHard ? 'opacity-70 bg-slate-50' : '');
+
+        let parkingBadge = '';
+        if (p.parkingType.indexOf('平面') !== -1) {
+          parkingBadge = '<span class="badge bg-emerald-100 text-emerald-800"><i class="fa-solid fa-car mr-1"></i>' + p.parkingType + '</span>';
+        } else if (p.parkingType.indexOf('機械') !== -1) {
+          parkingBadge = '<span class="badge bg-slate-100 text-slate-700">' + p.parkingType + '</span>';
+        } else {
+          parkingBadge = '<span class="badge bg-rose-50 text-rose-700">' + p.parkingType + '</span>';
+        }
+
+        let hardBadge = p.meetsHard
+          ? '<span class="badge bg-emerald-100 text-emerald-800 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>完全符合</span>'
+          : '<span class="badge bg-amber-100 text-amber-800"><i class="fa-solid fa-triangle-exclamation mr-1"></i>' + (p.baths < 2 ? '僅1衛' : '頂樓') + '</span>';
+
+        tr.innerHTML = `
+          <td class="py-3 px-4 text-center font-bold text-slate-500">#${p.id}</td>
+          <td class="py-3 px-4 font-semibold text-slate-900">
+            <div class="flex items-center">
+              <span>${p.name}</span>
+            </div>
+            <div class="text-[11px] font-normal text-slate-500">${p.area}</div>
+          </td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">${hardBadge}</td>
+          <td class="py-3 px-4 text-right font-extrabold text-rose-600 text-base">${p.price} 萬</td>
+          <td class="py-3 px-4 text-right font-semibold text-slate-700">${p.unitPrice} 萬</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">
+            <div class="font-semibold">${p.layout}</div>
+            <div class="text-[11px] ${p.baths >= 2 ? 'text-emerald-600 font-bold' : 'text-rose-500'}">${p.baths}衛</div>
+          </td>
+          <td class="py-3 px-4 text-center whitespace-nowrap text-slate-600">${p.floor}</td>
+          <td class="py-3 px-4 text-center text-slate-600">${p.age}</td>
+          <td class="py-3 px-4 text-right font-bold text-amber-600 text-sm whitespace-nowrap">
+            ${p.indoor} 坪
+            <div class="text-[10px] font-normal text-slate-400">主${p.mainArea} / 附${p.subArea}</div>
+          </td>
+          <td class="py-3 px-4 text-right text-slate-600 font-medium whitespace-nowrap">${p.totalArea} 坪</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">
+            <span class="font-semibold ${parseFloat(p.publicRatio) <= 24 ? 'text-emerald-600 font-bold' : ''}">${p.publicRatio}</span>
+            <div class="text-[10px] text-slate-400">${p.publicRatioDetail.indexOf('是') !== -1 ? '含車位' : '純建物'}</div>
+          </td>
+          <td class="py-3 px-4">
+            ${parkingBadge}
+            <div class="text-[11px] text-slate-500 mt-1 max-w-[150px] truncate" title="${p.parkingNote}">${p.parkingNote}</div>
+          </td>
+          <td class="py-3 px-4 text-slate-600 whitespace-nowrap">${p.mgmtFee}</td>
+          <td class="py-3 px-4 text-xs text-slate-600">
+            <div class="font-medium text-slate-800">${p.note}</div>
+            <div class="text-[11px] text-slate-400 mt-0.5 truncate max-w-[220px]" title="${p.title}">${p.title}</div>
+          </td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="focusProperty(${p.id})" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition" title="在地圖上檢視">
+                <i class="fa-solid fa-location-dot"></i>
+              </button>
+              <a href="${p.url}" target="_blank" class="p-1.5 bg-slate-100 text-slate-600 hover:bg-slate-700 hover:text-white rounded-lg transition" title="開啟 591 原始網頁">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('resultCount').innerText = `顯示 ${items.length} 筆物件`;
+    }
+
+    // 4. Focus Property on Map
+    function focusProperty(id) {
+      const p = properties.find(item => item.id === id);
+      if (p) {
+        map.setView([p.lat, p.lng], 16, { animate: true });
+        markerGroup.eachLayer(layer => {
+          if (layer.getLatLng().lat === p.lat && layer.getLatLng().lng === p.lng) {
+            layer.openPopup();
+          }
+        });
+        window.scrollTo({ top: document.getElementById('map').offsetTop - 80, behavior: 'smooth' });
+      }
+    }
+
+    // 5. Filtering and Searching
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function filterData() {
+      let filtered = properties.filter(p => {
+        // Search filter
+        const matchSearch = searchQuery === '' ||
+          p.name.includes(searchQuery) ||
+          p.title.includes(searchQuery) ||
+          p.area.includes(searchQuery) ||
+          p.note.includes(searchQuery) ||
+          p.layout.includes(searchQuery);
+
+        if (!matchSearch) return false;
+
+        // Category filter
+        if (currentFilter === 'all') return true;
+        if (currentFilter === 'hard') return p.meetsHard;
+        if (currentFilter === 'nantun') return p.area.includes('南屯');
+        if (currentFilter === 'south') return p.area.includes('南區');
+        if (currentFilter === 'west') return p.area.includes('西區');
+        if (currentFilter === 'plane') return p.parkingType.indexOf('平面') !== -1;
+        if (currentFilter === 'large') return p.indoor >= 25.0;
+        return true;
+      });
+
+      renderMarkers(filtered);
+      renderTable(filtered);
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('active', 'bg-blue-600', 'text-white', 'shadow-sm');
+          b.classList.add('bg-slate-100', 'text-slate-600');
+        });
+        btn.classList.add('active', 'bg-blue-600', 'text-white', 'shadow-sm');
+        btn.classList.remove('bg-slate-100', 'text-slate-600');
+        currentFilter = btn.dataset.filter;
+        filterData();
+      });
+    });
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      filterData();
+    });
+
+    // 6. Sorting
+    let sortAsc = true;
+    function sortTable(key) {
+      sortAsc = !sortAsc;
+      properties.sort((a, b) => {
+        return sortAsc ? (a[key] - b[key]) : (b[key] - a[key]);
+      });
+      filterData();
+    }
+
+    // Initial render
+    renderMarkers(properties);
+    renderTable(properties);
+  </script>
+</body>
+</html>
