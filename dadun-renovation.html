@@ -11,16 +11,19 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap');
     body { font-family: 'Noto Sans TC', sans-serif; -webkit-tap-highlight-color: transparent; }
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .arrow-icon { transform: rotate(180deg); }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen pb-16">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen pb-20">
 
   <!-- 頂部手機友好導航列 -->
   <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-4xl mx-auto px-4 py-4 sm:py-6">
+    <div class="max-w-4xl mx-auto px-4 py-3.5 sm:py-5">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-2">
-          <span class="bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+          <span class="bg-emerald-500 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
             基本經濟版
           </span>
           <span class="text-xs text-slate-300">2026年最新實估行情</span>
@@ -30,81 +33,81 @@
           <span class="text-sm font-bold text-amber-300">大墩人文 11F</span>
         </div>
       </div>
-      <h1 class="text-xl sm:text-2xl font-extrabold mt-2 tracking-tight">
-        🏠 裝潢整修、家電與家具預算估價
+      <h1 class="text-lg sm:text-2xl font-extrabold mt-1.5 tracking-tight flex items-center gap-1.5">
+        <span>🏠</span> 裝修整修、家電與家具預算表
       </h1>
-      <p class="text-xs sm:text-sm text-slate-300 mt-1">
-        以「實用高 CP 值、基本便宜」為核心原則規劃，方便家人快速瀏覽與決策討論。
+      <p class="text-xs sm:text-sm text-slate-300 mt-0.5">
+        點擊下方各大項目即可展開查看「各細項規格與費用」，方便全家人逐項檢視討論！
       </p>
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-6 space-y-6">
+  <main class="max-w-4xl mx-auto px-4 py-5 space-y-5">
 
     <!-- 總預算金額重點卡片 (手機吸睛重點) -->
-    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
-        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-coins text-amber-500"></i> 預算快速總覽
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3.5">
+        <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-coins text-amber-500"></i> 四種方案決策對照
         </h2>
-        <span class="text-xs text-slate-500">含退稅與實用配備</span>
+        <span class="text-[11px] text-slate-500">一目了然好選擇</span>
       </div>
 
       <!-- 四個方案卡片 (適合手機點擊與對照) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         
         <!-- 方案 1 -->
-        <div class="rounded-xl p-4 bg-emerald-50/80 border border-emerald-200 relative overflow-hidden">
-          <div class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1 flex items-center justify-between">
+        <div class="rounded-xl p-3.5 bg-emerald-50/80 border border-emerald-200 relative overflow-hidden">
+          <div class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-0.5 flex items-center justify-between">
             <span>方案 1・基本經濟入住</span>
-            <span class="bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded text-[11px]">最省方案</span>
+            <span class="bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded text-[10px]">最省方案</span>
           </div>
-          <div class="text-2xl sm:text-3xl font-black text-emerald-600 my-1">
-            約 50.9 <span class="text-base font-bold text-emerald-800">萬元</span>
+          <div class="text-2xl font-black text-emerald-600 my-0.5">
+            約 50.9 <span class="text-sm font-bold text-emerald-800">萬元</span>
           </div>
-          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+          <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
             涵蓋【項目 1～10】：拆除清運、電線重拉、油漆、新廚具、燈具、家電三寶、全套家具、窗簾、電子鎖、曬衣架。
           </p>
         </div>
 
         <!-- 方案 2 -->
-        <div class="rounded-xl p-4 bg-blue-50/80 border-2 border-blue-400 relative overflow-hidden shadow-sm">
-          <div class="absolute -right-7 top-3 bg-blue-600 text-white text-[10px] font-bold py-0.5 px-8 rotate-45 shadow">
+        <div class="rounded-xl p-3.5 bg-blue-50/80 border-2 border-blue-400 relative overflow-hidden shadow-sm">
+          <div class="absolute -right-7 top-3 bg-blue-600 text-white text-[9px] font-bold py-0.5 px-8 rotate-45 shadow">
             首選推薦
           </div>
-          <div class="text-xs font-bold text-blue-900 uppercase tracking-wider mb-1">
+          <div class="text-xs font-bold text-blue-900 uppercase tracking-wider mb-0.5">
             方案 2・基礎 ＋ 雙浴室重做
           </div>
-          <div class="text-2xl sm:text-3xl font-black text-blue-600 my-1">
-            約 72.9 <span class="text-base font-bold text-blue-900">萬元</span>
+          <div class="text-2xl font-black text-blue-600 my-0.5">
+            約 72.9 <span class="text-sm font-bold text-blue-900">萬元</span>
           </div>
-          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+          <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
             【項目 1～10】＋【兩間浴室打底重做防水與衛浴】。33年老屋最關鍵的「水電與防水」一次到位，杜絕漏水後患！
           </p>
         </div>
 
         <!-- 方案 3 -->
-        <div class="rounded-xl p-4 bg-slate-50 border border-slate-200">
-          <div class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+        <div class="rounded-xl p-3.5 bg-slate-50 border border-slate-200">
+          <div class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-0.5">
             方案 3・基礎 ＋ 全屋氣密窗
           </div>
-          <div class="text-2xl sm:text-3xl font-black text-slate-700 my-1">
-            約 60.4 <span class="text-base font-bold text-slate-900">萬元</span>
+          <div class="text-2xl font-black text-slate-700 my-0.5">
+            約 60.4 <span class="text-sm font-bold text-slate-900">萬元</span>
           </div>
-          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+          <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
             【項目 1～10】＋【全室鋁門窗改氣密窗(乾式包框)】。強化臨路與高樓層隔音、防風雨。
           </p>
         </div>
 
         <!-- 方案 4 -->
-        <div class="rounded-xl p-4 bg-amber-50/80 border border-amber-300">
-          <div class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1">
+        <div class="rounded-xl p-3.5 bg-amber-50/80 border border-amber-300">
+          <div class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-0.5">
             方案 4・全部項目完整大全配
           </div>
-          <div class="text-2xl sm:text-3xl font-black text-amber-600 my-1">
-            約 82.4 <span class="text-base font-bold text-amber-900">萬元</span>
+          <div class="text-2xl font-black text-amber-600 my-0.5">
+            約 82.4 <span class="text-sm font-bold text-amber-900">萬元</span>
           </div>
-          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+          <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
             全部項目全包！85 萬元以內如同新成屋一般乾淨舒適，水電、防水、門窗、家具家電全換新。
           </p>
         </div>
@@ -112,267 +115,562 @@
       </div>
     </section>
 
-    <!-- 基本必備項目明細 (項目 1 ~ 10) -->
-    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+    <!-- 基本必備項目明細 (項目 1 ~ 10 可折疊展開手風琴) -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-2">
         <div>
-          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">必</span>
+          <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-black">必</span>
             基本應該要花的花費（項目 1 ～ 10）
           </h2>
-          <p class="text-xs text-slate-500 mt-0.5">入住基本機能必備，費用合計約 $509,000 元</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">
+            <span class="text-emerald-700 font-semibold">👉 點擊任一項目</span> 可展開查看「細項明細與各別費用」
+          </p>
         </div>
+        <span class="text-xs font-black text-emerald-600 shrink-0">$509,000</span>
       </div>
 
       <div class="divide-y divide-slate-100">
 
-        <!-- 項目 1 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#01</span>
-              <h3 class="text-sm font-bold text-slate-900">拆除工程與廢棄物清運</h3>
+        <!-- 項目 1：拆除工程 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#01</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">拆除工程與廢棄物清運</h3>
+                <p class="text-[11px] text-slate-500">拆客廳書櫃、三房冷氣下櫃、廚具拉門與合法清運</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              拆客廳大書櫃、三間房冷氣下方矮櫃、廚房舊流理台上下櫃與拉門；含大樓電梯走道保護板與合法清運車。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-slate-900">$48,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 公共走道與電梯防撞保護工程 (大樓管委會必驗)</span>
+              <span class="font-bold text-slate-800">$8,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳大書櫃拆除下架</span>
+              <span class="font-bold text-slate-800">$5,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 三間臥室冷氣下方矮櫃拆除 (共3處，各約$2,000)</span>
+              <span class="font-bold text-slate-800">$6,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 廚房舊流理台、抽油煙機、上下櫥櫃整套拆除</span>
+              <span class="font-bold text-slate-800">$6,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 廚房舊拉門、滑軌與門框拆除修邊</span>
+              <span class="font-bold text-slate-800">$2,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 合法廢棄物清運車 (約1.5車) ＋ 粗工搬運下樓工資</span>
+              <span class="font-bold text-slate-800">$20,500</span>
+            </div>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$48,000</span>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 2 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#02</span>
-              <h3 class="text-sm font-bold text-slate-900">全屋油漆粉刷</h3>
+        <!-- 項目 2：全屋油漆 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#02</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">全屋油漆粉刷</h3>
+                <p class="text-[11px] text-slate-500">虹牌/得利平光水泥漆兩度刷塗＋局部補土批土</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              虹牌/得利平光水泥漆兩度刷塗（天花板＋四周牆面實刷約80坪）；含裂痕與釘孔局部批土補平，乾淨明亮。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-slate-900">$55,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 原牆面釘孔、細微裂痕與拆除處局部批土整平</span>
+              <span class="font-bold text-slate-800">$15,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳、三間房間、走道天花板均勻粉刷兩度 (展開約35坪)</span>
+              <span class="font-bold text-slate-800">$18,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 全室四周立面牆壁水泥漆塗刷兩度 (展開約45坪)</span>
+              <span class="font-bold text-slate-800">$22,000</span>
+            </div>
+            <p class="text-[10px] text-emerald-700 pt-1">💡 採用耐用好整理之平光水泥漆，比起高級乳膠漆可省下約 2.5 ~ 3 萬元！</p>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$55,000</span>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 3 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 bg-rose-50/40 -mx-2 px-2 rounded-lg">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-rose-600">#03 (安全必做)</span>
-              <h3 class="text-sm font-bold text-slate-900">全屋電線重新拉線</h3>
+        <!-- 項目 3：電線重拉 (標示安全必做) -->
+        <details class="group py-3 bg-rose-50/40 -mx-2 px-2 rounded-lg" open>
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-rose-600">#03</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                  全屋電線重新拉線 <span class="bg-rose-100 text-rose-700 text-[10px] font-bold px-1.5 py-0.2 rounded">安全必做</span>
+                </h3>
+                <p class="text-[11px] text-slate-500">33年老屋安全性最高優先，預防電線走火與跳電</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              33年老屋用電安全不可省！太平洋線全面抽換、配電箱重整、士林電機無熔絲開關、增設廚房/冷氣專用迴路、更換星光大面板。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-rose-600">$85,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-white p-3 rounded-xl border border-rose-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+              <span>• 太平洋/大亞 CNS 認證 2.0mm/5.5mm 銅線全面抽換 (原管抽換)</span>
+              <span class="font-bold text-slate-800">$45,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+              <span>• 配電總箱重整 ＋ 全新士林電機無熔絲開關 (NFB) 與漏電斷路器</span>
+              <span class="font-bold text-slate-800">$16,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-100">
+              <span>• 廚房高耗能家電專用迴路 ＋ 客廳/房間冷氣專用迴路增設</span>
+              <span class="font-bold text-slate-800">$12,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 全室開關、插座面板更新 (Panasonic 星光系列大面板)</span>
+              <span class="font-bold text-slate-800">$12,000</span>
+            </div>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-rose-600">$85,000</span>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 4 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#04</span>
-              <h3 class="text-sm font-bold text-slate-900">廚房更換全新一字型廚具</h3>
+        <!-- 項目 4：全新廚具 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#04</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">廚房更換全新一字型廚具</h3>
+                <p class="text-[11px] text-slate-500">220cm 美耐板/人造石檯面＋國產實用三機</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              長度約 210~220cm，耐磨檯面＋木心防潮桶身＋不鏽鋼大水槽＋國產品牌三機（雙口瓦斯爐、排油煙機、烘碗機）。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-slate-900">$85,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 檯面與桶身：美耐板/國產人造石檯面 ＋ 木心防潮桶身 (約220cm)</span>
+              <span class="font-bold text-slate-800">$36,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 門片五金：防潮美耐門片 ＋ 台製緩衝鉸鏈滑軌抽屜組</span>
+              <span class="font-bold text-slate-800">$14,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 不鏽鋼加大單槽 ＋ 冷熱混合防濺鵝頸水龍頭</span>
+              <span class="font-bold text-slate-800">$7,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 國產喜特麗/豪山 雙口檯面玻璃瓦斯爐</span>
+              <span class="font-bold text-slate-800">$8,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 國產喜特麗/豪山 隱藏式/斜背式強力排油煙機</span>
+              <span class="font-bold text-slate-800">$7,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 國產懸吊式臭氧殺菌烘碗機 ＋ 廚具現場組裝配管定位</span>
+              <span class="font-bold text-slate-800">$12,000</span>
+            </div>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$85,000</span>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 5 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#05</span>
-              <h3 class="text-sm font-bold text-slate-900">全屋燈具換新</h3>
+        <!-- 項目 5：全屋燈具 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#05</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">全屋燈具換新</h3>
+                <p class="text-[11px] text-slate-500">客廳大吸頂燈＋三間臥室吸頂燈＋走道廚房燈</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              客廳高流明 LED 大吸頂燈＋三間臥室護眼吸頂燈＋廚房平板燈＋走道陽台防水燈；含水電安裝工資。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-slate-900">$16,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳主燈：高流明護眼 LED 吸頂燈 (約 65~75W)</span>
+              <span class="font-bold text-slate-800">$2,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 三間臥室：LED 圓形吸頂燈 (各約36W，3盞×$1,200)</span>
+              <span class="font-bold text-slate-800">$3,600</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 廚房、前後陽台、走道燈：防油煙平板燈/防水吸頂燈 (共5盞)</span>
+              <span class="font-bold text-slate-800">$3,900</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 水電師傅全室舊燈拆除、新燈接線打釘固定工資</span>
+              <span class="font-bold text-slate-800">$6,000</span>
+            </div>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$16,000</span>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 6 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#06</span>
-              <h3 class="text-sm font-bold text-slate-900">必備家電採購（變頻節能）</h3>
+        <!-- 項目 6：必備家電 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#06</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">必備家電採購（變頻節能）</h3>
+                <p class="text-[11px] text-slate-500">450L冰箱＋3台冷暖冷氣＋15kg洗衣機 (已扣退稅)</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              450L變頻冰箱($2.4萬) ＋ 3台變頻冷暖冷氣($8.1萬) ＋ 15kg變頻洗衣機($1.7萬) ＋ 冷氣外架耗材($0.8萬)；已扣除政府節能補助 $12,000。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <div class="text-right">
+                <span class="text-sm font-black text-slate-900">$118,000</span>
+                <div class="text-[10px] text-emerald-600 font-bold">已扣退稅1.2萬</div>
+              </div>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 聲寶/三洋 450~485L 一級能效雙門變頻冰箱 (可退稅$3,000)</span>
+              <span class="font-bold text-slate-800">$24,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳變頻冷暖冷氣 (東元/禾聯約5.0kW，含標安，可退稅$3,000)</span>
+              <span class="font-bold text-slate-800">$39,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 房間變頻冷暖冷氣 2 台 (各約2.2kW，各$2.1萬含安裝，可退稅$6,000)</span>
+              <span class="font-bold text-slate-800">$42,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 舊大樓室外機安裝防鏽鐵架 ＋ 冷媒銅管超長耗材費用</span>
+              <span class="font-bold text-slate-800">$8,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 台灣三洋媽媽樂/聲寶 15 公斤超音波變頻洗衣機</span>
+              <span class="font-bold text-slate-800">$17,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 text-emerald-700 bg-emerald-50 px-2 rounded">
+              <span>🎉 扣除政府一級節能退稅補助款 (冰箱$3K + 冷氣3台$9K)</span>
+              <span class="font-bold">- $12,000</span>
+            </div>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$118,000</span>
-            <div class="text-[11px] text-emerald-600 font-semibold">已扣退稅 $12,000</div>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 7 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#07</span>
-              <h3 class="text-sm font-bold text-slate-900">必備家具採購（成家組）</h3>
+        <!-- 項目 7：必備家具 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#07</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">必備家具採購（成家組）</h3>
+                <p class="text-[11px] text-slate-500">沙發、茶几、電視櫃、餐桌椅、掀床架+床墊、雙衣櫃</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              貓抓布沙發($1.8萬)、客廳茶几($3.5K)、電視櫃($4.5K)、四人餐桌椅($8K)、雙人掀床底($7K)、獨立筒床墊($10K)、兩個衣櫃($13K)、運費安裝($4K)。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-slate-900">$68,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳：三人座耐磨貓抓皮/貓抓布沙發 (防刮好整理)</span>
+              <span class="font-bold text-slate-800">$18,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳：簡約耐磨貼皮茶几</span>
+              <span class="font-bold text-slate-800">$3,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳：180cm 系統規格低矮電視櫃</span>
+              <span class="font-bold text-slate-800">$4,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 餐廳：120cm 美耐板/岩板四人餐桌 ＋ 4 張耐磨餐椅</span>
+              <span class="font-bold text-slate-800">$8,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 主臥：5×6.2 雙人安全氣壓掀床底座 (大容量收納換季棉被)</span>
+              <span class="font-bold text-slate-800">$7,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 主臥：5×6.2 中硬度護脊獨立筒床墊 (工廠直營價)</span>
+              <span class="font-bold text-slate-800">$10,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 臥室：規格四門/滑門組合衣櫃 2 個 (各約$6,500)</span>
+              <span class="font-bold text-slate-800">$13,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 家具工廠全室配送上樓、現場組裝與包裝定位費</span>
+              <span class="font-bold text-slate-800">$4,000</span>
+            </div>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$68,000</span>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 8 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#08</span>
-              <h3 class="text-sm font-bold text-slate-900">全室窗簾安裝</h3>
+        <!-- 項目 8：全室窗簾 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#08</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">全室窗簾安裝</h3>
+                <p class="text-[11px] text-slate-500">客廳調光簾＋三間臥室遮光捲簾 (含軌道安裝)</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              客廳調光捲簾/布簾 ＋ 三間臥室遮光捲簾，兼顧睡眠遮光、隱私保護與冷氣保溫；含五金軌道與安裝。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-slate-900">$18,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳大面採光窗：調光捲簾 (斑馬簾) 或 簡約落地布簾</span>
+              <span class="font-bold text-slate-800">$6,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 三間臥室：高遮光抗熱防曬捲簾 3 窗 (兼顧睡眠與隱私，各約$3,100)</span>
+              <span class="font-bold text-slate-800">$9,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 窗簾軌道五金耗材 ＋ 師傅到府精準丈量與安裝工資</span>
+              <span class="font-bold text-slate-800">$2,000</span>
+            </div>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$18,000</span>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 9 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#09</span>
-              <h3 class="text-sm font-bold text-slate-900">玄關大門更換電子鎖</h3>
+        <!-- 項目 9：電子鎖 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#09</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">玄關大門更換電子鎖</h3>
+                <p class="text-[11px] text-slate-500">四合一智慧電子鎖 (指紋/密碼/卡片/鑰匙，含安裝)</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              知名大廠指紋/密碼/卡片/鑰匙四合一智慧電子鎖；免帶鑰匙出入最便利，交屋保障門禁安全（含專業開孔安裝）。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-slate-900">$12,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 知名大廠智慧電子鎖本體 (飛利浦/美樂/耶魯實用普及款)</span>
+              <span class="font-bold text-slate-800">$9,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 舊機械鎖拆除、不鏽鋼大門精準雷射/洗孔 ＋ 專業技師安裝調校</span>
+              <span class="font-bold text-slate-800">$3,000</span>
+            </div>
+            <p class="text-[10px] text-slate-500 pt-1">💡 中古屋交屋第一步必換鎖！免帶鑰匙出入防反鎖，全家人最方便安全。</p>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$12,000</span>
-          </div>
-        </div>
+        </details>
 
-        <!-- 項目 10 -->
-        <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-400">#10</span>
-              <h3 class="text-sm font-bold text-slate-900">後陽台手搖升降曬衣架</h3>
+        <!-- 項目 10：曬衣架 -->
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer select-none">
+            <div class="flex items-center gap-2.5">
+              <span class="text-xs font-bold text-slate-400 group-open:text-emerald-600">#10</span>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 group-hover:text-emerald-700">後陽台手搖升降曬衣架</h3>
+                <p class="text-[11px] text-slate-500">雙桿式手搖升降桿＋不鏽鋼鋼索 (含天花板安裝)</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-600 mt-1">
-              雙桿式鋁合金防風曬衣桿（2~2.4米）＋ 304不鏽鋼鋼索，手搖轉盤升降，輕鬆省力耐重，晾曬被單衣物必備。
-            </p>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-sm font-black text-slate-900">$4,000</span>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="mt-3 pl-7 pr-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 鋁合金雙桿防風曬衣桿 (2~2.4米) ＋ 304 不鏽鋼加粗抗斷鋼索</span>
+              <span class="font-bold text-slate-800">$2,500</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 後陽台 RC 天花板固定打壁虎 ＋ 轉向滑輪調校安裝工資</span>
+              <span class="font-bold text-slate-800">$1,500</span>
+            </div>
           </div>
-          <div class="text-right sm:text-right shrink-0">
-            <span class="text-base font-black text-slate-900">$4,000</span>
-          </div>
-        </div>
+        </details>
 
       </div>
 
       <!-- 基本項目小計 -->
-      <div class="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between bg-slate-50 p-3 rounded-xl">
-        <span class="text-sm font-bold text-slate-800">項目 1 ～ 10 基本必備小計：</span>
-        <span class="text-lg font-black text-emerald-600">$509,000 元</span>
+      <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between bg-slate-50 p-3.5 rounded-xl">
+        <span class="text-xs sm:text-sm font-bold text-slate-800">項目 1 ～ 10 基本必備小計：</span>
+        <span class="text-base sm:text-lg font-black text-emerald-600">$509,000 元</span>
       </div>
     </section>
 
-    <!-- 獨立選購項目 (浴室 & 氣密窗) -->
-    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+    <!-- 獨立選購項目 (浴室 & 氣密窗 可折疊手風琴) -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
         <div>
-          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">選</span>
-            獨立加選項目（建議評估後加選）
+          <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-black">選</span>
+            獨立加選項目（價格單獨列出）
           </h2>
-          <p class="text-xs text-slate-500 mt-0.5">價格單獨列出，可視手頭預算自由增減</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">
+            <span class="text-blue-700 font-semibold">👉 點擊展開</span> 查看工程規格與細部金額拆解
+          </p>
         </div>
       </div>
 
-      <div class="space-y-4">
+      <div class="space-y-3.5">
 
-        <!-- 選購 A: 兩間浴室重做 -->
-        <div class="p-4 rounded-xl border-2 border-blue-200 bg-blue-50/40">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-blue-100 pb-3">
-            <div>
-              <span class="bg-blue-600 text-white text-[11px] font-bold px-2 py-0.5 rounded">強烈建議選購</span>
-              <h3 class="text-base font-bold text-slate-900 mt-1">選購 (A)：兩間浴室（一大一小）全面打除重做</h3>
+        <!-- 選購 A: 兩間浴室重做 (預設展開) -->
+        <details class="group rounded-xl border-2 border-blue-200 bg-blue-50/30 overflow-hidden" open>
+          <summary class="p-3.5 sm:p-4 cursor-pointer select-none flex items-center justify-between">
+            <div class="pr-2">
+              <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">強烈建議選購</span>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900 mt-1">選購 (A)：兩間浴室（一大一小）全面打除重做</h3>
+              <p class="text-[11px] text-slate-500">水電管線、防水、磁磚與衛浴全套更新</p>
             </div>
-            <div class="text-right">
-              <span class="text-xl font-black text-blue-700">$220,000 元</span>
-              <div class="text-[11px] text-slate-500">大浴約 12.5 萬 / 小浴約 9.5 萬</div>
+            <div class="text-right shrink-0 flex items-center gap-2">
+              <div>
+                <span class="text-base sm:text-lg font-black text-blue-700">$220,000</span>
+                <div class="text-[10px] text-slate-500">大浴12.5萬/小浴9.5萬</div>
+              </div>
+              <i class="fa-solid fa-chevron-down arrow-icon text-blue-500 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="px-4 pb-4 pt-1 border-t border-blue-100 text-xs text-slate-700 space-y-2 bg-white/70">
+            <div class="bg-blue-100/50 p-2.5 rounded-lg text-blue-950 mb-2">
+              <strong>⭐ 為什麼最推薦加做：</strong> 33年中古大樓原建防水層多已硬化失效，若未打掉重做，未來只要滲水到樓下天花板，必須再度敲牆賠償。趁入住前全室粉塵一次搞定最省事！
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 舊有衛浴設備拆除 ＋ 壁磚地磚打除見底至紅磚RC</span>
+              <span class="font-bold text-slate-800">$25,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 冷熱水管全面抽換為「不鏽鋼被覆水管」＋ 排水排污管密封更新</span>
+              <span class="font-bold text-slate-800">$22,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 水泥砂漿粗胚打底整平 ＋ 地坪精準洩水坡度施作</span>
+              <span class="font-bold text-slate-800">$27,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 高彈性水泥防水工程 (<strong>全室牆面刷到天花板頂</strong>＋48小時蓄水測試)</span>
+              <span class="font-bold text-slate-800">$21,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 國產防滑地磚 (30×30) ＋ 亮面修邊壁磚 (30×60) 連工帶料</span>
+              <span class="font-bold text-slate-800">$44,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• PVC 暗架防潮天花板 ＋ LED 防潮崁燈 (兩間)</span>
+              <span class="font-bold text-slate-800">$11,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 凱撒/和成 兩段式省水單體馬桶 2 座</span>
+              <span class="font-bold text-slate-800">$15,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 陶瓷洗臉盆＋冷熱龍頭 2 套 (大浴面盆浴櫃組、小浴長腳盆組)</span>
+              <span class="font-bold text-slate-800">$14,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• LED 觸控除霧鏡/鏡箱 2 組 ＋ 沐浴冷熱花灑水龍頭 2 組</span>
+              <span class="font-bold text-slate-800">$13,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 大浴室「一字型強化玻璃拉門」(乾濕分離，8mm清玻+防爆膜)</span>
+              <span class="font-bold text-slate-800">$13,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 靜音排風扇 2 台 ＋ 304不鏽鋼毛巾置物架五金與定位安裝工資</span>
+              <span class="font-bold text-slate-800">$15,000</span>
             </div>
           </div>
-          <div class="mt-3 text-xs text-slate-700 leading-relaxed space-y-1.5">
-            <p><strong>• 為什麼最推薦：</strong> 33年中古大樓原建防水層多已硬化失效，若未打掉重做，未來只要漏水到樓下天花板，必須再度敲牆賠償。趁入住前全室粉塵一次搞定最省事。</p>
-            <p><strong>• 施作規格：</strong> 全面打除磁磚見底（紅磚RC）➔ 冷熱水管換新為「不鏽鋼被覆水管」➔ 水泥打底整平做洩水坡 ➔ 彈性水泥防水塗刷2~3度（<strong>全室刷到天花板頂</strong>）➔ 48小時試水測試 ➔ 國產防滑地磚壁磚 ➔ PVC暗架天花板 ➔ 全新凱撒(Caesar)或和成(HCG)馬桶、面盆、鏡子、龍頭設備兩套。</p>
-          </div>
-        </div>
+        </details>
 
         <!-- 選購 B: 全屋氣密窗 -->
-        <div class="p-4 rounded-xl border border-slate-300 bg-slate-50">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
-            <div>
-              <span class="bg-slate-700 text-white text-[11px] font-bold px-2 py-0.5 rounded">舒適升級選購</span>
-              <h3 class="text-base font-bold text-slate-900 mt-1">選購 (B)：全屋鋁門窗換新氣密窗（乾式包框）</h3>
+        <details class="group rounded-xl border border-slate-300 bg-slate-50 overflow-hidden">
+          <summary class="p-3.5 sm:p-4 cursor-pointer select-none flex items-center justify-between">
+            <div class="pr-2">
+              <span class="bg-slate-700 text-white text-[10px] font-bold px-2 py-0.5 rounded">舒適升級選購</span>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900 mt-1">選購 (B)：全屋鋁門窗換新氣密窗（乾式包框）</h3>
+              <p class="text-[11px] text-slate-500">全屋約 160 ~ 180 才，不敲外牆乾式快速施工</p>
             </div>
-            <div class="text-right">
-              <span class="text-xl font-black text-slate-800">$95,000 元</span>
-              <div class="text-[11px] text-slate-500">全屋約 160 ~ 180 才</div>
+            <div class="text-right shrink-0 flex items-center gap-2">
+              <div>
+                <span class="text-base sm:text-lg font-black text-slate-800">$95,000</span>
+                <div class="text-[10px] text-slate-500">全屋6~7處門窗</div>
+              </div>
+              <i class="fa-solid fa-chevron-down arrow-icon text-slate-400 text-xs transition-transform duration-200"></i>
+            </div>
+          </summary>
+          <div class="px-4 pb-4 pt-1 border-t border-slate-200 text-xs text-slate-700 space-y-2 bg-white/70">
+            <div class="bg-slate-100 p-2.5 rounded-lg text-slate-800 mb-2">
+              <strong>💡 乾式施工特點：</strong> 保留大樓原有舊框，新框直接套包鎖固，注入發泡劑並打耐候矽利康封死。1~2天快速完工，不破壞外牆磁磚與泥作，絕無外牆漏水爭議！
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 客廳陽台大落地門/大窗 (約56才，正新/創世紀氣密窗+8mm強化玻璃)</span>
+              <span class="font-bold text-slate-800">$34,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 主臥室大對外窗 (約28才，氣密窗+8mm強化玻璃)</span>
+              <span class="font-bold text-slate-800">$17,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 次臥室窗戶 2 扇 (合計約40才，氣密窗+8mm強化玻璃)</span>
+              <span class="font-bold text-slate-800">$22,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 廚房/後陽台通風門窗 (三合一防蚊通風門，約16才計)</span>
+              <span class="font-bold text-slate-800">$9,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-slate-200/60">
+              <span>• 兩間浴室通風小氣窗 (磨砂毛玻璃氣密窗，各以基本才12才計)</span>
+              <span class="font-bold text-slate-800">$7,000</span>
+            </div>
+            <div class="flex justify-between items-center py-1">
+              <span>• 乾式包框特製鋁料、耐候發泡劑與抗UV矽利康、高空搬運費</span>
+              <span class="font-bold text-slate-800">$6,000</span>
             </div>
           </div>
-          <div class="mt-3 text-xs text-slate-700 leading-relaxed space-y-1.5">
-            <p><strong>• 施工特點：</strong> 採用「乾式包框工法」，保留舊框直接套入新特製框，1~2天快速完工。完全不敲打外牆磁磚與泥作，絕無外牆漏水爭議，社區管委會最友善。</p>
-            <p><strong>• 施作規格：</strong> 含客廳陽台大落地門、主臥大窗、兩間次臥窗戶、廚房後陽台通風窗、兩間浴室氣窗。採用國產標準氣密窗（正新/創世紀/九州）搭配 8mm 強化玻璃，有效隔絕南屯路商圈車流聲與高樓風切風雨。</p>
-          </div>
-        </div>
+        </details>
 
       </div>
     </section>
 
     <!-- 備註說明：熱水器與小額規費 -->
     <section class="bg-amber-50/70 rounded-2xl border border-amber-200 p-4 sm:p-5">
-      <h3 class="text-sm font-bold text-amber-900 flex items-center gap-2 mb-2">
-        <i class="fa-solid fa-circle-info text-amber-600"></i> 屋況與入住提醒
+      <h3 class="text-xs sm:text-sm font-bold text-amber-900 flex items-center gap-1.5 mb-2">
+        <i class="fa-solid fa-circle-info text-amber-600"></i> 屋況省錢與入住提醒
       </h3>
-      <ul class="text-xs text-slate-700 space-y-1.5 list-disc list-inside">
-        <li><span class="font-semibold text-slate-900">熱水器：</span> 原屋已附有一台強制排氣瓦斯熱水器，功能完好可直接沿用，為您省下約 1.5 ~ 2 萬元的購置花費！</li>
-        <li><span class="font-semibold text-slate-900">大樓管委會裝修保證金：</span> 施工前需暫押約 2 萬元保證金給大樓管理室，施工完成驗收無損壞後會全額退回。</li>
-        <li><span class="font-semibold text-slate-900">瓦斯開戶與安全檢驗：</span> 欣中天然氣更換微電腦瓦斯表及室內軟管安全檢查，規費約 2,000 ~ 3,000 元。</li>
+      <ul class="text-[11px] sm:text-xs text-slate-700 space-y-1.5 list-disc list-inside">
+        <li><span class="font-bold text-slate-900">熱水器已省下：</span> 原屋已附有一台強制排氣瓦斯熱水器，功能完好可直接沿用，已為您直接省下約 1.5 ~ 2 萬元！</li>
+        <li><span class="font-bold text-slate-900">大樓管委會裝修保證金：</span> 施工前需暫押約 2 萬元保證金給大樓管理室，施工完成驗收無損壞後會全額退回。</li>
+        <li><span class="font-bold text-slate-900">瓦斯開戶與安全檢驗：</span> 欣中天然氣更換微電腦防震瓦斯表及室內軟管安全檢查，規費約 2,000 ~ 3,000 元。</li>
       </ul>
     </section>
 
   </main>
 
-  <!-- 底部固定浮動列 (適合手機快速聯絡與掌握總價) -->
-  <footer class="bg-white border-t border-slate-200 py-3 px-4 fixed bottom-0 left-0 right-0 z-40 shadow-md">
+  <!-- 底部固定浮動列 (適合手機快速掌握總價) -->
+  <footer class="bg-white border-t border-slate-200 py-2.5 px-4 fixed bottom-0 left-0 right-0 z-40 shadow-lg">
     <div class="max-w-4xl mx-auto flex items-center justify-between">
       <div>
-        <div class="text-[11px] text-slate-500">基本款 10 項預算總額</div>
-        <div class="text-lg font-black text-emerald-600">NT$ 509,000</div>
+        <div class="text-[10px] text-slate-500 font-medium">基本款 10 項總額</div>
+        <div class="text-base sm:text-lg font-black text-emerald-600">NT$ 509,000</div>
       </div>
       <div class="text-right">
-        <span class="text-[11px] text-slate-500">含浴室重做建議抓</span>
-        <div class="text-sm font-bold text-blue-700">約 72.9 萬元</div>
+        <span class="text-[10px] text-slate-500 font-medium">加雙浴室 (方案2首選)</span>
+        <div class="text-sm sm:text-base font-bold text-blue-700">約 72.9 萬元</div>
       </div>
     </div>
   </footer>
