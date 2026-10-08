@@ -264,11 +264,13 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
         prop_id = req_data.get('id') or query.get('id', [None])[0]
         to_cat = req_data.get('to') or query.get('to', [None])[0]
         url_arg = req_data.get('url') or query.get('url', [None])[0]
+        perm_param = query.get('permanent', ['0'])[0].lower()
+        permanent = bool(req_data.get('permanent')) or (perm_param in ['1', 'true', 'yes'])
 
         if path == '/api/move':
             self.handle_api_move(prop_id, to_cat)
         elif path == '/api/delete':
-            self.handle_api_delete(prop_id)
+            self.handle_api_delete(prop_id, permanent=permanent)
         elif path == '/api/crawl' or path == '/api/import-url':
             self.handle_api_crawl(url_arg)
         else:
@@ -385,7 +387,7 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             self.send_json({"success": False, "error": str(e)}, status=500)
 
-    def handle_api_delete(self, prop_id):
+    def handle_api_delete(self, prop_id, permanent=False):
         if not prop_id:
             self.send_json({"success": False, "error": "Missing id to delete"}, status=400)
             return
@@ -405,18 +407,28 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                     
                     code, comm_name = row[0], row[1]
                     
-                    # Delete from DB (cascades to sources and images)
-                    if str(prop_id).isdigit():
-                        cur.execute("DELETE FROM properties WHERE id = %s;", (int(prop_id),))
+                    if permanent:
+                        # Permanent Hard Delete from DB
+                        if str(prop_id).isdigit():
+                            cur.execute("DELETE FROM properties WHERE id = %s;", (int(prop_id),))
+                        else:
+                            cur.execute("DELETE FROM properties WHERE code = %s;", (str(prop_id),))
+                        msg = f"成功從資料庫徹底清除物件「{comm_name}」({code})！"
                     else:
-                        cur.execute("DELETE FROM properties WHERE code = %s;", (str(prop_id),))
+                        # Soft Delete: move to category 'deleted'
+                        if str(prop_id).isdigit():
+                            cur.execute("UPDATE properties SET decision_status = 'deleted', updated_at = NOW() WHERE id = %s;", (int(prop_id),))
+                        else:
+                            cur.execute("UPDATE properties SET decision_status = 'deleted', updated_at = NOW() WHERE code = %s;", (str(prop_id),))
+                        msg = f"已將物件「{comm_name}」({code})移至「刪除物件」分類！"
 
                     self.send_json({
                         "success": True,
                         "deleted_id": prop_id,
+                        "permanent": permanent,
                         "code": code,
                         "community_name": comm_name,
-                        "message": f"成功從資料庫刪除物件「{comm_name}」({code})！"
+                        "message": msg
                     })
         except Exception as e:
             self.send_json({"success": False, "error": str(e)}, status=500)

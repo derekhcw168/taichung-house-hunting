@@ -28,7 +28,8 @@ def export_db_to_html():
                 WHEN 'consider' THEN 1
                 WHEN 'pending' THEN 2
                 WHEN 'rejected' THEN 3
-                ELSE 4
+                WHEN 'deleted' THEN 4
+                ELSE 5
             END,
             p.id ASC;
     """)

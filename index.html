@@ -92,6 +92,10 @@
             <div class="text-rose-300 font-medium">✕ 看完不考慮</div>
             <div id="headerRejectedCount" class="text-xl font-extrabold text-rose-400">33 件</div>
           </div>
+          <div onclick="switchCategoryTab('deleted')" class="cursor-pointer hover:scale-105 transition bg-slate-500/20 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-400/30 text-center">
+            <div class="text-slate-300 font-medium">🗑️ 刪除物件</div>
+            <div id="headerDeletedCount" class="text-xl font-extrabold text-slate-300">0 件</div>
+          </div>
         </div>
       </div>
     </div>
@@ -180,6 +184,10 @@
           <button onclick="switchCategoryTab('rejected')" id="tab-rejected" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 text-slate-600 hover:bg-slate-50">
             <i class="fa-solid fa-circle-xmark text-rose-500"></i> 看完不考慮
             <span id="badge-tab-rejected" class="px-2 py-0.5 rounded-full text-xs bg-rose-100 text-rose-800 font-bold">33</span>
+          </button>
+          <button onclick="switchCategoryTab('deleted')" id="tab-deleted" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 text-slate-600 hover:bg-slate-50">
+            <i class="fa-solid fa-trash-can text-slate-500"></i> 刪除物件
+            <span id="badge-tab-deleted" class="px-2 py-0.5 rounded-full text-xs bg-slate-200 text-slate-700 font-bold">0</span>
           </button>
           <button onclick="switchCategoryTab('all')" id="tab-all" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 text-slate-600 hover:bg-slate-50">
             <i class="fa-solid fa-layer-group text-slate-500"></i> 全部總覽
@@ -3107,14 +3115,6 @@
   }
 ];
 
-    // Filter out deleted properties from local cache
-    try {
-      const deletedIds = JSON.parse(localStorage.getItem('taichung_house_deleted_ids') || '[]');
-      if (deletedIds && deletedIds.length > 0) {
-        allProperties = allProperties.filter(p => !deletedIds.includes(p.id));
-      }
-    } catch (e) {}
-
     // 1. Category Status Management
     let propertyCategories = {};
     allProperties.forEach(p => {
@@ -3135,6 +3135,18 @@
     } catch (e) {
       console.warn('LocalStorage load error', e);
     }
+
+    // Migrate any previously deleted properties from legacy cache to category 'deleted'
+    try {
+      const deletedIds = JSON.parse(localStorage.getItem('taichung_house_deleted_ids') || '[]');
+      if (deletedIds && deletedIds.length > 0) {
+        deletedIds.forEach(id => {
+          if (propertyCategories[id] !== undefined) {
+            propertyCategories[id] = 'deleted';
+          }
+        });
+      }
+    } catch (e) {}
 
     let activeCategoryTab = 'pending'; // 'pending', 'consider', 'rejected', 'all'
     let isLocalServerAvailable = false;
@@ -3198,10 +3210,12 @@
       let pendingCount = 0;
       let considerCount = 0;
       let rejectedCount = 0;
+      let deletedCount = 0;
       allProperties.forEach(p => {
         const cat = propertyCategories[p.id];
         if (cat === 'consider') considerCount++;
         else if (cat === 'rejected') rejectedCount++;
+        else if (cat === 'deleted') deletedCount++;
         else pendingCount++;
       });
 
@@ -3215,10 +3229,12 @@
       setTxt('headerPendingCount', pendingCount + ' 件');
       setTxt('headerConsiderCount', considerCount + ' 件');
       setTxt('headerRejectedCount', rejectedCount + ' 件');
+      setTxt('headerDeletedCount', deletedCount + ' 件');
 
       setTxt('badge-tab-pending', pendingCount);
       setTxt('badge-tab-consider', considerCount);
       setTxt('badge-tab-rejected', rejectedCount);
+      setTxt('badge-tab-deleted', deletedCount);
       setTxt('badge-tab-all', totalCount);
 
       updateFilterBadgeCounts();
@@ -3280,7 +3296,8 @@
       const catNames = {
         pending: '待看物件',
         consider: '看完列入考慮的物件',
-        rejected: '看完之後不考慮的物件'
+        rejected: '看完之後不考慮的物件',
+        deleted: '刪除物件'
       };
 
       // Direct write to PostgreSQL taichung_house via backend API
@@ -3304,6 +3321,7 @@
         'pending': 'pending', '待看': 'pending', '待看物件': 'pending',
         'consider': 'consider', '考慮': 'consider', '看完列入考慮': 'consider', '看完列入考慮的物件': 'consider',
         'rejected': 'rejected', '不考慮': 'rejected', '看完不考慮': 'rejected', '看完之後不考慮的物件': 'rejected',
+        'deleted': 'deleted', '刪除': 'deleted', '刪除物件': 'deleted', '已刪除': 'deleted', '已刪除物件': 'deleted',
         'all': 'all', '全部': 'all', '全部總覽': 'all'
       };
       activeCategoryTab = tabAliases[tab] || 'pending';
@@ -3315,6 +3333,7 @@
         pending: '📌 待看物件清單（準備去看）',
         consider: '❤️ 看完列入考慮的物件清單',
         rejected: '✕ 看完不考慮的物件清單',
+        deleted: '🗑️ 刪除物件清單（已移入排除區，可隨時還原）',
         all: '📋 全部物件總覽'
       };
       document.getElementById('currentTabTitle').innerText = titleMap[activeCategoryTab] || '看屋物件規格表';
@@ -3378,6 +3397,7 @@
         let label = p.id;
         if (cat === 'consider') label = '❤️';
         else if (cat === 'rejected') label = '✕';
+        else if (cat === 'deleted') label = '🗑️';
 
         const icon = L.divIcon({
           className: 'custom-marker ' + markerClass,
@@ -3396,7 +3416,27 @@
         let catBadge = '';
         if (cat === 'consider') catBadge = '<span style="background:#10b981; color:white; padding:1px 6px; border-radius:3px; font-size:10px; font-weight:bold;">❤️ 列入考慮</span>';
         else if (cat === 'rejected') catBadge = '<span style="background:#64748b; color:white; padding:1px 6px; border-radius:3px; font-size:10px; font-weight:bold;">✕ 看完不考慮</span>';
+        else if (cat === 'deleted') catBadge = '<span style="background:#475569; color:white; padding:1px 6px; border-radius:3px; font-size:10px; font-weight:bold;">🗑️ 已刪除</span>';
         else catBadge = '<span style="background:#2563eb; color:white; padding:1px 6px; border-radius:3px; font-size:10px; font-weight:bold;">📌 待看物件</span>';
+
+        let quickMoveButtons = '';
+        if (cat === 'deleted') {
+          quickMoveButtons = `
+            <div style="display:flex; gap:4px; margin-bottom:8px;">
+              <button onclick="movePropertyCategory(${p.id}, 'pending')" style="flex:1; padding:4px; background:#2563eb; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="還原至待看">↩️ 還原待看</button>
+              <button onclick="movePropertyCategory(${p.id}, 'consider')" style="flex:1; padding:4px; background:#10b981; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="列入考慮">❤️ 考慮</button>
+              <button onclick="movePropertyCategory(${p.id}, 'rejected')" style="flex:1; padding:4px; background:#64748b; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="不考慮">✕ 不考慮</button>
+            </div>
+          `;
+        } else {
+          quickMoveButtons = `
+            <div style="display:flex; gap:4px; margin-bottom:8px;">
+              <button onclick="movePropertyCategory(${p.id}, 'consider')" style="flex:1; padding:4px; background:#10b981; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="列入考慮">❤️ 考慮</button>
+              <button onclick="movePropertyCategory(${p.id}, 'rejected')" style="flex:1; padding:4px; background:#64748b; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="不考慮">✕ 排除</button>
+              <button onclick="deleteProperty(${p.id}, '${p.name.replace(/'/g, "\\'")}')" style="padding:4px 8px; background:#ef4444; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="移至刪除物件"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+          `;
+        }
 
         const popupContent = `
           <div style="min-width:240px; font-family:'Noto Sans TC',sans-serif;">
@@ -3415,11 +3455,7 @@
               <div style="color:#64748b; font-size:11px; margin-top:4px;">${p.note}</div>
             </div>
             <!-- Quick Move in Popup -->
-            <div style="display:flex; gap:4px; margin-bottom:8px;">
-              <button onclick="movePropertyCategory(${p.id}, 'consider')" style="flex:1; padding:4px; background:#10b981; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="列入考慮">❤️ 考慮</button>
-              <button onclick="movePropertyCategory(${p.id}, 'rejected')" style="flex:1; padding:4px; background:#64748b; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="不考慮">✕ 排除</button>
-              <button onclick="deleteProperty(${p.id}, '${p.name}')" style="padding:4px 8px; background:#ef4444; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="從資料庫刪除"><i class="fa-solid fa-trash-can"></i></button>
-            </div>
+            ${quickMoveButtons}
             <div style="display:flex; gap:4px;">
               <button onclick="openPhotoModal(${p.id}, '${p.name.replace(/'/g, "\\'")}')" style="flex:1; text-align:center; background:#7c3aed; color:white; padding:5px 6px; border:none; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;" title="查看現場照片"><i class="fa-solid fa-camera mr-1"></i>照片</button>
               <a href="${p.url}" target="_blank" style="flex:1; text-align:center; background:#2563eb; color:white; padding:5px 6px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">原始網頁</a>
@@ -3660,6 +3696,7 @@
         let rowBg = 'hover:bg-blue-50/50 transition duration-150 ';
         if (cat === 'consider') rowBg += 'bg-emerald-50/25 ';
         else if (cat === 'rejected') rowBg += 'bg-slate-100/40 text-slate-500 ';
+        else if (cat === 'deleted') rowBg += 'bg-slate-100/70 text-slate-400 ';
         else if (p.isNew) rowBg += 'bg-sky-50/20 ';
         tr.className = rowBg;
 
@@ -3683,7 +3720,7 @@
               <button onclick="movePropertyCategory(${p.id}, 'rejected')" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="看完不考慮 (寫入資料庫)">
                 <i class="fa-solid fa-xmark"></i> 不考慮
               </button>
-              <button onclick="deleteProperty(${p.id}, '${p.name}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="從資料庫徹底刪除">
+              <button onclick="deleteProperty(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
                 <i class="fa-solid fa-trash-can"></i> 刪除
               </button>
             </div>
@@ -3698,7 +3735,7 @@
               <button onclick="movePropertyCategory(${p.id}, 'rejected')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded text-[11px] transition" title="改為不考慮">
                 <i class="fa-solid fa-xmark"></i> 不考慮
               </button>
-              <button onclick="deleteProperty(${p.id}, '${p.name}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="從資料庫徹底刪除">
+              <button onclick="deleteProperty(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
                 <i class="fa-solid fa-trash-can"></i> 刪除
               </button>
             </div>
@@ -3713,8 +3750,26 @@
               <button onclick="movePropertyCategory(${p.id}, 'consider')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded text-[11px] transition" title="改為考慮">
                 <i class="fa-solid fa-heart"></i> 改考慮
               </button>
-              <button onclick="deleteProperty(${p.id}, '${p.name}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="從資料庫徹底刪除">
+              <button onclick="deleteProperty(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
                 <i class="fa-solid fa-trash-can"></i> 刪除
+              </button>
+            </div>
+          `;
+        } else if (cat === 'deleted') {
+          actionButtons = `
+            <div class="flex items-center justify-center gap-1.5">
+              <span class="badge bg-slate-200 text-slate-600 font-bold mr-1"><i class="fa-solid fa-trash-can mr-1"></i>已刪除</span>
+              <button onclick="movePropertyCategory(${p.id}, 'pending')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[11px] flex items-center gap-1 shadow-sm transition" title="還原回待看名單">
+                <i class="fa-solid fa-rotate-left"></i> 還原待看
+              </button>
+              <button onclick="movePropertyCategory(${p.id}, 'consider')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded text-[11px] font-medium transition" title="改為考慮">
+                <i class="fa-solid fa-heart"></i> 改考慮
+              </button>
+              <button onclick="movePropertyCategory(${p.id}, 'rejected')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded text-[11px] font-medium transition" title="改為不考慮">
+                <i class="fa-solid fa-xmark"></i> 不考慮
+              </button>
+              <button onclick="permanentDeleteProperty(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-100 hover:bg-red-200 text-red-700 rounded font-bold text-[11px] transition" title="徹底從資料庫清除">
+                <i class="fa-solid fa-fire"></i> 清除
               </button>
             </div>
           `;
@@ -3733,7 +3788,7 @@
           </td>
           <td class="py-3 px-4 font-semibold text-slate-900">
             <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="${cat === 'rejected' ? 'line-through text-slate-400' : ''}">${p.name}</span>${newBadge}
+              <span class="${(cat === 'rejected' || cat === 'deleted') ? 'line-through text-slate-400' : ''}">${p.name}</span>${newBadge}
               <button onclick="openPhotoModal(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition" title="檢視現場照片">
                 <i class="fa-solid fa-camera text-[10px]"></i> <span>${p.imgCount || 0}</span>
               </button>
@@ -3797,14 +3852,22 @@
     }
 
 
-    // Delete Property from Database
+    // Move to 'deleted' category (Soft Delete)
     async function deleteProperty(id, name) {
-      if (!confirm(`確定要將物件「${name}」從資料庫/清單中徹底刪除嗎？`)) {
+      if (!confirm(`確定要將物件「${name}」移至「刪除物件」分類嗎？\n（您隨時可以在「刪除物件」分頁中檢視或還原此物件）`)) {
+        return;
+      }
+      await movePropertyCategory(id, 'deleted');
+      showToast(`🗑️ <strong>【已移至刪除物件】</strong>：已將「${name}」移入「刪除物件」分類！可隨時在該分頁中還原。`, '<i class="fa-solid fa-trash-can text-slate-400"></i>');
+    }
+
+    // Permanent Hard Delete from Database (Only for deleted category)
+    async function permanentDeleteProperty(id, name) {
+      if (!confirm(`⚠️ 確定要將物件「${name}」從資料庫中【徹底清除】嗎？\n此動作將一併清除該物件在 PostgreSQL 中的所有資料與現場照片，且無法復原！`)) {
         return;
       }
 
-      const apiEndpoint = getApiUrl(`/api/delete?id=${id}`);
-
+      const apiEndpoint = getApiUrl(`/api/delete?id=${id}&permanent=true`);
       let dbDeleted = false;
       try {
         const controller = new AbortController();
@@ -3818,31 +3881,17 @@
           }
         }
       } catch (e) {
-        console.warn('Backend delete API call failed (normal when on external HTTPS):', e);
+        console.warn('Backend permanent delete API call failed:', e);
       }
 
-      // Record in localStorage deleted list so it stays hidden on this browser
-      try {
-        let deletedIds = JSON.parse(localStorage.getItem('taichung_house_deleted_ids') || '[]');
-        if (!deletedIds.includes(id)) {
-          deletedIds.push(id);
-          localStorage.setItem('taichung_house_deleted_ids', JSON.stringify(deletedIds));
-        }
-      } catch (err) {}
-
-      // Remove from memory and update UI
       allProperties = allProperties.filter(x => x.id !== id);
       delete propertyCategories[id];
       applyFiltersAndSort();
 
       if (dbDeleted) {
-        showToast(`🗑️ <strong>【資料庫已刪除】</strong>：已徹底移除「${name}」！`, '<i class="fa-solid fa-trash-can text-rose-400"></i>');
+        showToast(`💥 <strong>【資料庫已徹底清除】</strong>：已永久移除「${name}」！`, '<i class="fa-solid fa-fire text-rose-500"></i>');
       } else {
-        if (window.location.protocol === 'https:') {
-          showToast(`🗑️ <strong>已從線上清單移除</strong>「${name}」！<br><span style="color:#fbbf24;font-size:11px;">💡 提示：您目前在 GitHub Pages 雲端網頁中。若要同步清除電腦本機的 PostgreSQL 資料庫，請在電腦端開啟本機專屬控制台：<a href="http://localhost:8899/" target="_blank" class="underline text-sky-300 font-bold">http://localhost:8899/</a></span>`, '<i class="fa-solid fa-cloud-arrow-down text-amber-400"></i>');
-        } else {
-          showToast(`🗑️ <strong>已從清單移除</strong>「${name}」！<br><span style="color:#94a3b8;font-size:11px;">(本機服務未連線，已先從本機畫面移除)</span>`, '<i class="fa-solid fa-trash-can text-rose-400"></i>');
-        }
+        showToast(`🗑️ <strong>已從畫面徹底移除</strong>「${name}」！`, '<i class="fa-solid fa-trash-can text-slate-400"></i>');
       }
     }
 
@@ -3945,6 +3994,31 @@
             allProperties.forEach(p => {
               propertyCategories[p.id] = p.category || 'pending';
             });
+
+            // If local storage has specific category overrides
+            try {
+              const saved = localStorage.getItem('taichung_house_categories_v4');
+              if (saved) {
+                const parsed = JSON.parse(saved);
+                Object.keys(parsed).forEach(id => {
+                  if (propertyCategories[id] !== undefined && parsed[id]) {
+                    propertyCategories[id] = parsed[id];
+                  }
+                });
+              }
+            } catch (e) {}
+
+            // Migrate any legacy deleted IDs from localStorage
+            try {
+              const deletedIds = JSON.parse(localStorage.getItem('taichung_house_deleted_ids') || '[]');
+              if (deletedIds && deletedIds.length > 0) {
+                deletedIds.forEach(id => {
+                  if (propertyCategories[id] !== undefined) {
+                    propertyCategories[id] = 'deleted';
+                  }
+                });
+              }
+            } catch (e) {}
 
             applyFiltersAndSort();
             const badge = document.getElementById('syncServiceBadge');
