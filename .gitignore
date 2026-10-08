@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# Local binaries and temp data
+*.exe
+*.pdb
+*.tmp
+
+# Raw MHTML and bulk images (stored locally in Google Drive to prevent git bloat)
+物件圖片/
+待看物件/
+看完列入考慮的物件/
+看完之後不考慮的物件/
+*.mhtml
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
