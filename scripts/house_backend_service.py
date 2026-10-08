@@ -190,6 +190,9 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
+    def do_HEAD(self):
+        self.do_GET()
+
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
@@ -221,23 +224,10 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(content)
             else:
                 self.send_error(404, "HTML file not found")
+        elif path.startswith('/api/images/') or path.startswith('/物件圖片/'):
+            # Serve image directly from PostgreSQL (BYTEA)
+            self.handle_api_serve_image(path)
         else:
-            # Check if requesting images under /物件圖片/
-            if path.startswith('/物件圖片/'):
-                rel_sub = urllib.parse.unquote(path[len('/物件圖片/'):])
-                local_path = os.path.join(IMAGE_DIR, rel_sub)
-                if os.path.exists(local_path) and os.path.isfile(local_path):
-                    with open(local_path, 'rb') as f:
-                        data = f.read()
-                    self.send_response(200)
-                    if local_path.endswith('.png'): self.send_header('Content-Type', 'image/png')
-                    elif local_path.endswith('.webp'): self.send_header('Content-Type', 'image/webp')
-                    else: self.send_header('Content-Type', 'image/jpeg')
-                    self.send_header('Content-Length', str(len(data)))
-                    self.send_header('Connection', 'close')
-                    self.end_headers()
-                    self.wfile.write(data)
-                    return
             super().do_GET()
 
     def do_POST(self):
@@ -412,6 +402,46 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             self.send_json({"success": False, "error": str(e)}, status=500)
 
+    def handle_api_serve_image(self, path):
+        try:
+            with get_db() as conn:
+                with conn.cursor() as cur:
+                    row = None
+                    if path.startswith('/api/images/'):
+                        parts = path[len('/api/images/'):].strip('/').split('/')
+                        if len(parts) == 1 and parts[0].isdigit():
+                            cur.execute("SELECT image_data, mime_type FROM property_images WHERE id = %s;", (int(parts[0]),))
+                            row = cur.fetchone()
+                        elif len(parts) >= 2 and parts[0].isdigit():
+                            prop_id = int(parts[0])
+                            file_name = urllib.parse.unquote(parts[1])
+                            cur.execute("SELECT image_data, mime_type FROM property_images WHERE property_id = %s AND file_name = %s LIMIT 1;", (prop_id, file_name))
+                            row = cur.fetchone()
+                    elif path.startswith('/物件圖片/'):
+                        rel_sub = '物件圖片/' + urllib.parse.unquote(path[len('/物件圖片/'):])
+                        cur.execute("SELECT image_data, mime_type FROM property_images WHERE file_relpath = %s LIMIT 1;", (rel_sub,))
+                        row = cur.fetchone()
+                        if not row:
+                            file_name = os.path.basename(rel_sub)
+                            cur.execute("SELECT image_data, mime_type FROM property_images WHERE file_name = %s LIMIT 1;", (file_name,))
+                            row = cur.fetchone()
+
+                    if row and row[0]:
+                        img_bytes = bytes(row[0])
+                        mime = row[1] or 'image/jpeg'
+                        self.send_response(200)
+                        self.send_header('Content-Type', mime)
+                        self.send_header('Content-Length', str(len(img_bytes)))
+                        self.send_header('Cache-Control', 'public, max-age=604800')
+                        self.send_header('Connection', 'close')
+                        self.end_headers()
+                        self.wfile.write(img_bytes)
+                        return
+                    else:
+                        self.send_error(404, "Image not found in PostgreSQL")
+        except Exception as e:
+            self.send_error(500, f"Database image fetch error: {e}")
+
     def handle_api_crawl(self, url):
         if not url:
             self.send_json({"success": False, "error": "網址不能為空"}, status=400)
@@ -474,10 +504,7 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                         ) VALUES (%s, %s, %s, %s, %s, %s);
                     """, (prop_id, data['platform'], data['title'], url, meta_json, data['meta_description']))
 
-                    # Download images
-                    img_folder = os.path.join(IMAGE_DIR, f"{prop_code}_{clean_filename(comm_name)}")
-                    os.makedirs(img_folder, exist_ok=True)
-                    
+                    # Download images directly into PostgreSQL (BYTEA) - no disk storage
                     saved_imgs = 0
                     for idx, img_url in enumerate(data['images'], 1):
                         try:
@@ -486,19 +513,21 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                                 img_data = resp.read()
                                 if len(img_data) > 10000:
                                     ext = '.jpg'
-                                    if 'png' in img_url: ext = '.png'
-                                    elif 'webp' in img_url: ext = '.webp'
+                                    mime = 'image/jpeg'
+                                    if 'png' in img_url:
+                                        ext = '.png'
+                                        mime = 'image/png'
+                                    elif 'webp' in img_url:
+                                        ext = '.webp'
+                                        mime = 'image/webp'
                                     fname = f"photo_{saved_imgs+1:02d}{ext}"
-                                    fpath = os.path.join(img_folder, fname)
-                                    with open(fpath, 'wb') as img_f:
-                                        img_f.write(img_data)
                                     rel_path = f"物件圖片/{prop_code}_{clean_filename(comm_name)}/{fname}"
                                     
                                     cur.execute("""
                                         INSERT INTO property_images (
-                                            property_id, image_category, file_name, file_relpath, file_size, original_url, sort_order
-                                        ) VALUES (%s, %s, %s, %s, %s, %s, %s);
-                                    """, (prop_id, 'photo', fname, rel_path, len(img_data), img_url, saved_imgs+1))
+                                            property_id, image_category, file_name, file_relpath, file_size, original_url, sort_order, image_data, mime_type
+                                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+                                    """, (prop_id, 'photo', fname, rel_path, len(img_data), img_url, saved_imgs+1, img_data, mime))
                                     saved_imgs += 1
                         except Exception:
                             continue
