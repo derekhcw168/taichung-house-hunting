@@ -224,6 +224,25 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(content)
             else:
                 self.send_error(404, "HTML file not found")
+        elif path == '/favicon.ico':
+            ico_file = os.path.join(BASE_DIR, "favicon.ico")
+            if os.path.exists(ico_file):
+                with open(ico_file, 'rb') as f:
+                    content = f.read()
+                self.send_response(200)
+                self.send_header('Content-Type', 'image/x-icon')
+                self.send_header('Content-Length', str(len(content)))
+                self.send_header('Connection', 'close')
+                self.end_headers()
+                self.wfile.write(content)
+            else:
+                self.send_error(404, "Favicon not found")
+        elif path.startswith('/api/properties/') and path.endswith('/images'):
+            parts = path.strip('/').split('/')
+            if len(parts) == 4 and parts[2].isdigit():
+                self.handle_api_property_images(int(parts[2]))
+            else:
+                self.send_error(400, "Invalid property id")
         elif path.startswith('/api/images/') or path.startswith('/物件圖片/'):
             # Serve image directly from PostgreSQL (BYTEA)
             self.handle_api_serve_image(path)
@@ -399,6 +418,30 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                         "community_name": comm_name,
                         "message": f"成功從資料庫刪除物件「{comm_name}」({code})！"
                     })
+        except Exception as e:
+            self.send_json({"success": False, "error": str(e)}, status=500)
+
+    def handle_api_property_images(self, prop_id):
+        try:
+            with get_db() as conn:
+                with conn.cursor() as cur:
+                    cur.execute("""
+                        SELECT id, file_name, file_relpath, image_category, mime_type, file_size 
+                        FROM property_images 
+                        WHERE property_id = %s 
+                        ORDER BY sort_order ASC, id ASC;
+                    """, (int(prop_id),))
+                    rows = cur.fetchall()
+                    imgs = [{
+                        "id": r[0],
+                        "file_name": r[1],
+                        "file_relpath": r[2],
+                        "category": r[3],
+                        "mime": r[4],
+                        "size": r[5],
+                        "url": f"/api/images/{r[0]}"
+                    } for r in rows]
+            self.send_json({"success": True, "property_id": prop_id, "count": len(imgs), "images": imgs})
         except Exception as e:
             self.send_json({"success": False, "error": str(e)}, status=500)
 

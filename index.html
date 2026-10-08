@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>台中精選買房物件分類儀表板 (待看 / 考慮 / 不考慮・支援一鍵即時搬移同步)</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Leaflet CSS & JS -->
@@ -60,8 +63,8 @@
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div class="flex items-center flex-wrap gap-2 mb-2">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold uppercase tracking-wider border border-emerald-400/30">
-              <i class="fa-solid fa-check-double"></i> 100% 兩衛合規版 (40件・含實地看屋列入考慮)
+            <span id="bannerTitleBadge" class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold uppercase tracking-wider border border-emerald-400/30">
+              <i class="fa-solid fa-check-double"></i> 100% 兩衛合規版 (<span id="bannerTotalCount">67</span>件・含實地看屋列入考慮)
             </span>
             <span id="syncServiceBadge" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
               <span class="w-2 h-2 rounded-full bg-slate-400 inline-block animate-pulse"></span> 正在偵測本機同步服務...
@@ -79,15 +82,15 @@
         <div class="flex flex-wrap gap-2 text-xs">
           <div onclick="switchCategoryTab('pending')" class="cursor-pointer hover:scale-105 transition bg-blue-500/20 backdrop-blur-md px-3.5 py-2 rounded-xl border border-blue-400/30 text-center">
             <div class="text-blue-300 font-medium">📌 待看物件</div>
-            <div id="headerPendingCount" class="text-xl font-extrabold text-blue-400">35 件</div>
+            <div id="headerPendingCount" class="text-xl font-extrabold text-blue-400">29 件</div>
           </div>
           <div onclick="switchCategoryTab('consider')" class="cursor-pointer hover:scale-105 transition bg-emerald-500/20 backdrop-blur-md px-3.5 py-2 rounded-xl border border-emerald-400/30 text-center">
             <div class="text-emerald-300 font-medium">❤️ 列入考慮</div>
-            <div id="headerConsiderCount" class="text-xl font-extrabold text-emerald-400">0 件</div>
+            <div id="headerConsiderCount" class="text-xl font-extrabold text-emerald-400">5 件</div>
           </div>
           <div onclick="switchCategoryTab('rejected')" class="cursor-pointer hover:scale-105 transition bg-rose-500/20 backdrop-blur-md px-3.5 py-2 rounded-xl border border-rose-400/30 text-center">
             <div class="text-rose-300 font-medium">✕ 看完不考慮</div>
-            <div id="headerRejectedCount" class="text-xl font-extrabold text-rose-400">0 件</div>
+            <div id="headerRejectedCount" class="text-xl font-extrabold text-rose-400">33 件</div>
           </div>
         </div>
       </div>
@@ -119,6 +122,9 @@
             <i class="fa-solid fa-cloud-arrow-down"></i> 擷取並加入待看
           </button>
         </div>
+      </div>
+      <div id="cloudNoticeBox" class="hidden mt-3 p-3 rounded-xl bg-amber-500/15 border border-amber-400/30 text-amber-200 text-xs flex items-center justify-between gap-2">
+        <span><i class="fa-solid fa-circle-info mr-1 text-amber-400"></i> 目前處於 <strong>GitHub Pages 雲端瀏覽模式</strong>。自動擷取新網址入庫需要本機 PostgreSQL 服務，請點擊右上角「<a href="http://localhost:8899/" class="underline font-bold text-white hover:text-amber-300">開啟本機控制台</a>」即可執行自動擷取入庫！</span>
       </div>
       <div id="crawlStatusMsg" class="hidden mt-3 text-xs p-3 rounded-xl bg-indigo-950/90 border border-indigo-400/50 text-indigo-200 flex items-center gap-3">
         <i class="fa-solid fa-spinner fa-spin text-amber-400 text-base"></i>
@@ -165,19 +171,19 @@
         <div class="flex flex-wrap gap-1 sm:gap-2 text-sm" id="categoryTabs">
           <button onclick="switchCategoryTab('pending')" id="tab-pending" class="tab-btn active px-4 py-2.5 rounded-xl flex items-center gap-2 text-slate-600 hover:bg-slate-50">
             <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> 待看物件
-            <span id="badge-tab-pending" class="px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-800 font-bold">35</span>
+            <span id="badge-tab-pending" class="px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-800 font-bold">29</span>
           </button>
           <button onclick="switchCategoryTab('consider')" id="tab-consider" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 text-slate-600 hover:bg-slate-50">
             <i class="fa-solid fa-heart text-emerald-600"></i> 看完列入考慮
-            <span id="badge-tab-consider" class="px-2 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 font-bold">0</span>
+            <span id="badge-tab-consider" class="px-2 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 font-bold">5</span>
           </button>
           <button onclick="switchCategoryTab('rejected')" id="tab-rejected" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 text-slate-600 hover:bg-slate-50">
             <i class="fa-solid fa-circle-xmark text-rose-500"></i> 看完不考慮
-            <span id="badge-tab-rejected" class="px-2 py-0.5 rounded-full text-xs bg-rose-100 text-rose-800 font-bold">0</span>
+            <span id="badge-tab-rejected" class="px-2 py-0.5 rounded-full text-xs bg-rose-100 text-rose-800 font-bold">33</span>
           </button>
           <button onclick="switchCategoryTab('all')" id="tab-all" class="tab-btn px-4 py-2.5 rounded-xl flex items-center gap-2 text-slate-600 hover:bg-slate-50">
             <i class="fa-solid fa-layer-group text-slate-500"></i> 全部總覽
-            <span id="badge-tab-all" class="px-2 py-0.5 rounded-full text-xs bg-slate-100 text-slate-800 font-bold">35</span>
+            <span id="badge-tab-all" class="px-2 py-0.5 rounded-full text-xs bg-slate-100 text-slate-800 font-bold">67</span>
           </button>
         </div>
 
@@ -217,13 +223,13 @@
           <div class="flex flex-wrap gap-1.5 text-xs font-medium">
             <button onclick="setDistrict('all')" id="btn-dist-all" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 active">全部</button>
             <button onclick="setDistrict('南屯區')" id="btn-dist-南屯區" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">
-              <span class="text-sky-600 font-bold mr-1">首選</span>南屯區 (9)
+              <span class="text-sky-600 font-bold mr-1">首選</span>南屯區 <span id="count-dist-南屯區" class="text-[11px] opacity-80">(0)</span>
             </button>
             <button onclick="setDistrict('南區')" id="btn-dist-南區" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">
-              <span class="text-emerald-600 font-bold mr-1">次選</span>南區 (19)
+              <span class="text-emerald-600 font-bold mr-1">次選</span>南區 <span id="count-dist-南區" class="text-[11px] opacity-80">(0)</span>
             </button>
-            <button onclick="setDistrict('西區')" id="btn-dist-西區" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">西區 (5)</button>
-            <button onclick="setDistrict('西屯區')" id="btn-dist-西屯區" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">西屯區 (2)</button>
+            <button onclick="setDistrict('西區')" id="btn-dist-西區" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">西區 <span id="count-dist-西區" class="text-[11px] opacity-80">(0)</span></button>
+            <button onclick="setDistrict('西屯區')" id="btn-dist-西屯區" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">西屯區 <span id="count-dist-西屯區" class="text-[11px] opacity-80">(0)</span></button>
           </div>
         </div>
 
@@ -239,9 +245,9 @@
             <button onclick="setPriceQuick('950to1000')" id="btn-price-950to1000" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">950 ~ 1000 萬</button>
             <div class="flex items-center gap-1 ml-2 text-xs text-slate-500">
               <span>自訂：</span>
-              <input type="number" id="inputPriceMin" placeholder="最低" oninput="onCustomPriceChange()" class="w-16 px-2 py-1 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-blue-500">
+              <input type="number" id="inputPriceMin" placeholder="最低" min="0" max="9999" oninput="onCustomPriceChange()" class="w-16 px-2 py-1 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-blue-500">
               <span>~</span>
-              <input type="number" id="inputPriceMax" placeholder="最高" oninput="onCustomPriceChange()" class="w-16 px-2 py-1 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-blue-500">
+              <input type="number" id="inputPriceMax" placeholder="最高" min="0" max="9999" oninput="onCustomPriceChange()" class="w-16 px-2 py-1 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-blue-500">
               <span>萬</span>
             </div>
           </div>
@@ -255,9 +261,9 @@
             </span>
             <div class="flex flex-wrap gap-1.5 text-xs font-medium">
               <button onclick="setParking('all')" id="btn-park-all" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 active">不限</button>
-              <button onclick="setParking('平面')" id="btn-park-平面" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">平面車位 (6)</button>
-              <button onclick="setParking('機械')" id="btn-park-機械" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">機械車位 (15)</button>
-              <button onclick="setParking('無車位')" id="btn-park-無車位" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">無車位 (14)</button>
+              <button onclick="setParking('平面')" id="btn-park-平面" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">平面車位 <span id="count-park-平面" class="text-[11px] opacity-80">(0)</span></button>
+              <button onclick="setParking('機械')" id="btn-park-機械" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">機械車位 <span id="count-park-機械" class="text-[11px] opacity-80">(0)</span></button>
+              <button onclick="setParking('無車位')" id="btn-park-無車位" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">無車位 <span id="count-park-無車位" class="text-[11px] opacity-80">(0)</span></button>
             </div>
           </div>
           <div class="flex flex-col sm:flex-row sm:items-center gap-2">
@@ -3133,19 +3139,26 @@
     let activeCategoryTab = 'pending'; // 'pending', 'consider', 'rejected', 'all'
     let isLocalServerAvailable = false;
 
+    function getApiUrl(path) {
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      return isLocal ? path : `http://127.0.0.1:8899${path}`;
+    }
+
     // Check Local Sync Server status
     async function checkLocalSyncService() {
       const badge = document.getElementById('syncServiceBadge');
+      const cloudNotice = document.getElementById('cloudNoticeBox');
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 1200);
-        const res = await fetch('http://127.0.0.1:8899/api/status', { signal: controller.signal });
+        const res = await fetch(getApiUrl('/api/status'), { signal: controller.signal });
         clearTimeout(timeoutId);
         if (res.ok) {
           const data = await res.json();
           isLocalServerAvailable = true;
           badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40';
           badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span> 🟢 本機 PostgreSQL 資料庫連線中';
+          if (cloudNotice) cloudNotice.classList.add('hidden');
 
           // Sync disk state with webpage
           if (data && data.status) {
@@ -3161,11 +3174,16 @@
               applyFiltersAndSort();
             }
           }
+        } else {
+          throw new Error('Server returned non-ok');
         }
       } catch (err) {
         isLocalServerAvailable = false;
         badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-blue-950/60 text-blue-300 border border-blue-500/30';
         badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 inline-block"></span> 🌐 GitHub Pages 雲端模式 (<a href="http://localhost:8899/" class="underline hover:text-white font-bold text-sky-300" title="點擊開啟本機 PostgreSQL 控制台">開啟本機控制台</a>)';
+        if (cloudNotice && window.location.protocol === 'https:') {
+          cloudNotice.classList.remove('hidden');
+        }
       }
     }
 
@@ -3187,14 +3205,54 @@
         else pendingCount++;
       });
 
-      document.getElementById('headerPendingCount').innerText = pendingCount + ' 件';
-      document.getElementById('headerConsiderCount').innerText = considerCount + ' 件';
-      document.getElementById('headerRejectedCount').innerText = rejectedCount + ' 件';
+      const totalCount = allProperties.length;
+      const setTxt = (id, txt) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = txt;
+      };
 
-      document.getElementById('badge-tab-pending').innerText = pendingCount;
-      document.getElementById('badge-tab-consider').innerText = considerCount;
-      document.getElementById('badge-tab-rejected').innerText = rejectedCount;
-      document.getElementById('badge-tab-all').innerText = allProperties.length;
+      setTxt('bannerTotalCount', totalCount);
+      setTxt('headerPendingCount', pendingCount + ' 件');
+      setTxt('headerConsiderCount', considerCount + ' 件');
+      setTxt('headerRejectedCount', rejectedCount + ' 件');
+
+      setTxt('badge-tab-pending', pendingCount);
+      setTxt('badge-tab-consider', considerCount);
+      setTxt('badge-tab-rejected', rejectedCount);
+      setTxt('badge-tab-all', totalCount);
+
+      updateFilterBadgeCounts();
+    }
+
+    function updateFilterBadgeCounts() {
+      const distCounts = { '南屯區': 0, '南區': 0, '西區': 0, '西屯區': 0 };
+      const parkCounts = { '平面': 0, '機械': 0, '無車位': 0 };
+
+      const baseItems = allProperties.filter(p => {
+        if (activeCategoryTab === 'all') return true;
+        return propertyCategories[p.id] === activeCategoryTab;
+      });
+
+      baseItems.forEach(p => {
+        if (p.district in distCounts) distCounts[p.district]++;
+        if (p.parkingType && p.parkingType.indexOf('平面') !== -1) parkCounts['平面']++;
+        else if (p.parkingType && p.parkingType.indexOf('機械') !== -1) parkCounts['機械']++;
+        else parkCounts['無車位']++;
+      });
+
+      const setEl = (id, count) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = `(${count})`;
+      };
+
+      setEl('count-dist-南屯區', distCounts['南屯區']);
+      setEl('count-dist-南區', distCounts['南區']);
+      setEl('count-dist-西區', distCounts['西區']);
+      setEl('count-dist-西屯區', distCounts['西屯區']);
+
+      setEl('count-park-平面', parkCounts['平面']);
+      setEl('count-park-機械', parkCounts['機械']);
+      setEl('count-park-無車位', parkCounts['無車位']);
     }
 
     function showToast(msg, icon) {
@@ -3227,7 +3285,7 @@
 
       // Direct write to PostgreSQL taichung_house via backend API
       try {
-        const res = await fetch(`http://127.0.0.1:8899/api/move?id=${id}&to=${targetCategory}`, { method: 'POST' });
+        const res = await fetch(getApiUrl(`/api/move?id=${id}&to=${targetCategory}`), { method: 'POST' });
         if (res.ok) {
           const data = await res.json();
           showToast(`🟢 <strong>【PostgreSQL 更新成功】</strong><br>已將「${p.name}」狀態即時寫入資料庫「${catNames[targetCategory]}」！`, '<i class="fa-solid fa-database text-emerald-400"></i>');
@@ -3242,9 +3300,15 @@
     }
 
     function switchCategoryTab(tab) {
-      activeCategoryTab = tab;
+      const tabAliases = {
+        'pending': 'pending', '待看': 'pending', '待看物件': 'pending',
+        'consider': 'consider', '考慮': 'consider', '看完列入考慮': 'consider', '看完列入考慮的物件': 'consider',
+        'rejected': 'rejected', '不考慮': 'rejected', '看完不考慮': 'rejected', '看完之後不考慮的物件': 'rejected',
+        'all': 'all', '全部': 'all', '全部總覽': 'all'
+      };
+      activeCategoryTab = tabAliases[tab] || 'pending';
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('tab-' + tab);
+      const activeBtn = document.getElementById('tab-' + activeCategoryTab);
       if (activeBtn) activeBtn.classList.add('active');
 
       const titleMap = {
@@ -3253,7 +3317,7 @@
         rejected: '✕ 看完不考慮的物件清單',
         all: '📋 全部物件總覽'
       };
-      document.getElementById('currentTabTitle').innerText = titleMap[tab] || '看屋物件規格表';
+      document.getElementById('currentTabTitle').innerText = titleMap[activeCategoryTab] || '看屋物件規格表';
       applyFiltersAndSort();
     }
 
@@ -3297,7 +3361,7 @@
       let base = '';
       if (p.parkingType.indexOf('平面') !== -1) base = 'marker-plane';
       else if (p.indoor >= 25) base = 'marker-large';
-      else if (p.category === 'school') base = 'marker-school';
+      else if (p.themeCategory === 'school') base = 'marker-school';
       else base = 'marker-view';
 
       const cat = propertyCategories[p.id];
@@ -3356,9 +3420,10 @@
               <button onclick="movePropertyCategory(${p.id}, 'rejected')" style="flex:1; padding:4px; background:#64748b; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="不考慮">✕ 排除</button>
               <button onclick="deleteProperty(${p.id}, '${p.name}')" style="padding:4px 8px; background:#ef4444; color:white; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;" title="從資料庫刪除"><i class="fa-solid fa-trash-can"></i></button>
             </div>
-            <div style="display:flex; gap:6px;">
-              <a href="${p.url}" target="_blank" style="flex:1; text-align:center; background:#2563eb; color:white; padding:5px 8px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">原始網頁</a>
-              <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" style="flex:1; text-align:center; background:#0f172a; color:white; padding:5px 8px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">Google 導航</a>
+            <div style="display:flex; gap:4px;">
+              <button onclick="openPhotoModal(${p.id}, '${p.name.replace(/'/g, "\\'")}')" style="flex:1; text-align:center; background:#7c3aed; color:white; padding:5px 6px; border:none; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;" title="查看現場照片"><i class="fa-solid fa-camera mr-1"></i>照片</button>
+              <a href="${p.url}" target="_blank" style="flex:1; text-align:center; background:#2563eb; color:white; padding:5px 6px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">原始網頁</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" style="flex:1; text-align:center; background:#0f172a; color:white; padding:5px 6px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">導航</a>
             </div>
           </div>
         `;
@@ -3394,17 +3459,24 @@
       unitPrice: '單價',
       rooms: '格局房數',
       floorNum: '所在樓層',
+      floor: '所在樓層',
       ageNum: '屋齡',
+      age: '屋齡',
       indoor: '室內實坪',
+      indoorSize: '室內實坪',
       publicRatioNum: '公設比',
+      publicRatio: '公設比',
       parkingType: '車位型態',
-      mgmtFeeNum: '管理費'
+      parking: '車位型態',
+      mgmtFeeNum: '管理費',
+      mgmtFee: '管理費'
     };
 
     function setDistrict(dist) {
-      filters.district = dist;
+      const normalizedDist = (!dist || dist === '' || dist === 'all') ? 'all' : dist;
+      filters.district = normalizedDist;
       document.querySelectorAll('[id^="btn-dist-"]').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-dist-' + dist);
+      const activeBtn = document.getElementById('btn-dist-' + normalizedDist);
       if (activeBtn) activeBtn.classList.add('active');
       applyFiltersAndSort();
     }
@@ -3660,8 +3732,11 @@
             ${actionButtons}
           </td>
           <td class="py-3 px-4 font-semibold text-slate-900">
-            <div class="flex items-center">
+            <div class="flex items-center gap-1.5 flex-wrap">
               <span class="${cat === 'rejected' ? 'line-through text-slate-400' : ''}">${p.name}</span>${newBadge}
+              <button onclick="openPhotoModal(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition" title="檢視現場照片">
+                <i class="fa-solid fa-camera text-[10px]"></i> <span>${p.imgCount || 0}</span>
+              </button>
             </div>
             <div class="text-[11px] font-normal text-slate-500">${p.area}</div>
           </td>
@@ -3693,6 +3768,9 @@
           </td>
           <td class="py-3 px-3 text-center whitespace-nowrap">
             <div class="flex items-center justify-center gap-1.5">
+              <button onclick="openPhotoModal(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="p-1.5 bg-purple-50 text-purple-600 hover:bg-purple-600 hover:text-white rounded-lg transition" title="查看現場照片 (${p.imgCount || 0}張)">
+                <i class="fa-solid fa-camera"></i>
+              </button>
               <button onclick="focusProperty(${p.id})" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition" title="在地圖上檢視">
                 <i class="fa-solid fa-location-dot"></i>
               </button>
@@ -3725,8 +3803,7 @@
         return;
       }
 
-      const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const apiEndpoint = isLocalHost ? `/api/delete?id=${id}` : `http://127.0.0.1:8899/api/delete?id=${id}`;
+      const apiEndpoint = getApiUrl(`/api/delete?id=${id}`);
 
       let dbDeleted = false;
       try {
@@ -3786,10 +3863,10 @@
       btn.disabled = true;
       btn.classList.add('opacity-50');
       statusBox.classList.remove('hidden');
-      statusText.innerHTML = `正在從網址擷取資料，並自動下載現場照片至「物件圖片」資料夾中，請稍候...`;
+      statusText.innerHTML = `正在從網址擷取資料，並自動下載現場照片至「物件圖片」資料庫中，請稍候...`;
 
       try {
-        const res = await fetch('http://127.0.0.1:8899/api/crawl', {
+        const res = await fetch(getApiUrl('/api/crawl'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url })
@@ -3819,7 +3896,7 @@
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 1200);
-        const res = await fetch('http://127.0.0.1:8899/api/properties', { signal: controller.signal });
+        const res = await fetch(getApiUrl('/api/properties'), { signal: controller.signal });
         clearTimeout(timeoutId);
         if (res.ok) {
           const data = await res.json();
@@ -3884,6 +3961,153 @@
       return false;
     }
 
+    // Photo Gallery Modal Logic
+    let modalPhotos = [];
+    let modalCurrentIdx = 0;
+
+    async function openPhotoModal(id, name) {
+      const p = allProperties.find(x => x.id === id);
+      const modal = document.getElementById('photoModal');
+      const titleEl = document.getElementById('photoModalTitle');
+      const subtitleEl = document.getElementById('photoModalSubtitle');
+      const counterEl = document.getElementById('photoModalCounter');
+      const spinner = document.getElementById('photoLoadingSpinner');
+      const emptyNotice = document.getElementById('photoEmptyNotice');
+      const mainImg = document.getElementById('modalMainImg');
+      const prevBtn = document.getElementById('modalPrevBtn');
+      const nextBtn = document.getElementById('modalNextBtn');
+      const thumbsStrip = document.getElementById('photoThumbnailsStrip');
+
+      modalPhotos = [];
+      modalCurrentIdx = 0;
+      titleEl.innerText = (name || (p ? p.name : '物件')) + ` (#${id})`;
+      subtitleEl.innerText = p ? `${p.district} ｜ ${p.layout} ｜ ${p.price}萬 (${p.floor})` : '現場屋況照片';
+      counterEl.innerText = '0 / 0';
+      mainImg.classList.add('hidden');
+      prevBtn.classList.add('hidden');
+      nextBtn.classList.add('hidden');
+      emptyNotice.classList.add('hidden');
+      thumbsStrip.innerHTML = '';
+      spinner.classList.remove('hidden');
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
+        const res = await fetch(getApiUrl(`/api/properties/${id}/images`), { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.images && data.images.length > 0) {
+            modalPhotos = data.images.map(img => ({
+              url: getApiUrl(img.url),
+              category: img.category || '現場照',
+              name: img.file_name
+            }));
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to load photos from DB API:', err);
+      }
+
+      // Fallback if no images from API
+      if (modalPhotos.length === 0 && p && p.sampleImg) {
+        modalPhotos.push({
+          url: getApiUrl(p.sampleImg.startsWith('/') ? p.sampleImg : '/' + p.sampleImg),
+          category: '精選照',
+          name: '封面照'
+        });
+      }
+
+      spinner.classList.add('hidden');
+
+      if (modalPhotos.length === 0) {
+        emptyNotice.classList.remove('hidden');
+        return;
+      }
+
+      // Render thumbnails
+      thumbsStrip.innerHTML = '';
+      modalPhotos.forEach((img, idx) => {
+        const thumb = document.createElement('img');
+        thumb.src = img.url;
+        thumb.alt = img.name;
+        thumb.className = `w-14 h-14 object-cover rounded-lg cursor-pointer border-2 transition ${idx === 0 ? 'border-purple-500 scale-105' : 'border-transparent opacity-60 hover:opacity-100'}`;
+        thumb.onclick = () => selectModalPhoto(idx);
+        thumb.id = `modal-thumb-${idx}`;
+        thumbsStrip.appendChild(thumb);
+      });
+
+      renderCurrentModalPhoto();
+    }
+
+    function renderCurrentModalPhoto() {
+      if (modalPhotos.length === 0) return;
+      const mainImg = document.getElementById('modalMainImg');
+      const counterEl = document.getElementById('photoModalCounter');
+      const prevBtn = document.getElementById('modalPrevBtn');
+      const nextBtn = document.getElementById('modalNextBtn');
+
+      mainImg.src = modalPhotos[modalCurrentIdx].url;
+      mainImg.classList.remove('hidden');
+      counterEl.innerText = `${modalCurrentIdx + 1} / ${modalPhotos.length}`;
+
+      if (modalPhotos.length > 1) {
+        prevBtn.classList.remove('hidden');
+        nextBtn.classList.remove('hidden');
+      } else {
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+      }
+
+      // Update active thumbnail
+      document.querySelectorAll('#photoThumbnailsStrip img').forEach((thumb, idx) => {
+        if (idx === modalCurrentIdx) {
+          thumb.className = 'w-14 h-14 object-cover rounded-lg cursor-pointer border-2 border-purple-500 scale-105 transition';
+          thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else {
+          thumb.className = 'w-14 h-14 object-cover rounded-lg cursor-pointer border-2 border-transparent opacity-60 hover:opacity-100 transition';
+        }
+      });
+    }
+
+    function selectModalPhoto(idx) {
+      if (idx >= 0 && idx < modalPhotos.length) {
+        modalCurrentIdx = idx;
+        renderCurrentModalPhoto();
+      }
+    }
+
+    function prevModalPhoto() {
+      if (modalPhotos.length <= 1) return;
+      modalCurrentIdx = (modalCurrentIdx - 1 + modalPhotos.length) % modalPhotos.length;
+      renderCurrentModalPhoto();
+    }
+
+    function nextModalPhoto() {
+      if (modalPhotos.length <= 1) return;
+      modalCurrentIdx = (modalCurrentIdx + 1) % modalPhotos.length;
+      renderCurrentModalPhoto();
+    }
+
+    function closePhotoModal() {
+      const modal = document.getElementById('photoModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Keyboard listener for modal navigation & ESC
+    window.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('photoModal');
+      if (modal && !modal.classList.contains('hidden')) {
+        if (e.key === 'Escape') closePhotoModal();
+        else if (e.key === 'ArrowLeft') prevModalPhoto();
+        else if (e.key === 'ArrowRight') nextModalPhoto();
+      }
+    });
+
     // Initialize
     loadPropertiesFromDb().then(loaded => {
       if (!loaded) {
@@ -3892,5 +4116,58 @@
       checkLocalSyncService();
     });
   </script>
+
+  <!-- Photo Gallery Modal Overlay -->
+  <div id="photoModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity duration-200" onclick="if(event.target === this) closePhotoModal()">
+    <div class="relative w-full max-w-4xl bg-slate-900 rounded-2xl shadow-2xl border border-slate-700 flex flex-col max-h-[90vh] overflow-hidden" onclick="event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90 text-white">
+        <div class="flex items-center gap-3">
+          <span class="p-2 bg-purple-600/20 text-purple-400 rounded-xl border border-purple-500/30">
+            <i class="fa-solid fa-camera-retro text-lg"></i>
+          </span>
+          <div>
+            <h3 id="photoModalTitle" class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              社區照片瀏覽
+            </h3>
+            <p id="photoModalSubtitle" class="text-xs text-slate-400 mt-0.5">現場屋況與格局照片</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="photoModalCounter" class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 font-mono">0 / 0</span>
+          <button onclick="closePhotoModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition" title="關閉視窗 (Esc)">
+            <i class="fa-solid fa-xmark text-base"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Photo View Area -->
+      <div class="relative flex-1 bg-black flex items-center justify-center min-h-[350px] max-h-[60vh] overflow-hidden select-none">
+        <div id="photoLoadingSpinner" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/70 text-slate-300 gap-2 z-10">
+          <i class="fa-solid fa-spinner fa-spin text-3xl text-purple-400"></i>
+          <span class="text-xs">載入照片中...</span>
+        </div>
+        <div id="photoEmptyNotice" class="hidden flex flex-col items-center justify-center p-8 text-center text-slate-400 gap-3">
+          <i class="fa-regular fa-image text-5xl text-slate-600"></i>
+          <p class="text-sm font-medium" id="photoEmptyText">本機資料庫未收錄此物件之現場照片</p>
+          <p class="text-xs text-slate-500 max-w-md">若您目前在 GitHub Pages 雲端版，請開啟本機控制台以檢視 PostgreSQL 完整圖庫。</p>
+        </div>
+        <img id="modalMainImg" src="" alt="物件現場照" class="hidden max-h-full max-w-full object-contain mx-auto transition-all duration-150" />
+
+        <!-- Navigation Buttons -->
+        <button id="modalPrevBtn" onclick="prevModalPhoto()" class="hidden absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-purple-600 text-white flex items-center justify-center transition shadow-lg backdrop-blur-sm z-20" title="上一張 (←)">
+          <i class="fa-solid fa-chevron-left text-lg"></i>
+        </button>
+        <button id="modalNextBtn" onclick="nextModalPhoto()" class="hidden absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-purple-600 text-white flex items-center justify-center transition shadow-lg backdrop-blur-sm z-20" title="下一張 (→)">
+          <i class="fa-solid fa-chevron-right text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Thumbnails Strip -->
+      <div id="photoThumbnailsStrip" class="px-4 py-3 bg-slate-900 border-t border-slate-800 flex gap-2 overflow-x-auto select-none min-h-[76px]">
+        <!-- Thumbnails injected by JS -->
+      </div>
+    </div>
+  </div>
 </body>
 </html>
