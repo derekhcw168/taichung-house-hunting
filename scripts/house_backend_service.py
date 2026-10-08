@@ -602,11 +602,12 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json({"success": False, "error": f"擷取失敗: {str(e)}"}, status=500)
 
 def run_server():
-    server_address = ('127.0.0.1', PORT)
+    server_address = ('0.0.0.0', PORT)
     httpd = http.server.ThreadingHTTPServer(server_address, HouseRequestHandler)
     print(f"==================================================")
     print(f" 台中看屋決策平台 - PostgreSQL 即時服務已啟動")
-    print(f" 網址: http://localhost:{PORT}/")
+    print(f" 本機網址: http://localhost:{PORT}/")
+    print(f" 區網網址: http://192.168.2.252:{PORT}/ (供家人同 Wi-Fi 電腦/手機使用)")
     print(f" 資料庫: taichung_house (PostgreSQL 16)")
     print(f"==================================================")
     try:
