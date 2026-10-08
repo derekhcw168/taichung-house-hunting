@@ -79,9 +79,7 @@ def main(commit_msg=None):
     scripts_src = os.path.join(base_dir, "scripts")
     scripts_dst = os.path.join(repo_dir, "scripts")
     if os.path.exists(scripts_src):
-        if os.path.exists(scripts_dst):
-            shutil.rmtree(scripts_dst, ignore_errors=True)
-        shutil.copytree(scripts_src, scripts_dst, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+        shutil.copytree(scripts_src, scripts_dst, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'), dirs_exist_ok=True)
 
     # C. Batch / VBS utilities
     for pattern in ["*.bat", "*.vbs"]:

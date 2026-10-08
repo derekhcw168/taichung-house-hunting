@@ -179,10 +179,11 @@ def scrape_property_url(url):
 
 class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
-        # Enable CORS
+        # Enable CORS and Chrome Private Network Access (PNA)
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Request-Private-Network, *')
+        self.send_header('Access-Control-Allow-Private-Network', 'true')
         super().end_headers()
 
     def do_OPTIONS(self):

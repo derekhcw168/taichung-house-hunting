@@ -1980,46 +1980,6 @@
     "sampleImg": "物件圖片/PROP_45_傑出名門/photo_01.png"
   },
   {
-    "id": 39.0,
-    "code": "PROP_17",
-    "name": "劃江山",
-    "title": "【專案獨家】大慶捷運站⍣中山醫☛超值3房+車位",
-    "price": 998.0,
-    "unitPrice": 27.9,
-    "layout": "3房2廳2衛",
-    "rooms": 3.0,
-    "baths": 2.0,
-    "floor": "6/16F",
-    "floorNum": 6.0,
-    "totalFloors": 16.0,
-    "age": "30.0年",
-    "ageNum": 30.0,
-    "totalArea": 35.79,
-    "mainArea": 22.15,
-    "subArea": 3.34,
-    "indoor": 25.49,
-    "parkingType": "坡道機械式",
-    "parkingNote": "B1坡道機械車位(休旅車位，雙鐵共構生活圈)",
-    "mgmtFee": "1,650元/月",
-    "mgmtFeeNum": 1650,
-    "publicRatio": "28.8%",
-    "publicRatioNum": 28.8,
-    "publicRatioDetail": "是(共用10.3坪含車位，室內實用25.5坪)",
-    "district": "南區",
-    "area": "南區",
-    "orientation": "未載明",
-    "note": "【專案獨家】大慶捷運站⍣中山醫☛超值3房+車位",
-    "lat": 24.1108,
-    "lng": 120.6752,
-    "url": "https://sale.591.com.tw/home/house/detail/2/20993883.html",
-    "category": "rejected",
-    "themeCategory": "view",
-    "isNew": false,
-    "source": "591",
-    "imgCount": 28.0,
-    "sampleImg": "物件圖片/PROP_17_劃江山/photo_01.webp"
-  },
-  {
     "id": 40.0,
     "code": "PROP_46",
     "name": "台中蓮莊",
@@ -3141,6 +3101,14 @@
   }
 ];
 
+    // Filter out deleted properties from local cache
+    try {
+      const deletedIds = JSON.parse(localStorage.getItem('taichung_house_deleted_ids') || '[]');
+      if (deletedIds && deletedIds.length > 0) {
+        allProperties = allProperties.filter(p => !deletedIds.includes(p.id));
+      }
+    } catch (e) {}
+
     // 1. Category Status Management
     let propertyCategories = {};
     allProperties.forEach(p => {
@@ -3197,7 +3165,7 @@
       } catch (err) {
         isLocalServerAvailable = false;
         badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-blue-950/60 text-blue-300 border border-blue-500/30';
-        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 inline-block"></span> 🌐 GitHub Pages 雲端瀏覽模式';
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 inline-block"></span> 🌐 GitHub Pages 雲端模式 (<a href="http://localhost:8899/" class="underline hover:text-white font-bold text-sky-300" title="點擊開啟本機 PostgreSQL 控制台">開啟本機控制台</a>)';
       }
     }
 
@@ -3753,23 +3721,51 @@
 
     // Delete Property from Database
     async function deleteProperty(id, name) {
-      if (!confirm(`確定要將物件「${name}」從 PostgreSQL 資料庫徹底刪除嗎？\n（此動作會將資料庫記錄與關聯圖片一併刪除）`)) {
+      if (!confirm(`確定要將物件「${name}」從資料庫/清單中徹底刪除嗎？`)) {
         return;
       }
+
+      const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiEndpoint = isLocalHost ? `/api/delete?id=${id}` : `http://127.0.0.1:8899/api/delete?id=${id}`;
+
+      let dbDeleted = false;
       try {
-        const res = await fetch(`http://127.0.0.1:8899/api/delete?id=${id}`, { method: 'POST' });
-        const data = await res.json();
-        if (data.success) {
-          showToast(`🗑️ <strong>已從資料庫刪除</strong>：已徹底移除「${name}」！`, '<i class="fa-solid fa-trash-can text-rose-400"></i>');
-          allProperties = allProperties.filter(x => x.id !== id);
-          delete propertyCategories[id];
-          applyFiltersAndSort();
-        } else {
-          alert('刪除失敗: ' + (data.error || '未知錯誤'));
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const res = await fetch(apiEndpoint, { method: 'POST', signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            dbDeleted = true;
+          }
         }
       } catch (e) {
-        console.error('Delete failed:', e);
-        alert('無法連線至本機後端服務: ' + e);
+        console.warn('Backend delete API call failed (normal when on external HTTPS):', e);
+      }
+
+      // Record in localStorage deleted list so it stays hidden on this browser
+      try {
+        let deletedIds = JSON.parse(localStorage.getItem('taichung_house_deleted_ids') || '[]');
+        if (!deletedIds.includes(id)) {
+          deletedIds.push(id);
+          localStorage.setItem('taichung_house_deleted_ids', JSON.stringify(deletedIds));
+        }
+      } catch (err) {}
+
+      // Remove from memory and update UI
+      allProperties = allProperties.filter(x => x.id !== id);
+      delete propertyCategories[id];
+      applyFiltersAndSort();
+
+      if (dbDeleted) {
+        showToast(`🗑️ <strong>【資料庫已刪除】</strong>：已徹底移除「${name}」！`, '<i class="fa-solid fa-trash-can text-rose-400"></i>');
+      } else {
+        if (window.location.protocol === 'https:') {
+          showToast(`🗑️ <strong>已從線上清單移除</strong>「${name}」！<br><span style="color:#fbbf24;font-size:11px;">💡 提示：您目前在 GitHub Pages 雲端網頁中。若要同步清除電腦本機的 PostgreSQL 資料庫，請在電腦端開啟本機專屬控制台：<a href="http://localhost:8899/" target="_blank" class="underline text-sky-300 font-bold">http://localhost:8899/</a></span>`, '<i class="fa-solid fa-cloud-arrow-down text-amber-400"></i>');
+        } else {
+          showToast(`🗑️ <strong>已從清單移除</strong>「${name}」！<br><span style="color:#94a3b8;font-size:11px;">(本機服務未連線，已先從本機畫面移除)</span>`, '<i class="fa-solid fa-trash-can text-rose-400"></i>');
+        }
       }
     }
 
