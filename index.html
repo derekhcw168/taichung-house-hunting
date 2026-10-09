@@ -1798,6 +1798,46 @@
     "sampleImg": "物件圖片/PROP_14_龍邑大樓/photo_01.webp"
   },
   {
+    "id": 70.0,
+    "code": "PROP_69",
+    "name": "寶輝大隱",
+    "title": "南屯藏富|寶輝大隱|高質感三房雙衛平車",
+    "price": 3788.0,
+    "unitPrice": 94.7,
+    "layout": "3房2廳2衛",
+    "rooms": 3.0,
+    "baths": 2.0,
+    "floor": "高樓層",
+    "floorNum": 5.0,
+    "totalFloors": 10.0,
+    "age": "20.0年",
+    "ageNum": 20.0,
+    "totalArea": 64.57,
+    "mainArea": 0,
+    "subArea": 0,
+    "indoor": 40.0,
+    "parkingType": "坡道平面式",
+    "parkingNote": "平面車位",
+    "mgmtFee": "未載明",
+    "mgmtFeeNum": 0,
+    "publicRatio": "未載明",
+    "publicRatioNum": 25,
+    "publicRatioDetail": "",
+    "district": "南屯區",
+    "area": "南屯區",
+    "orientation": "坐北朝南",
+    "note": "南屯藏富|寶輝大隱|高質感三房雙衛平車",
+    "lat": 24.147,
+    "lng": 120.636,
+    "url": "https://591.com.tw/v2/sale/21003712?from=share",
+    "category": "pending",
+    "themeCategory": "plane",
+    "isNew": false,
+    "source": "591",
+    "imgCount": 1.0,
+    "sampleImg": "https://img1.591.com.tw/house/2026/10/02/179093239079754100.jpg!1000x.water2.jpg"
+  },
+  {
     "id": 36.0,
     "code": "PROP_43",
     "name": "京華大鎮京國特區",
@@ -3977,7 +4017,7 @@
       const btn = document.getElementById('btnSubmitUrl');
       const statusBox = document.getElementById('crawlStatusMsg');
       const statusText = document.getElementById('crawlStatusText');
-      const url = input.value.trim();
+      let url = input.value.trim();
 
       if (!url) {
         alert('請先貼上房屋網址！');
@@ -3985,15 +4025,23 @@
         return;
       }
 
+      // Pre-normalize 591 mobile or app share URL
+      if (url.includes('591.com.tw')) {
+        const idMatch = url.match(/(?:\/|id=|v2\/sale\/|detail\/|detail\/\d+\/|house\/)(\d{7,9})/);
+        if (idMatch) {
+          url = `https://sale.591.com.tw/home/house/detail/2/${idMatch[1]}.html`;
+        }
+      }
+
       btn.disabled = true;
       btn.classList.add('opacity-50');
       statusBox.classList.remove('hidden');
-      statusText.innerHTML = `正在連線後端解析網頁資訊並寫入資料庫...`;
+      statusText.innerHTML = `正在自動解析房屋資料並存入資料庫...`;
 
       try {
         if (!cloudApiBaseUrl) await loadApiConfig();
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 12000);
+        const timeoutId = setTimeout(() => controller.abort(), 20000);
         const res = await fetch(getApiUrl('/api/crawl'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -4010,13 +4058,11 @@
           switchCategoryTab('pending');
         } else {
           statusBox.classList.add('hidden');
-          // Offer cloud quick-add modal with error notice
-          openCloudQuickAddModal(url, data.error);
+          showToast(`❌ <strong>自動擷取失敗</strong><br>${data.error || '請檢查網址是否正確'}`, '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>');
         }
       } catch (e) {
-        // Backend unreachable or cross-origin / mixed-content -> smoothly open Cloud Quick-Add modal!
         statusBox.classList.add('hidden');
-        openCloudQuickAddModal(url);
+        showToast(`⚠️ <strong>後端服務連線逾時</strong><br>請確認後端連線正常，或稍後再試。`, '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>');
       } finally {
         btn.disabled = false;
         btn.classList.remove('opacity-50');

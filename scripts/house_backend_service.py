@@ -88,14 +88,27 @@ def get_db():
 def clean_filename(name):
     return re.sub(r'[\\/*?:"<>|]', '_', name).strip()
 
-def scrape_property_url(url):
+def normalize_property_url(raw_url):
+    url = raw_url.strip()
+    if '591.com.tw' in url:
+        m = re.search(r'(?:/|id=|v2/sale/|detail/|detail/\d+/|house/)(\d{7,9})', url)
+        if m:
+            return f"https://sale.591.com.tw/home/house/detail/2/{m.group(1)}.html"
+    return url
+
+def scrape_property_url(raw_url):
+    url = normalize_property_url(raw_url)
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'zh-TW,zh;q=0.9,en;q=0.8'
     }
     req = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(req, context=ssl_ctx, timeout=12) as resp:
+    opener = urllib.request.build_opener(
+        urllib.request.HTTPSHandler(context=ssl_ctx),
+        urllib.request.HTTPCookieProcessor()
+    )
+    with opener.open(req, timeout=15) as resp:
         html = resp.read().decode('utf-8', errors='ignore')
 
     soup = BeautifulSoup(html, 'html.parser')
@@ -107,6 +120,7 @@ def scrape_property_url(url):
 
     data = {
         'url': url,
+        'original_url': raw_url,
         'title': title,
         'meta_description': desc,
         'community': '',
@@ -122,34 +136,47 @@ def scrape_property_url(url):
         'floor': '',
         'current_floor': 5,
         'total_floors': 10,
-        'age': 30,
+        'age': 20,
         'indoor': 25.0,
         'total_area': 35.0,
         'parking': '車位/未載明',
         'parking_desc': '',
         'management_fee': '未載明',
         'orientation': '坐北朝南',
-        'platform': '其他房仲',
+        'platform': '591' if '591' in url else '其他房仲',
         'images': []
     }
 
-    # Extract district
+    # 1. Parse JSON-LD Schema (Common on 591 and modern real estate sites)
+    for s in soup.find_all('script', attrs={'type': 'application/ld+json'}):
+        try:
+            ld = json.loads(s.get_text())
+            graph = ld.get('@graph', [ld]) if isinstance(ld, dict) else [ld]
+            for item in graph:
+                if isinstance(item, dict) and ('Apartment' in item.get('@type', []) or 'Product' in item.get('@type', []) or item.get('offers')):
+                    if item.get('name'): data['title'] = item['name']
+                    if item.get('offers', {}).get('price'): data['price'] = float(item['offers']['price']) / 10000.0
+                    if item.get('floorSize', {}).get('value'): data['total_area'] = float(item['floorSize']['value'])
+                    if item.get('address', {}).get('addressLocality'): data['district'] = item['address']['addressLocality']
+                    if item.get('address', {}).get('streetAddress'): data['address'] = item['address']['streetAddress']
+                    if item.get('numberOfRooms'): data['rooms'] = int(item['numberOfRooms'])
+                    if item.get('image'): data['images'] = item['image'] if isinstance(item['image'], list) else [item['image']]
+                    break
+        except Exception:
+            pass
+
+    # 2. Extract District if not set
     for dist in ['南屯區', '南區', '西區', '北區', '西屯區', '北屯區', '東區', '中區', '大里區', '太平區', '潭子區']:
         if dist in desc or dist in text or dist in title:
             data['district'] = dist
             break
 
-    # Extract price
-    pm = re.search(r'(\d{3,4})\s*萬', desc + ' ' + title)
-    if pm:
-        data['price'] = float(pm.group(1))
+    # 3. Extract Price if not found in JSON-LD
+    if not data['price']:
+        pm = re.search(r'(\d{3,4})\s*萬', desc + ' ' + title)
+        if pm: data['price'] = float(pm.group(1))
 
-    # Extract unit price
-    up_m = re.search(r'(\d{2,3}(?:\.\d+)?)\s*萬/坪', desc + ' ' + text)
-    if up_m:
-        data['unit_price'] = float(up_m.group(1))
-
-    # Extract layout
+    # 4. Extract Layout
     lay_m = re.search(r'(\d+)房(\d+)廳(\d+)衛(?:\s*(\d+)陽)?', desc + ' ' + text)
     if lay_m:
         data['rooms'] = int(lay_m.group(1))
@@ -158,80 +185,91 @@ def scrape_property_url(url):
         if lay_m.group(4):
             data['balconies'] = int(lay_m.group(4))
         data['layout'] = f"{data['rooms']}房{data['living_rooms']}廳{data['baths']}衛"
+    elif data['rooms']:
+        data['layout'] = f"{data['rooms']}房2廳2衛"
 
-    # Extract indoor area
+    # 5. Extract Total Area & Indoor Area
+    if not data['total_area']:
+        tot_m = re.search(r'(?:權狀|總建|建坪|面積)\s*約?\s*([0-9.]+)\s*坪', desc + ' ' + text)
+        if tot_m: data['total_area'] = float(tot_m.group(1))
+
     in_m = re.search(r'(?:主[＋+]陽|室內|主建物)\s*約?\s*([0-9.]+)\s*坪', desc + ' ' + text)
     if in_m:
         data['indoor'] = float(in_m.group(1))
+    elif data['total_area']:
+        data['indoor'] = round(data['total_area'] * 0.62, 1)
 
-    # Extract total area
-    tot_m = re.search(r'(?:權狀|總建|建坪)\s*約?\s*([0-9.]+)\s*坪', desc + ' ' + text)
-    if tot_m:
-        data['total_area'] = float(tot_m.group(1))
-    elif data['indoor']:
-        data['total_area'] = round(data['indoor'] * 1.35, 2)
+    if data['price'] and data['indoor'] and not data['unit_price']:
+        data['unit_price'] = round(data['price'] / data['indoor'], 1)
 
-    # Extract floor
+    # 6. Extract Floor
     fl_m = re.search(r'(\d+)\s*/\s*(\d+)\s*F', desc + ' ' + text, re.I)
     if fl_m:
         data['current_floor'] = int(fl_m.group(1))
         data['total_floors'] = int(fl_m.group(2))
         data['floor'] = f"{data['current_floor']}/{data['total_floors']}F"
+    else:
+        fl_s = re.search(r'(高樓層|中樓層|低樓層|\d+樓)', desc + ' ' + text)
+        data['floor'] = fl_s.group(1) if fl_s else '高樓層'
 
-    # Extract age
+    # 7. Extract Age
     age_m = re.search(r'屋齡\s*約?\s*([0-9.]+)\s*年', desc + ' ' + text)
     if age_m:
         data['age'] = float(age_m.group(1))
 
-    # Parking
-    if '平車' in title or '平面車位' in desc or '平面' in text:
+    # 8. Parking
+    if any(k in (data['title'] + ' ' + desc + ' ' + text) for k in ['平車', '平面車位', '坡道平面', '平面']):
         data['parking'] = '坡道平面式'
         data['parking_desc'] = '平面車位'
-    elif '機械' in title or '機械' in desc:
+    elif any(k in (data['title'] + ' ' + desc + ' ' + text) for k in ['機械', '機械車位', '機械式']):
         data['parking'] = '坡道機械式'
         data['parking_desc'] = '機械車位'
 
-    # Platform specific community name & images
-    if 'sinyi.com.tw' in url:
+    # 9. Platform Specific Community & Image Handling
+    if '591.com.tw' in url:
+        data['platform'] = '591'
+        # 591 descriptions almost always have "位於[社區名稱]"
+        comm_m = re.search(r'位於([^，,。!！\s]+)', desc)
+        if comm_m and comm_m.group(1).strip() not in ['台中市', '南屯區', '西區', '北區', '住宅']:
+            data['community'] = comm_m.group(1).strip()
+        else:
+            comm_m = re.search(r'社區[：:\s]*([^\s,，。<]+)', text)
+            if comm_m and comm_m.group(1).strip() not in ['找房', '行情', '推薦']:
+                data['community'] = comm_m.group(1).strip()
+
+        if not data['community'] and '|' in data['title']:
+            parts = [p.strip() for p in data['title'].split('|') if p.strip()]
+            if len(parts) >= 2: data['community'] = parts[1]
+
+        if not data['images']:
+            imgs = re.findall(r'https?://img\d*\.591\.com\.tw/house/[^\s"\'<>]+!1000x\.[a-z]+', html)
+            if not imgs:
+                imgs = re.findall(r'https?://img\d*\.591\.com\.tw/house/[^\s"\'<>]+\.(?:jpg|png|webp)', html)
+            data['images'] = list(set(imgs))[:20]
+
+    elif 'sinyi.com.tw' in url or 'sinyi.in' in url:
         data['platform'] = '信義房屋'
-        # Clean title
         clean_t = title.split(' - ')[0]
         if '［' in clean_t and '］' in clean_t:
             data['community'] = clean_t.split('［')[1].split('］')[0].replace('降價獨家－', '').replace('專任', '').strip()
         else:
             data['community'] = clean_t
-        
         case_m = re.search(r'/(?:buy/house/|o/)([A-Za-z0-9]+)', url)
         if case_m:
             case_id = case_m.group(1)
             for c in "ABCDEFGHIJKLMNOP":
                 data['images'].append(f"https://res.sinyi.com.tw/buy/{case_id}/bigimg/{c}.JPG")
 
-    elif 'yungyi' in url or 'yungching' in url or 'ycut' in url:
+    elif 'yungyi' in url or 'yungching' in url or 'ycut' in url or 'u-trust' in url:
         data['platform'] = '永義/永慶/有巢氏'
         comm_m = re.search(r'社區名稱[：:\s]*([^\s,，。]+)', text)
         if comm_m: data['community'] = comm_m.group(1)
         else: data['community'] = title.split('｜')[0].split('_')[0].split('|')[0].strip()
-        
         imgs = re.findall(r'https?://(?:cloudfps|yccdn)\.[^\s"\'<>]+\.(?:jpg|png|jpeg)', html)
         data['images'] = list(set(imgs))[:15]
 
-    elif '591.com.tw' in url:
-        data['platform'] = '591'
-        comm_m = re.search(r'社區[：:\s]*([^\s,，。<]+)', text)
-        if comm_m: data['community'] = comm_m.group(1)
-        else: data['community'] = title.split(' - ')[0].split('【')[0].split('｜')[0].strip()
-        
-        imgs = re.findall(r'https?://img\d*\.591\.com\.tw/house/[^\s"\'<>]+!1000x\.[a-z]+', html)
-        if not imgs:
-            imgs = re.findall(r'https?://img\d*\.591\.com\.tw/house/[^\s"\'<>]+\.(?:jpg|png|webp)', html)
-        data['images'] = list(set(imgs))[:20]
-
     if not data['community']:
-        data['community'] = title.split(' ')[0] if title else "精選物件"
-
-    if data['price'] and data['total_area'] and not data['unit_price']:
-        data['unit_price'] = round(data['price'] / data['total_area'], 1)
+        data['community'] = title.split(' ')[0] if title else "精選待看物件"
 
     return data
 
@@ -581,12 +619,28 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
             
             with get_db() as conn:
                 with conn.cursor() as cur:
+                    # Check if property with this URL already exists
+                    cur.execute("""
+                        SELECT id, community_name FROM properties 
+                        WHERE original_url = %s OR original_url = %s
+                        LIMIT 1;
+                    """, (url, data['url']))
+                    existing = cur.fetchone()
+                    if existing:
+                        self.send_json({
+                            "success": True,
+                            "property_id": existing[0],
+                            "community": existing[1],
+                            "message": f"「{existing[1]}」已經在待看清單資料庫中！"
+                        })
+                        return
+
                     # Get max code number
                     cur.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM properties;")
                     next_id = cur.fetchone()[0]
                     prop_code = f"PROP_{next_id:02d}"
 
-                    comm_name = data['community']
+                    comm_name = data['community'] or data['title'].split(' ')[0] or "精選待看物件"
                     # Ensure community exists
                     cur.execute("""
                         INSERT INTO communities (name, district)
