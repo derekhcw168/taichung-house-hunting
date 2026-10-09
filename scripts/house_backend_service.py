@@ -45,6 +45,8 @@ def trigger_async_github_sync(commit_msg):
 
 def update_api_config(url):
     global CURRENT_TUNNEL_URL
+    if CURRENT_TUNNEL_URL == url:
+        return
     CURRENT_TUNNEL_URL = url
     config = {
         "api_url": url,
@@ -69,7 +71,7 @@ def start_tunnel_thread():
             try:
                 if os.path.exists(cloudflared_bin):
                     cmd = [cloudflared_bin, 'tunnel', '--url', f'http://127.0.0.1:{PORT}']
-                    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+                    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding='utf-8', errors='ignore', bufsize=1)
                     for line in iter(proc.stdout.readline, ''):
                         m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.trycloudflare\.com', line)
                         if m:
@@ -81,7 +83,7 @@ def start_tunnel_thread():
                     proc.wait()
                 else:
                     cmd = ['ssh', '-o', 'StrictHostKeyChecking=no', '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=3', '-R', f'80:127.0.0.1:{PORT}', 'nokey@localhost.run']
-                    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+                    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding='utf-8', errors='ignore', bufsize=1)
                     for line in iter(proc.stdout.readline, ''):
                         m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.lhr\.life', line)
                         if m:
