@@ -64,22 +64,36 @@ def update_api_config(url):
 
 def start_tunnel_thread():
     def _tunnel_loop():
+        cloudflared_bin = os.path.join(BASE_DIR, "cloudflared.exe")
         while True:
             try:
-                cmd = ['ssh', '-o', 'StrictHostKeyChecking=no', '-o', 'ServerAliveInterval=30', '-R', f'80:127.0.0.1:{PORT}', 'nokey@localhost.run']
-                proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
-                for line in iter(proc.stdout.readline, ''):
-                    m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.lhr\.life', line)
-                    if m:
-                        t_url = m.group(0)
-                        print(f"==================================================")
-                        print(f" 🌐 雲端穿透服務已就緒: {t_url}")
-                        print(f"==================================================")
-                        update_api_config(t_url)
-                proc.wait()
+                if os.path.exists(cloudflared_bin):
+                    cmd = [cloudflared_bin, 'tunnel', '--url', f'http://127.0.0.1:{PORT}']
+                    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+                    for line in iter(proc.stdout.readline, ''):
+                        m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.trycloudflare\.com', line)
+                        if m:
+                            t_url = m.group(0)
+                            print(f"==================================================")
+                            print(f" 🌐 Cloudflare 高速穿透服務已就緒: {t_url}")
+                            print(f"==================================================")
+                            update_api_config(t_url)
+                    proc.wait()
+                else:
+                    cmd = ['ssh', '-o', 'StrictHostKeyChecking=no', '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=3', '-R', f'80:127.0.0.1:{PORT}', 'nokey@localhost.run']
+                    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+                    for line in iter(proc.stdout.readline, ''):
+                        m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.lhr\.life', line)
+                        if m:
+                            t_url = m.group(0)
+                            print(f"==================================================")
+                            print(f" 🌐 雲端穿透服務已就緒: {t_url}")
+                            print(f"==================================================")
+                            update_api_config(t_url)
+                    proc.wait()
             except Exception as e:
                 print(f"[TunnelError]: {e}")
-            time.sleep(5)
+            time.sleep(3)
     threading.Thread(target=_tunnel_loop, daemon=True).start()
 
 def get_db():
