@@ -64,6 +64,17 @@ def export_db_to_html():
         mgmt_fee_str = item.get('management_fee') or '未載明'
         mgmt_num = int(re.sub(r'[^0-9]', '', mgmt_fee_str)) if re.sub(r'[^0-9]', '', mgmt_fee_str) else 0
 
+        floor_val = item.get('floor_info')
+        if not floor_val or 'None' in str(floor_val):
+            if item.get('current_floor') and item.get('total_floors'):
+                floor_val = f"{item['current_floor']}/{item['total_floors']}F"
+            else:
+                floor_val = "未載明"
+
+        layout_val = item.get('layout_raw')
+        if not layout_val or 'None' in str(layout_val):
+            layout_val = "未載明"
+
         p_obj = {
             "id": item['id'],
             "code": item.get('code') or f"PROP_{item['id']:03d}",
@@ -71,10 +82,10 @@ def export_db_to_html():
             "title": item.get('title') or '',
             "price": item.get('price_total') or 0,
             "unitPrice": item.get('unit_price') or 0,
-            "layout": item.get('layout_raw') or f"{item.get('rooms', 3)}房{item.get('living_rooms', 2)}廳{item.get('bathrooms', 2)}衛",
+            "layout": layout_val,
             "rooms": item.get('rooms') or 3,
             "baths": item.get('bathrooms') or 2,
-            "floor": item.get('floor_info') or f"{item.get('current_floor', 5)}/{item.get('total_floors', 10)}F",
+            "floor": floor_val,
             "floorNum": item.get('current_floor') or 5,
             "totalFloors": item.get('total_floors') or 10,
             "age": f"{item['age']}年" if item.get('age') else '未載明',
