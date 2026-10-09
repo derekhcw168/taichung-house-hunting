@@ -122,7 +122,7 @@
           </p>
         </div>
         <div class="flex-1 max-w-2xl flex flex-col sm:flex-row gap-2">
-          <input type="url" id="inputPropertyUrl" placeholder="請在此貼上房屋網頁網址 (例: https://sale.591.com.tw/... 或 https://www.sinyi.com.tw/...)" 
+          <input type="url" id="inputPropertyUrl" aria-label="房屋網頁網址" placeholder="請在此貼上房屋網頁網址 (例: https://sale.591.com.tw/... 或 https://www.sinyi.com.tw/...)" 
                  class="flex-1 px-4 py-2.5 rounded-xl bg-slate-800/90 text-white placeholder-slate-400 border border-indigo-400/50 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
           <button onclick="submitPropertyUrl()" id="btnSubmitUrl" 
                   class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition shrink-0">
@@ -257,9 +257,9 @@
             <button onclick="setPriceQuick('950to1000')" id="btn-price-950to1000" class="filter-btn px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700">950 ~ 1000 萬</button>
             <div class="flex items-center gap-1 ml-2 text-xs text-slate-500">
               <span>自訂：</span>
-              <input type="number" id="inputPriceMin" placeholder="最低" min="0" max="9999" oninput="onCustomPriceChange()" class="w-16 px-2 py-1 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-blue-500">
+              <input type="number" id="inputPriceMin" aria-label="自訂最低總價" placeholder="最低" min="0" max="9999" oninput="onCustomPriceChange()" class="w-16 px-2 py-1 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-blue-500">
               <span>~</span>
-              <input type="number" id="inputPriceMax" placeholder="最高" min="0" max="9999" oninput="onCustomPriceChange()" class="w-16 px-2 py-1 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-blue-500">
+              <input type="number" id="inputPriceMax" aria-label="自訂最高總價" placeholder="最高" min="0" max="9999" oninput="onCustomPriceChange()" class="w-16 px-2 py-1 rounded border border-slate-200 text-xs focus:ring-1 focus:ring-blue-500">
               <span>萬</span>
             </div>
           </div>
@@ -295,7 +295,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-slate-100">
           <div class="relative flex-1 max-w-md">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-            <input type="text" id="inputKeyword" oninput="onKeywordChange()" placeholder="搜尋社區、路名、學區或特色..." class="w-full pl-9 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none bg-slate-50/50">
+            <input type="text" id="inputKeyword" aria-label="搜尋社區、路名、學區或特色" oninput="onKeywordChange()" placeholder="搜尋社區、路名、學區或特色..." class="w-full pl-9 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none bg-slate-50/50">
           </div>
           <div class="flex items-center gap-3 text-xs bg-blue-50 px-3 py-2 rounded-lg border border-blue-100">
             <div>當前顯示：<span id="countFiltered" class="font-extrabold text-blue-700 text-sm">35</span> 件</div>

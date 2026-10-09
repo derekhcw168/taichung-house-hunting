@@ -528,8 +528,8 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_error(404, "Favicon not found")
         elif path.startswith('/api/properties/') and path.endswith('/images'):
             parts = path.strip('/').split('/')
-            if len(parts) == 4 and parts[2].isdigit():
-                self.handle_api_property_images(int(parts[2]))
+            if len(parts) == 4 and parts[2]:
+                self.handle_api_property_images(parts[2])
             else:
                 self.send_error(400, "Invalid property id")
         elif path.startswith('/api/images/') or path.startswith('/物件圖片/'):
@@ -728,12 +728,21 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
         try:
             with get_db() as conn:
                 with conn.cursor() as cur:
-                    cur.execute("""
-                        SELECT id, file_name, file_relpath, image_category, mime_type, file_size 
-                        FROM property_images 
-                        WHERE property_id = %s 
-                        ORDER BY sort_order ASC, id ASC;
-                    """, (int(prop_id),))
+                    if str(prop_id).isdigit():
+                        cur.execute("""
+                            SELECT id, file_name, file_relpath, image_category, mime_type, file_size 
+                            FROM property_images 
+                            WHERE property_id = %s 
+                            ORDER BY sort_order ASC, id ASC;
+                        """, (int(prop_id),))
+                    else:
+                        cur.execute("""
+                            SELECT pi.id, pi.file_name, pi.file_relpath, pi.image_category, pi.mime_type, pi.file_size 
+                            FROM property_images pi
+                            JOIN properties p ON pi.property_id = p.id
+                            WHERE p.code = %s
+                            ORDER BY pi.sort_order ASC, pi.id ASC;
+                        """, (str(prop_id),))
                     rows = cur.fetchall()
                     imgs = [{
                         "id": r[0],
