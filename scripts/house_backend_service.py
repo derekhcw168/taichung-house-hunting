@@ -8,6 +8,10 @@ import os
 import sys
 import psycopg
 import hashlib
+import subprocess
+import threading
+import datetime
+import time
 from bs4 import BeautifulSoup
 if sys.stdout is None:
     log_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "backend.log")
@@ -23,6 +27,60 @@ IMAGE_DIR = os.path.join(BASE_DIR, "物件圖片")
 os.makedirs(IMAGE_DIR, exist_ok=True)
 
 ssl_ctx = ssl._create_unverified_context()
+CURRENT_TUNNEL_URL = ""
+
+def trigger_async_github_sync(commit_msg):
+    def _worker():
+        try:
+            time.sleep(1) # debounce
+            scripts_dir = os.path.join(BASE_DIR, "scripts")
+            sys.path.insert(0, scripts_dir)
+            import export_all_properties_to_html
+            export_all_properties_to_html.export_db_to_html()
+            import sync_to_github
+            sync_to_github.main(commit_msg)
+        except Exception as e:
+            print(f"[AsyncSync] GitHub sync failed: {e}")
+    threading.Thread(target=_worker, daemon=True).start()
+
+def update_api_config(url):
+    global CURRENT_TUNNEL_URL
+    CURRENT_TUNNEL_URL = url
+    config = {
+        "api_url": url,
+        "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat()
+    }
+    cfg_file = os.path.join(BASE_DIR, "api_config.json")
+    with open(cfg_file, "w", encoding="utf-8") as f:
+        json.dump(config, f, indent=2)
+
+    repo_dir = os.path.join(os.path.expanduser('~'), 'Documents', 'GitHub', 'taichung-house-hunting')
+    repo_cfg = os.path.join(repo_dir, "api_config.json")
+    if os.path.exists(repo_dir):
+        with open(repo_cfg, "w", encoding="utf-8") as f:
+            json.dump(config, f, indent=2)
+
+    trigger_async_github_sync(f"Update Cloud API tunnel URL: {url}")
+
+def start_tunnel_thread():
+    def _tunnel_loop():
+        while True:
+            try:
+                cmd = ['ssh', '-o', 'StrictHostKeyChecking=no', '-o', 'ServerAliveInterval=30', '-R', f'80:127.0.0.1:{PORT}', 'nokey@localhost.run']
+                proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+                for line in iter(proc.stdout.readline, ''):
+                    m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.lhr\.life', line)
+                    if m:
+                        t_url = m.group(0)
+                        print(f"==================================================")
+                        print(f" 🌐 雲端穿透服務已就緒: {t_url}")
+                        print(f"==================================================")
+                        update_api_config(t_url)
+                proc.wait()
+            except Exception as e:
+                print(f"[TunnelError]: {e}")
+            time.sleep(5)
+    threading.Thread(target=_tunnel_loop, daemon=True).start()
 
 def get_db():
     return psycopg.connect(DB_CONFIG, autocommit=True)
@@ -210,6 +268,19 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
         elif path == '/api/delete':
             prop_id = query.get('id', [None])[0]
             self.handle_api_delete(prop_id)
+        elif path == '/api/config' or path == '/api_config.json':
+            cfg_file = os.path.join(BASE_DIR, "api_config.json")
+            if os.path.exists(cfg_file):
+                with open(cfg_file, 'rb') as f:
+                    content = f.read()
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json; charset=utf-8')
+                self.send_header('Content-Length', str(len(content)))
+                self.send_header('Connection', 'close')
+                self.end_headers()
+                self.wfile.write(content)
+            else:
+                self.send_json({"api_url": CURRENT_TUNNEL_URL})
         elif path == '/' or path == '/index.html':
             # Serve the main HTML dashboard
             html_file = os.path.join(BASE_DIR, "591看屋物件地圖與比較分析.html")
@@ -273,6 +344,8 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_api_delete(prop_id, permanent=permanent)
         elif path == '/api/crawl' or path == '/api/import-url':
             self.handle_api_crawl(url_arg)
+        elif path == '/api/quick-add':
+            self.handle_api_quick_add(req_data)
         else:
             self.send_error(404, "Endpoint not found")
 
@@ -559,33 +632,17 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                         ) VALUES (%s, %s, %s, %s, %s, %s);
                     """, (prop_id, data['platform'], data['title'], url, meta_json, data['meta_description']))
 
-                    # Download images directly into PostgreSQL (BYTEA) - no disk storage
-                    saved_imgs = 0
-                    for idx, img_url in enumerate(data['images'], 1):
-                        try:
-                            req = urllib.request.Request(img_url, headers={'User-Agent': 'Mozilla/5.0'})
-                            with urllib.request.urlopen(req, context=ssl_ctx, timeout=4) as resp:
-                                img_data = resp.read()
-                                if len(img_data) > 10000:
-                                    ext = '.jpg'
-                                    mime = 'image/jpeg'
-                                    if 'png' in img_url:
-                                        ext = '.png'
-                                        mime = 'image/png'
-                                    elif 'webp' in img_url:
-                                        ext = '.webp'
-                                        mime = 'image/webp'
-                                    fname = f"photo_{saved_imgs+1:02d}{ext}"
-                                    rel_path = f"物件圖片/{prop_code}_{clean_filename(comm_name)}/{fname}"
-                                    
-                                    cur.execute("""
-                                        INSERT INTO property_images (
-                                            property_id, image_category, file_name, file_relpath, file_size, original_url, sort_order, image_data, mime_type
-                                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-                                    """, (prop_id, 'photo', fname, rel_path, len(img_data), img_url, saved_imgs+1, img_data, mime))
-                                    saved_imgs += 1
-                        except Exception:
-                            continue
+                    # Store cover image URL reference without downloading heavy binary files
+                    if data.get('images'):
+                        first_img = data['images'][0]
+                        cur.execute("""
+                            INSERT INTO property_images (
+                                property_id, image_category, file_name, file_relpath, file_size, original_url, sort_order
+                            ) VALUES (%s, %s, %s, %s, %s, %s, %s);
+                        """, (prop_id, 'photo', 'cover.jpg', first_img, 0, first_img, 1))
+
+            # Automatically trigger async sync to HTML & GitHub
+            trigger_async_github_sync(f"Auto-add crawled property {comm_name} (#{prop_id})")
 
             self.send_json({
                 "success": True,
@@ -595,21 +652,104 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                 "title": data['title'],
                 "price": data['price'],
                 "district": data['district'],
-                "images_downloaded": saved_imgs,
-                "message": f"成功自動抓取並建立「{comm_name}」！已存入 PostgreSQL 待看清單，共下載 {saved_imgs} 張照片。"
+                "message": f"成功自動解析「{comm_name}」並寫入 PostgreSQL 資料庫！已即時加入待看清單。"
             })
         except Exception as e:
             self.send_json({"success": False, "error": f"擷取失敗: {str(e)}"}, status=500)
+
+    def handle_api_quick_add(self, req_data):
+        try:
+            name = (req_data.get('name') or '').strip()
+            if not name:
+                self.send_json({"success": False, "error": "請填寫社區或建案名稱"}, status=400)
+                return
+
+            district = req_data.get('district') or '南屯區'
+            price = float(req_data.get('price') or 0)
+            layout = req_data.get('layout') or '3房2廳2衛'
+            indoor = float(req_data.get('indoor') or 25.0)
+            total_area = float(req_data.get('total_area') or (round(indoor * 1.38, 1)))
+            unit_price = round(price / indoor, 1) if (indoor > 0 and price > 0) else 0.0
+            floor = req_data.get('floor') or '高樓層'
+            age = float(req_data.get('age') or 25.0)
+            parking = req_data.get('parking') or '平面車位'
+            url = req_data.get('url') or ''
+            note = req_data.get('note') or '家人雲端快速收錄'
+            category = req_data.get('category') or 'pending'
+
+            with get_db() as conn:
+                with conn.cursor() as cur:
+                    cur.execute("SELECT id FROM communities WHERE name = %s LIMIT 1;", (name,))
+                    crow = cur.fetchone()
+                    if crow:
+                        comm_id = crow[0]
+                    else:
+                        cur.execute("""
+                            INSERT INTO communities (name, district, city)
+                            VALUES (%s, %s, %s) RETURNING id;
+                        """, (name, district, '臺中市'))
+                        comm_id = cur.fetchone()[0]
+
+                    cur.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM properties;")
+                    next_id = cur.fetchone()[0]
+                    prop_code = f"PROP_{next_id:02d}"
+
+                    cur.execute("""
+                        INSERT INTO properties (
+                            code, community_name, community_id, city, district, address, title,
+                            price_total, unit_price, rooms, living_rooms, bathrooms, balconies,
+                            layout_raw, floor_info, current_floor, total_floors, age,
+                            total_area, indoor_total, parking_type, parking_desc, management_fee,
+                            orientation, decision_status, original_source_platform, original_url
+                        ) VALUES (
+                            %s, %s, %s, %s, %s, %s, %s,
+                            %s, %s, %s, %s, %s, %s,
+                            %s, %s, %s, %s, %s,
+                            %s, %s, %s, %s, %s,
+                            %s, %s, %s, %s
+                        ) RETURNING id;
+                    """, (
+                        prop_code, name, comm_id, '臺中市', district, '', note,
+                        price, unit_price, 3, 2, 2, 1,
+                        layout, floor, 5, 14, age,
+                        total_area, indoor, parking, parking, '未載明',
+                        '坐北朝南', category, '家人雲端收錄', url
+                    ))
+                    prop_id = cur.fetchone()[0]
+
+                    if url:
+                        meta_json = json.dumps({'user_added': True, 'url': url}, ensure_ascii=False)
+                        cur.execute("""
+                            INSERT INTO property_sources (
+                                property_id, platform, original_title, original_url, raw_metadata, description_text
+                            ) VALUES (%s, %s, %s, %s, %s, %s);
+                        """, (prop_id, '家人雲端收錄', name, url, meta_json, note))
+
+            # Automatically trigger async sync to HTML & GitHub
+            trigger_async_github_sync(f"Auto-add cloud quick property: {name} (#{prop_id})")
+
+            self.send_json({
+                "success": True,
+                "property_id": prop_id,
+                "code": prop_code,
+                "community": name,
+                "price": price,
+                "district": district,
+                "message": f"成功收錄「{name}」至 PostgreSQL 資料庫！已自動加入待看清單。"
+            })
+        except Exception as e:
+            self.send_json({"success": False, "error": f"收錄失敗: {str(e)}"}, status=500)
 
 def run_server():
     server_address = ('0.0.0.0', PORT)
     httpd = http.server.ThreadingHTTPServer(server_address, HouseRequestHandler)
     print(f"==================================================")
-    print(f" 台中看屋決策平台 - PostgreSQL 即時服務已啟動")
-    print(f" 本機網址: http://localhost:{PORT}/")
-    print(f" 區網網址: http://192.168.2.252:{PORT}/ (供家人同 Wi-Fi 電腦/手機使用)")
+    print(f" 台中看屋決策平台 - PostgreSQL 雲端即時服務已啟動")
+    print(f" 辦公室本機網址: http://localhost:{PORT}/")
     print(f" 資料庫: taichung_house (PostgreSQL 16)")
+    print(f" 正在啟動雲端安全穿透通道 (供家人遠端同步)...")
     print(f"==================================================")
+    start_tunnel_thread()
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

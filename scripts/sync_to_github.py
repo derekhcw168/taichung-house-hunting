@@ -74,6 +74,9 @@ def main(commit_msg=None):
         shutil.copy2(csv_src, os.path.join(repo_dir, "591看屋物件綜合比較表.csv"))
     if os.path.exists(renov_src):
         shutil.copy2(renov_src, os.path.join(repo_dir, "dadun-renovation.html"))
+    cfg_src = os.path.join(base_dir, "api_config.json")
+    if os.path.exists(cfg_src):
+        shutil.copy2(cfg_src, os.path.join(repo_dir, "api_config.json"))
 
     # B. Scripts folder (Backend Python scripts, ETL, Crawler)
     scripts_src = os.path.join(base_dir, "scripts")

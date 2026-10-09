@@ -118,7 +118,7 @@
             <h3 class="text-lg md:text-xl font-extrabold text-white">貼上房仲網址 ➜ 自動擷取並加入 PostgreSQL 資料庫</h3>
           </div>
           <p class="text-xs text-indigo-200">
-            支援 <strong>591 售屋網、信義房屋、永義房屋、有巢氏房屋、永慶房屋</strong> 等網站。系統自動分析格局、價格、坪數，並下載現場照片存入本地資料夾，即時加入「待看物件」！
+            支援 <strong>591 售屋網、信義房屋、永義房屋、有巢氏房屋、永慶房屋</strong> 等網站。貼上網址自動解析格局、價格、坪數，即時寫入 PostgreSQL 資料庫並同步至待看清單！
           </p>
         </div>
         <div class="flex-1 max-w-2xl flex flex-col sm:flex-row gap-2">
@@ -134,23 +134,9 @@
           </button>
         </div>
       </div>
-      <div id="cloudNoticeBox" class="hidden mt-3 p-3.5 rounded-xl bg-amber-500/15 border border-amber-400/30 text-amber-100 text-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
-        <div class="flex items-start gap-2.5">
-          <i class="fa-solid fa-house-signal text-amber-400 text-base mt-0.5 shrink-0"></i>
-          <div>
-            <span class="font-bold text-white">🌐 家人多裝置連線提示：</span>
-            若在家中使用同一個 Wi-Fi，請直接開啟內網專屬網址 👉 <a href="http://192.168.2.252:8899/" class="underline font-bold text-amber-300 hover:text-white" target="_blank">http://192.168.2.252:8899/</a>，即可直接享受全自動照片下載與入庫！在外網瀏覽時，貼上網址後系統會自動開啟「快速收錄視窗」，輕鬆加入待看清單！
-          </div>
-        </div>
-        <div id="pendingSyncPillBox" class="hidden shrink-0">
-          <button onclick="syncPendingUrlsToDb()" class="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow transition">
-            <i class="fa-solid fa-cloud-arrow-down"></i> <span id="pendingSyncCountText">發現 0 筆待入庫網址</span>
-          </button>
-        </div>
-      </div>
       <div id="crawlStatusMsg" class="hidden mt-3 text-xs p-3 rounded-xl bg-indigo-950/90 border border-indigo-400/50 text-indigo-200 flex items-center gap-3">
         <i class="fa-solid fa-spinner fa-spin text-amber-400 text-base"></i>
-        <span id="crawlStatusText">正在連接網站擷取資料並下載照片至本地...</span>
+        <span id="crawlStatusText">正在連接網站解析房屋資料並存入資料庫...</span>
       </div>
     </section>
 
@@ -3168,43 +3154,65 @@
 
     let activeCategoryTab = 'pending'; // 'pending', 'consider', 'rejected', 'all'
     let isLocalServerAvailable = false;
+    let cloudApiBaseUrl = '';
+
+    async function loadApiConfig() {
+      // 1. Direct local access
+      if (window.location.port === '8899' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        cloudApiBaseUrl = window.location.origin;
+        return;
+      }
+      // 2. Fetch active tunnel endpoint from api_config.json
+      try {
+        const res = await fetch('./api_config.json?t=' + Date.now());
+        if (res.ok) {
+          const cfg = await res.json();
+          if (cfg && cfg.api_url) {
+            cloudApiBaseUrl = cfg.api_url.replace(/\/+$/, '');
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load api_config.json:', e);
+      }
+    }
 
     function getApiUrl(path) {
-      // 1. Direct LAN or Localhost access
-      const isLanOrLocal = window.location.port === '8899' ||
-                           window.location.hostname === 'localhost' ||
-                           window.location.hostname === '127.0.0.1' ||
-                           window.location.hostname.startsWith('192.168.') ||
-                           window.location.hostname.startsWith('10.');
-      if (isLanOrLocal && window.location.protocol === 'http:') {
+      // 1. Localhost
+      if (window.location.port === '8899' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         return path;
       }
-      // 2. Custom backend endpoint configured by user
+      // 2. Dynamic HTTPS Tunnel
+      if (cloudApiBaseUrl) {
+        return `${cloudApiBaseUrl}${path}`;
+      }
+      // 3. User configured backend endpoint
       const customApi = localStorage.getItem('taichung_house_custom_backend');
       if (customApi && customApi.trim()) {
         return `${customApi.trim().replace(/\/+$/, '')}${path}`;
       }
-      // 3. Fallback to default local server
       return `http://127.0.0.1:8899${path}`;
     }
 
-    // Check Local Sync Server status
+    // Check Local / Cloud Sync Server status
     async function checkLocalSyncService() {
       const badge = document.getElementById('syncServiceBadge');
-      const cloudNotice = document.getElementById('cloudNoticeBox');
       try {
+        if (!cloudApiBaseUrl) {
+          await loadApiConfig();
+        }
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1200);
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
         const res = await fetch(getApiUrl('/api/status'), { signal: controller.signal });
         clearTimeout(timeoutId);
         if (res.ok) {
           const data = await res.json();
           isLocalServerAvailable = true;
-          badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40';
-          badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span> 🟢 本機 PostgreSQL 資料庫連線中';
-          if (cloudNotice) cloudNotice.classList.add('hidden');
+          if (badge) {
+            badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40';
+            badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span> 🟢 PostgreSQL 資料庫連線中 (即時同步)';
+          }
 
-          // Sync disk state with webpage
+          // Sync database state with webpage
           if (data && data.status) {
             let changed = false;
             Object.keys(data.status).forEach(id => {
@@ -3218,16 +3226,14 @@
               applyFiltersAndSort();
             }
           }
-          updatePendingSyncQueueUI();
         } else {
           throw new Error('Server returned non-ok');
         }
       } catch (err) {
         isLocalServerAvailable = false;
-        badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-blue-950/60 text-blue-300 border border-blue-500/30';
-        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 inline-block"></span> 🌐 GitHub Pages 雲端模式 (<a href="http://192.168.2.252:8899/" target="_blank" class="underline hover:text-white font-bold text-sky-300" title="點擊開啟內網 PostgreSQL 控制台">開啟內網控制台</a>)';
-        if (cloudNotice) {
-          cloudNotice.classList.remove('hidden');
+        if (badge) {
+          badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-blue-950/60 text-blue-300 border border-blue-500/30';
+          badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-blue-400 inline-block"></span> 🌐 GitHub Pages 雲端模式 (支援快速收錄)';
         }
       }
     }
@@ -3982,11 +3988,12 @@
       btn.disabled = true;
       btn.classList.add('opacity-50');
       statusBox.classList.remove('hidden');
-      statusText.innerHTML = `正在連線後端伺服器並解析網頁資訊...`;
+      statusText.innerHTML = `正在連線後端解析網頁資訊並寫入資料庫...`;
 
       try {
+        if (!cloudApiBaseUrl) await loadApiConfig();
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 6000);
+        const timeoutId = setTimeout(() => controller.abort(), 12000);
         const res = await fetch(getApiUrl('/api/crawl'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -4330,7 +4337,7 @@
       }
     }
 
-    function saveCloudQuickAddProperty() {
+    async function saveCloudQuickAddProperty() {
       const url = document.getElementById('quickAddUrl').value.trim();
       const nameInput = document.getElementById('quickAddName').value.trim();
       const district = document.getElementById('quickAddDistrict').value || '南屯區';
@@ -4346,6 +4353,41 @@
         alert('請填寫社區或建案名稱！');
         document.getElementById('quickAddName').focus();
         return;
+      }
+
+      // Try sending directly to PostgreSQL backend /api/quick-add
+      let backendSaved = false;
+      try {
+        if (!cloudApiBaseUrl) await loadApiConfig();
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
+        const res = await fetch(getApiUrl('/api/quick-add'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: nameInput,
+            district: district,
+            price: price,
+            layout: layout,
+            indoor: indoor,
+            total_area: totalArea,
+            floor: floor,
+            parking: parkingType,
+            note: note,
+            url: url,
+            category: 'pending'
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          const resData = await res.json();
+          if (resData.success) {
+            backendSaved = true;
+          }
+        }
+      } catch (e) {
+        console.warn('Backend quick-add unreachable, saving locally:', e);
       }
 
       const districtCenters = {
@@ -4365,7 +4407,7 @@
       const jitterLat = (Math.random() - 0.5) * 0.008;
       const jitterLng = (Math.random() - 0.5) * 0.008;
 
-      let platformName = '家人收錄';
+      let platformName = '家人雲端收錄';
       if (url.includes('591')) platformName = '591';
       else if (url.includes('sinyi')) platformName = '信義';
       else if (url.includes('yungching')) platformName = '永慶';
@@ -4402,7 +4444,7 @@
         district: district,
         area: district,
         orientation: '坐北朝南',
-        note: note || '家人線上新增待看物件',
+        note: note || '家人雲端新增待看物件',
         lat: Math.round((baseCoords[0] + jitterLat) * 100000) / 100000,
         lng: Math.round((baseCoords[1] + jitterLng) * 100000) / 100000,
         url: url || '',
@@ -4415,25 +4457,19 @@
         createdAt: new Date().toISOString()
       };
 
-      allProperties.unshift(newProp);
-      propertyCategories[newId] = 'pending';
-
-      try {
-        const raw = localStorage.getItem('taichung_house_user_added_properties');
-        let list = raw ? JSON.parse(raw) : [];
-        list.unshift(newProp);
-        localStorage.setItem('taichung_house_user_added_properties', JSON.stringify(list));
-
-        if (url) {
-          const qRaw = localStorage.getItem('taichung_house_pending_sync_urls');
-          let qList = qRaw ? JSON.parse(qRaw) : [];
-          if (!qList.some(x => x.url === url)) {
-            qList.push({ url, name: nameInput, district, price, addedAt: new Date().toISOString() });
-            localStorage.setItem('taichung_house_pending_sync_urls', JSON.stringify(qList));
-          }
+      if (backendSaved) {
+        await loadPropertiesFromDb();
+      } else {
+        allProperties.unshift(newProp);
+        propertyCategories[newId] = 'pending';
+        try {
+          const raw = localStorage.getItem('taichung_house_user_added_properties');
+          let list = raw ? JSON.parse(raw) : [];
+          list.unshift(newProp);
+          localStorage.setItem('taichung_house_user_added_properties', JSON.stringify(list));
+        } catch (e) {
+          console.warn('LocalStorage save failed', e);
         }
-      } catch (e) {
-        console.warn('LocalStorage save failed', e);
       }
 
       saveCategoriesToLocal();
@@ -4442,72 +4478,10 @@
 
       switchCategoryTab('pending');
       applyFiltersAndSort();
-      showToast(`🎉 <strong>【已成功加入待看清單】</strong><br>已收錄「${nameInput}」，已顯示在待看清單與地圖中！`, '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
-    }
-
-    // Pending Sync Queue UI & Action
-    function updatePendingSyncQueueUI() {
-      const pillBox = document.getElementById('pendingSyncPillBox');
-      const countText = document.getElementById('pendingSyncCountText');
-      if (!pillBox || !countText) return;
-      try {
-        const raw = localStorage.getItem('taichung_house_pending_sync_urls');
-        const qList = raw ? JSON.parse(raw) : [];
-        if (qList && qList.length > 0) {
-          pillBox.classList.remove('hidden');
-          countText.innerText = `發現 ${qList.length} 筆待入庫網址 (點擊自動入庫)`;
-        } else {
-          pillBox.classList.add('hidden');
-        }
-      } catch (e) {
-        pillBox.classList.add('hidden');
-      }
-    }
-
-    async function syncPendingUrlsToDb() {
-      try {
-        const raw = localStorage.getItem('taichung_house_pending_sync_urls');
-        if (!raw) return;
-        const qList = JSON.parse(raw);
-        if (!qList || qList.length === 0) return;
-
-        if (!confirm(`發現家人在雲端收錄的 ${qList.length} 個待入庫房屋網址，是否立即開始自動抓取並寫入本機 PostgreSQL 資料庫？`)) {
-          return;
-        }
-
-        const statusBox = document.getElementById('crawlStatusMsg');
-        const statusText = document.getElementById('crawlStatusText');
-        statusBox.classList.remove('hidden');
-
-        let successCount = 0;
-        const remaining = [];
-        for (let i = 0; i < qList.length; i++) {
-          const item = qList[i];
-          statusText.innerHTML = `正在自動入庫 (${i+1}/${qList.length})：${item.name || item.url}...`;
-          try {
-            const res = await fetch(getApiUrl('/api/crawl'), {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ url: item.url })
-            });
-            const data = await res.json();
-            if (data.success) {
-              successCount++;
-            } else {
-              remaining.push(item);
-            }
-          } catch (e) {
-            remaining.push(item);
-          }
-        }
-
-        localStorage.setItem('taichung_house_pending_sync_urls', JSON.stringify(remaining));
-        statusBox.classList.add('hidden');
-        showToast(`🎉 <strong>【批次入庫完成】</strong><br>已成功將 ${successCount} 筆物件存入 PostgreSQL！`, '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
-        await loadPropertiesFromDb();
-        updatePendingSyncQueueUI();
-      } catch (e) {
-        console.error('Batch sync error', e);
+      if (backendSaved) {
+        showToast(`🎉 <strong>【已成功存入資料庫】</strong><br>已收錄「${nameInput}」，資料庫已更新並加入待看清單！`, '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
+      } else {
+        showToast(`🎉 <strong>【已成功加入待看清單】</strong><br>已收錄「${nameInput}」，已顯示在待看清單與地圖中！`, '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
       }
     }
 
@@ -4527,12 +4501,14 @@
     });
 
     // Initialize
-    loadPropertiesFromDb().then(loaded => {
-      loadUserAddedPropertiesFromLocal();
-      if (!loaded) {
-        applyFiltersAndSort();
-      }
-      checkLocalSyncService();
+    loadApiConfig().then(() => {
+      loadPropertiesFromDb().then(loaded => {
+        loadUserAddedPropertiesFromLocal();
+        if (!loaded) {
+          applyFiltersAndSort();
+        }
+        checkLocalSyncService();
+      });
     });
   </script>
 
