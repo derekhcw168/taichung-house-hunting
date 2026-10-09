@@ -983,7 +983,26 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             self.send_json({"success": False, "error": f"收錄失敗: {str(e)}"}, status=500)
 
+def kill_existing_port_processes(port):
+    try:
+        res = subprocess.run(f"netstat -ano | findstr :{port}", shell=True, capture_output=True, text=True)
+        my_pid = os.getpid()
+        pids_to_kill = set()
+        for line in res.stdout.splitlines():
+            if 'LISTENING' in line:
+                parts = line.strip().split()
+                if len(parts) >= 5 and parts[-1].isdigit():
+                    pid = int(parts[-1])
+                    if pid != my_pid:
+                        pids_to_kill.add(pid)
+        for pid in pids_to_kill:
+            print(f"⚠️ 正在自動清除佔用 Port {port} 的孤兒進程 PID: {pid}")
+            subprocess.run(f"taskkill /F /PID {pid}", shell=True, capture_output=True)
+    except Exception as e:
+        print(f"Port cleanup warning: {e}")
+
 def run_server():
+    kill_existing_port_processes(PORT)
     server_address = ('0.0.0.0', PORT)
     httpd = http.server.ThreadingHTTPServer(server_address, HouseRequestHandler)
     print(f"==================================================")
