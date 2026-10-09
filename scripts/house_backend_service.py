@@ -713,6 +713,9 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                             cur.execute("UPDATE properties SET decision_status = 'deleted', updated_at = NOW() WHERE code = %s;", (str(prop_id),))
                         msg = f"已將物件「{comm_name}」({code})移至「刪除物件」分類！"
 
+                    # Trigger async sync to HTML and GitHub
+                    trigger_async_github_sync(f"Delete property {comm_name} ({code}, permanent={permanent})")
+
                     self.send_json({
                         "success": True,
                         "deleted_id": prop_id,
