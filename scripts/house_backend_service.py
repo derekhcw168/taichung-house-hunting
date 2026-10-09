@@ -257,6 +257,93 @@ def scrape_property_url(raw_url):
             except Exception as e:
                 print(f"591 BFF API parse error ({e}), falling back to HTML parsing...")
 
+    # Check if Yungyi / Yungching group URL and attempt TransferState JSON extraction
+    if any(k in url for k in ['yungyi-house.com.tw', 'yungching.com.tw', 'u-trust.com.tw']):
+        try:
+            req_y = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+            with urllib.request.urlopen(req_y, context=ssl_ctx, timeout=10) as resp_y:
+                html_y = resp_y.read().decode('utf-8', errors='ignore')
+            for script in re.finditer(r'<script[^>]*>(.*?)</script>', html_y, re.DOTALL):
+                text_s = script.group(1).strip()
+                if 'Buy/Detail' in text_s:
+                    full_json = json.loads(text_s)
+                    for k, v in full_json.items():
+                        if 'Buy/Detail' in k and isinstance(v, dict):
+                            d = v.get('data', {})
+                            case_name = d.get('caseName') or ''
+                            district = d.get('district') or '台中市'
+                            price = float(d.get('price') or 0)
+                            room = d.get('room') or 3
+                            living = d.get('livingRoom') or 2
+                            bath = d.get('bathRoom') or 2
+                            layout = f"{room}房{living}廳{bath}衛"
+                            from_floor = d.get('fromFloor') or 5
+                            up_floor = d.get('upFloor') or 12
+                            floor_str = f"{from_floor}/{up_floor}F"
+                            
+                            pin_info = d.get('pinInfo', {})
+                            main_area = float(pin_info.get('mainArea') or 0)
+                            auxi_area = float(pin_info.get('totalAuxiArea') or pin_info.get('auxiArea') or 0)
+                            indoor = round(main_area + auxi_area, 2)
+                            total_pin = float(pin_info.get('regArea') or pin_info.get('totalPin') or 0)
+                            if indoor == 0 and total_pin > 0:
+                                indoor = round(total_pin * 0.65, 1)
+
+                            unit_price = round(price / total_pin, 1) if (total_pin > 0 and price > 0) else (round(price / indoor, 1) if indoor > 0 else 0.0)
+
+                            parking_info = d.get('parkingInfo', {})
+                            parking_desc = parking_info.get('parkingName') or d.get('car') or '車位/未載明'
+                            if any(k in (case_name + ' ' + str(parking_desc)) for k in ['平車', '平面車位', '平面式', '平面']):
+                                parking_norm = '坡道平面式'
+                            elif any(k in (case_name + ' ' + str(parking_desc)) for k in ['機械', '機械車位', '機械式']):
+                                parking_norm = '坡道機械式'
+                            elif parking_info.get('isParking') is False or '無' in str(parking_desc):
+                                parking_norm = '無車位'
+                            else:
+                                parking_norm = '車位/未載明'
+
+                            age_val = float(d.get('buildAge') or d.get('age') or 20.0)
+
+                            pictures = d.get('pictureInfo', {}).get('pictures', [])
+                            yungyi_imgs = []
+                            for pic in pictures:
+                                pu = pic.get('photoUrl')
+                                if pu:
+                                    if pu.startswith('//'):
+                                        pu = 'https:' + pu
+                                    yungyi_imgs.append(pu)
+
+                            return {
+                                'url': url,
+                                'original_url': raw_url,
+                                'title': case_name,
+                                'meta_description': case_name,
+                                'community': case_name,
+                                'district': district,
+                                'address': d.get('address') or (district + str(d.get('roadName', ''))),
+                                'price': price,
+                                'unit_price': unit_price,
+                                'rooms': room,
+                                'living_rooms': living,
+                                'baths': bath,
+                                'balconies': 1,
+                                'layout': layout,
+                                'floor': floor_str,
+                                'current_floor': from_floor,
+                                'total_floors': up_floor,
+                                'age': age_val,
+                                'indoor': indoor,
+                                'total_area': total_pin,
+                                'parking': parking_norm,
+                                'parking_desc': parking_desc if parking_desc != 'None' else parking_norm,
+                                'management_fee': '未載明',
+                                'orientation': '坐北朝南',
+                                'platform': '永義房屋' if 'yungyi' in url else '永慶房產',
+                                'images': yungyi_imgs
+                            }
+        except Exception as e:
+            print(f"Yungyi TransferState JSON parse error ({e}), falling back to HTML parsing...")
+
     # Fallback HTML scraping
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -307,21 +394,36 @@ def scrape_property_url(raw_url):
         'images': []
     }
 
-    # 1. Parse JSON-LD Schema (Common on 591 and modern real estate sites)
+    # 1. Parse JSON-LD Schema (Common on 591, Sinyi and modern real estate sites)
     for s in soup.find_all('script', attrs={'type': 'application/ld+json'}):
         try:
             ld = json.loads(s.get_text())
             graph = ld.get('@graph', [ld]) if isinstance(ld, dict) else [ld]
             for item in graph:
-                if isinstance(item, dict) and ('Apartment' in item.get('@type', []) or 'Product' in item.get('@type', []) or item.get('offers')):
+                if isinstance(item, dict):
+                    about = item.get('about') if isinstance(item.get('about'), dict) else {}
                     if item.get('name'): data['title'] = item['name']
-                    if item.get('offers', {}).get('price'): data['price'] = float(item['offers']['price']) / 10000.0
-                    if item.get('floorSize', {}).get('value'): data['total_area'] = float(item['floorSize']['value'])
-                    if item.get('address', {}).get('addressLocality'): data['district'] = item['address']['addressLocality']
-                    if item.get('address', {}).get('streetAddress'): data['address'] = item['address']['streetAddress']
-                    if item.get('numberOfRooms'): data['rooms'] = int(item['numberOfRooms'])
-                    if item.get('image'): data['images'] = item['image'] if isinstance(item['image'], list) else [item['image']]
-                    break
+                    elif about.get('name'): data['title'] = about['name']
+
+                    offers = item.get('offers') or about.get('offers') or {}
+                    if isinstance(offers, dict) and offers.get('price'):
+                        data['price'] = float(offers['price']) / 10000.0
+
+                    floor_size = about.get('floorSize') or item.get('floorSize') or {}
+                    if isinstance(floor_size, dict) and floor_size.get('value'):
+                        data['total_area'] = float(floor_size['value'])
+
+                    addr = about.get('address') or item.get('address') or {}
+                    if isinstance(addr, dict):
+                        if addr.get('addressLocality'): data['district'] = addr['addressLocality']
+                        if addr.get('streetAddress'): data['address'] = addr['streetAddress']
+
+                    if about.get('numberOfRooms'): data['rooms'] = int(about['numberOfRooms'])
+                    elif item.get('numberOfRooms'): data['rooms'] = int(item['numberOfRooms'])
+
+                    imgs = item.get('image') or about.get('image')
+                    if imgs:
+                        data['images'] = imgs if isinstance(imgs, list) else [imgs]
         except Exception:
             pass
 
@@ -349,7 +451,7 @@ def scrape_property_url(raw_url):
         data['layout'] = f"{data['rooms']}房2廳2衛"
 
     # 5. Extract Total Area & Indoor Area
-    if not data['total_area']:
+    if not data['total_area'] or data['total_area'] == 35.0:
         tot_m = re.search(r'(?:權狀|總建|建坪|面積)\s*約?\s*([0-9.]+)\s*坪', desc + ' ' + text)
         if tot_m: data['total_area'] = float(tot_m.group(1))
 
@@ -359,8 +461,11 @@ def scrape_property_url(raw_url):
     elif data['total_area']:
         data['indoor'] = round(data['total_area'] * 0.62, 1)
 
-    if data['price'] and data['indoor'] and not data['unit_price']:
-        data['unit_price'] = round(data['price'] / data['indoor'], 1)
+    if data['price'] and not data['unit_price']:
+        if data['total_area'] and data['total_area'] > 0:
+            data['unit_price'] = round(data['price'] / data['total_area'], 1)
+        elif data['indoor'] and data['indoor'] > 0:
+            data['unit_price'] = round(data['price'] / data['indoor'], 1)
 
     # 6. Extract Floor (Accurate floor format X/YF e.g. 4/12F)
     fl_m = re.search(r'(\d+)\s*(?:F|樓)?\s*[/／共]\s*(?:共)?\s*(\d+)\s*(?:F|樓|層)', desc + ' ' + text, re.I)
