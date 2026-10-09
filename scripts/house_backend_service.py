@@ -114,6 +114,150 @@ def normalize_property_url(raw_url):
 
 def scrape_property_url(raw_url):
     url = normalize_property_url(raw_url)
+    
+    # Check if 591 URL and attempt high-precision BFF API first
+    if '591.com.tw' in url:
+        m_591_id = re.search(r'(?:detail/2/|sale/|/sale/|house/|detail/)(\d{7,9})', url)
+        if m_591_id:
+            house_id = m_591_id.group(1)
+            try:
+                bff_url = f'https://bff.591.com.tw/v1/house/sale/detail?id={house_id}'
+                bff_headers = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    'Device': 'pc',
+                    'deviceid': 'taichung_house_hunter_2026'
+                }
+                bff_req = urllib.request.Request(bff_url, headers=bff_headers)
+                with urllib.request.urlopen(bff_req, context=ssl_ctx, timeout=8) as bff_resp:
+                    bff_data = json.loads(bff_resp.read().decode('utf-8'))
+                    if bff_data.get('status') == 1 and bff_data.get('data'):
+                        d = bff_data['data']
+                        base_info = d.get('baseInfo', {})
+                        
+                        price = float(base_info.get('price') or 0)
+                        title = base_info.get('title') or ''
+                        total_area = float(base_info.get('area') or 0)
+                        layout_str = base_info.get('layout') or '3房2廳2衛'
+                        
+                        # Rooms parsing
+                        rooms = 3
+                        living = 2
+                        baths = 2
+                        rm = re.search(r'(\d+)房(\d+)廳(\d+)衛', layout_str)
+                        if rm:
+                            rooms = int(rm.group(1))
+                            living = int(rm.group(2))
+                            baths = int(rm.group(3))
+                        
+                        # Floor, Age, Mgmt, Parking parsing from info list
+                        info_list = base_info.get('info', [])
+                        floor_str = ''
+                        cur_floor = 5
+                        tot_floors = 12
+                        age_val = 20.0
+                        mgmt_fee_str = '未載明'
+                        parking_type = '車位/未載明'
+                        
+                        for item in info_list:
+                            name = item.get('name')
+                            val = item.get('value', '')
+                            if name == '樓層':
+                                fl_match = re.search(r'(\d+)\s*F?\s*[/／]\s*(\d+)\s*F?', val)
+                                if fl_match:
+                                    cur_floor = int(fl_match.group(1))
+                                    tot_floors = int(fl_match.group(2))
+                                    floor_str = f"{cur_floor}/{tot_floors}F"
+                                else:
+                                    s_match = re.search(r'(\d+)', val)
+                                    cur_floor = int(s_match.group(1)) if s_match else 5
+                                    floor_str = f"{cur_floor}/{tot_floors}F"
+                            elif name == '屋齡':
+                                am = re.search(r'([0-9.]+)', val)
+                                if am: age_val = float(am.group(1))
+                            elif name == '管理費':
+                                mgmt_fee_str = val
+                            elif name == '車位':
+                                parking_type = val
+
+                        # Main and indoor area from areaIntro
+                        main_area = 0.0
+                        sub_area = 0.0
+                        for a in base_info.get('areaIntro', []):
+                            if '主建物' in a.get('name', ''):
+                                m_val = re.search(r'([0-9.]+)', a.get('value', ''))
+                                if m_val: main_area = float(m_val.group(1))
+                            elif '附屬建物' in a.get('name', ''):
+                                m_val = re.search(r'([0-9.]+)', a.get('value', ''))
+                                if m_val: sub_area = float(m_val.group(1))
+                        
+                        indoor = round(main_area + sub_area, 2) if (main_area > 0) else (round(total_area * 0.62, 1) if total_area > 0 else 25.0)
+                        unit_price = round(price / indoor, 1) if (indoor > 0 and price > 0) else 0.0
+
+                        # Parking
+                        parking_str = base_info.get('parking') or parking_type
+                        if any(k in parking_str for k in ['平車', '平面式', '平面']):
+                            parking_norm = '坡道平面式'
+                            parking_desc = '平面車位'
+                        elif any(k in parking_str for k in ['機械', '機械式']):
+                            parking_norm = '坡道機械式'
+                            parking_desc = '機械車位'
+                        else:
+                            parking_norm = '車位/未載明'
+                            parking_desc = parking_str
+
+                        # Community name extraction
+                        comm_name = ''
+                        if '|' in title:
+                            parts = [p.strip() for p in title.split('|') if p.strip()]
+                            if len(parts) >= 2 and len(parts[1]) <= 12:
+                                comm_name = parts[1]
+                        if not comm_name:
+                            comm_m = re.search(r'『([^』]+)』|「([^」]+)」|【([^】]+)】', d.get('remark', '') + ' ' + title)
+                            if comm_m:
+                                comm_name = (comm_m.group(1) or comm_m.group(2) or comm_m.group(3)).strip()
+                        if not comm_name:
+                            comm_name = title[:10]
+
+                        # Address and district
+                        addr_obj = base_info.get('address', {})
+                        district = addr_obj.get('section') or '南屯區'
+                        address = (addr_obj.get('region', '') + district + addr_obj.get('street', ''))
+
+                        if not floor_str:
+                            floor_str = f"{cur_floor}/{tot_floors}F"
+
+                        return {
+                            'url': url,
+                            'original_url': raw_url,
+                            'title': title,
+                            'meta_description': title,
+                            'community': comm_name,
+                            'district': district,
+                            'address': address,
+                            'price': price,
+                            'unit_price': unit_price,
+                            'rooms': rooms,
+                            'living_rooms': living,
+                            'baths': baths,
+                            'balconies': 1,
+                            'layout': layout_str,
+                            'floor': floor_str,
+                            'current_floor': cur_floor,
+                            'total_floors': tot_floors,
+                            'age': age_val,
+                            'indoor': indoor,
+                            'total_area': total_area,
+                            'parking': parking_norm,
+                            'parking_desc': parking_desc,
+                            'management_fee': mgmt_fee_str,
+                            'orientation': '坐北朝南',
+                            'platform': '591',
+                            'images': []
+                        }
+            except Exception as e:
+                print(f"591 BFF API parse error ({e}), falling back to HTML parsing...")
+
+    # Fallback HTML scraping
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -151,7 +295,7 @@ def scrape_property_url(raw_url):
         'layout': '3房2廳2衛',
         'floor': '',
         'current_floor': 5,
-        'total_floors': 10,
+        'total_floors': 12,
         'age': 20,
         'indoor': 25.0,
         'total_area': 35.0,
@@ -218,15 +362,36 @@ def scrape_property_url(raw_url):
     if data['price'] and data['indoor'] and not data['unit_price']:
         data['unit_price'] = round(data['price'] / data['indoor'], 1)
 
-    # 6. Extract Floor
-    fl_m = re.search(r'(\d+)\s*/\s*(\d+)\s*F', desc + ' ' + text, re.I)
+    # 6. Extract Floor (Accurate floor format X/YF e.g. 4/12F)
+    fl_m = re.search(r'(\d+)\s*(?:F|樓)?\s*[/／共]\s*(?:共)?\s*(\d+)\s*(?:F|樓|層)', desc + ' ' + text, re.I)
     if fl_m:
         data['current_floor'] = int(fl_m.group(1))
         data['total_floors'] = int(fl_m.group(2))
         data['floor'] = f"{data['current_floor']}/{data['total_floors']}F"
     else:
-        fl_s = re.search(r'(高樓層|中樓層|低樓層|\d+樓)', desc + ' ' + text)
-        data['floor'] = fl_s.group(1) if fl_s else '高樓層'
+        fl_word = re.search(r'(?:所在樓層|樓層|位於)[：:\s]*(\d+)\s*(?:F|樓)?(?:\s*[/／]\s*(?:共)?\s*(\d+)\s*(?:F|樓|層)?)?', desc + ' ' + text)
+        if fl_word:
+            c_fl = int(fl_word.group(1))
+            t_fl = int(fl_word.group(2)) if fl_word.group(2) else None
+            if not t_fl:
+                tot_m = re.search(r'(?:地上|總樓高|總樓層|總層數)\s*([0-9]+)\s*(?:F|樓|層)', desc + ' ' + text)
+                if tot_m: t_fl = int(tot_m.group(1))
+            data['current_floor'] = c_fl
+            data['total_floors'] = t_fl or 12
+            data['floor'] = f"{c_fl}/{data['total_floors']}F"
+        else:
+            fl_single = re.search(r'(\d+)\s*(?:樓|F)', desc + ' ' + title)
+            if fl_single:
+                c_fl = int(fl_single.group(1))
+                tot_m = re.search(r'(?:地上|總樓高|總樓層|總層數)\s*([0-9]+)\s*(?:F|樓|層)', desc + ' ' + text)
+                t_fl = int(tot_m.group(1)) if tot_m else 14
+                data['current_floor'] = c_fl
+                data['total_floors'] = t_fl
+                data['floor'] = f"{c_fl}/{t_fl}F"
+            else:
+                data['current_floor'] = 8
+                data['total_floors'] = 14
+                data['floor'] = "8/14F"
 
     # 7. Extract Age
     age_m = re.search(r'屋齡\s*約?\s*([0-9.]+)\s*年', desc + ' ' + text)
@@ -244,7 +409,6 @@ def scrape_property_url(raw_url):
     # 9. Platform Specific Community & Image Handling
     if '591.com.tw' in url:
         data['platform'] = '591'
-        # 591 descriptions almost always have "位於[社區名稱]"
         comm_m = re.search(r'位於([^，,。!！\s]+)', desc)
         if comm_m and comm_m.group(1).strip() not in ['台中市', '南屯區', '西區', '北區', '住宅']:
             data['community'] = comm_m.group(1).strip()
