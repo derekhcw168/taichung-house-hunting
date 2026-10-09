@@ -126,7 +126,7 @@ def export_db_to_html():
     with open(HTML_FILE, 'w', encoding='utf-8') as f:
         f.write(new_content)
 
-    print("Successfully updated 591看屋物件地圖與比較分析.html with all 68 properties!")
+    print(f"Successfully updated 591看屋物件地圖與比較分析.html with all {len(properties)} properties!")
 
 if __name__ == '__main__':
     export_db_to_html()
