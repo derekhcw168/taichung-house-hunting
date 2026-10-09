@@ -207,7 +207,19 @@ def scrape_property_url(raw_url):
 
                         # Community name extraction
                         comm_name = ''
-                        if '|' in title:
+                        try:
+                            html_req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+                            with urllib.request.urlopen(html_req, context=ssl_ctx, timeout=5) as hresp:
+                                html_text = hresp.read().decode('utf-8', errors='ignore')
+                            m_comm = re.search(r'community-name=[\x22\x27]([^\x22\x27]+)[\x22\x27]', html_text)
+                            if not m_comm:
+                                m_comm = re.search(r'[\x22\x27]community[_\-]?name[\x22\x27]\s*:\s*[\x22\x27]([^\x22\x27]+)[\x22\x27]', html_text, re.I)
+                            if m_comm and m_comm.group(1).strip() not in ['找房', '行情', '推薦', '住宅']:
+                                comm_name = m_comm.group(1).strip()
+                        except Exception:
+                            pass
+
+                        if not comm_name and '|' in title:
                             parts = [p.strip() for p in title.split('|') if p.strip()]
                             if len(parts) >= 2 and len(parts[1]) <= 12:
                                 comm_name = parts[1]
@@ -313,12 +325,16 @@ def scrape_property_url(raw_url):
                                         pu = 'https:' + pu
                                     yungyi_imgs.append(pu)
 
+                            cinfo = d.get('communityInfo', {})
+                            building_name = cinfo.get('buildingName') if isinstance(cinfo, dict) else None
+                            community_name = (building_name or case_name).strip()
+
                             return {
                                 'url': url,
                                 'original_url': raw_url,
                                 'title': case_name,
                                 'meta_description': case_name,
-                                'community': case_name,
+                                'community': community_name,
                                 'district': district,
                                 'address': d.get('address') or (district + str(d.get('roadName', ''))),
                                 'price': price,
@@ -514,12 +530,14 @@ def scrape_property_url(raw_url):
     # 9. Platform Specific Community & Image Handling
     if '591.com.tw' in url:
         data['platform'] = '591'
-        comm_m = re.search(r'位於([^，,。!！\s]+)', desc)
-        if comm_m and comm_m.group(1).strip() not in ['台中市', '南屯區', '西區', '北區', '住宅']:
-            data['community'] = comm_m.group(1).strip()
+        m_comm = re.search(r'community-name=[\x22\x27]([^\x22\x27]+)[\x22\x27]', html)
+        if not m_comm:
+            m_comm = re.search(r'[\x22\x27]community[_\-]?name[\x22\x27]\s*:\s*[\x22\x27]([^\x22\x27]+)[\x22\x27]', html, re.I)
+        if m_comm and m_comm.group(1).strip() not in ['找房', '行情', '推薦', '住宅']:
+            data['community'] = m_comm.group(1).strip()
         else:
             comm_m = re.search(r'社區[：:\s]*([^\s,，。<]+)', text)
-            if comm_m and comm_m.group(1).strip() not in ['找房', '行情', '推薦']:
+            if comm_m and comm_m.group(1).strip() not in ['找房', '行情', '推薦', '資訊']:
                 data['community'] = comm_m.group(1).strip()
 
         if not data['community'] and '|' in data['title']:
@@ -534,11 +552,20 @@ def scrape_property_url(raw_url):
 
     elif 'sinyi.com.tw' in url or 'sinyi.in' in url:
         data['platform'] = '信義房屋'
-        clean_t = title.split(' - ')[0]
-        if '［' in clean_t and '］' in clean_t:
-            data['community'] = clean_t.split('［')[1].split('］')[0].replace('降價獨家－', '').replace('專任', '').strip()
+        # 1. Search for commName in contentData JSON
+        m_comm = re.search(r'[\x22\x27]contentData[\x22\x27]\s*:\s*\{[^\}]*?[\x22\x27]commName[\x22\x27]\s*:\s*[\x22\x27]([^\x22\x27]+)[\x22\x27]', html)
+        if not m_comm:
+            # 2. Search for ic-buy-community.svg tag
+            m_comm = re.search(r'ic-buy-community\.svg[^>]*/>([^<]+)<img', html)
+        if m_comm and m_comm.group(1).strip():
+            data['community'] = m_comm.group(1).strip()
         else:
-            data['community'] = clean_t
+            clean_t = title.split(' - ')[0]
+            if '［' in clean_t and '］' in clean_t:
+                data['community'] = clean_t.split('［')[1].split('］')[0].replace('降價獨家－', '').replace('專任', '').strip()
+            else:
+                data['community'] = clean_t
+
         case_m = re.search(r'/(?:buy/house/|o/)([A-Za-z0-9]+)', url)
         if case_m:
             case_id = case_m.group(1)
