@@ -357,8 +357,11 @@
               <th onclick="sortTable('mgmtFeeNum')" class="sortable py-3 px-3 text-right">
                 管理費 <span id="sort-icon-mgmtFeeNum" class="sort-icon">⇅</span>
               </th>
+              <th id="thShowingAgent" class="py-3 px-3 text-center whitespace-nowrap hidden">
+                <span class="inline-flex items-center gap-1 text-emerald-800"><i class="fa-solid fa-user-tie"></i> 帶看房仲</span>
+              </th>
               <th class="py-3 px-4">特色優勢與生活機能</th>
-              <th class="py-3 px-3 text-center rounded-r-lg">外部查看</th>
+              <th class="py-3 px-3 text-center rounded-r-lg">外部查看 / 操作</th>
             </tr>
           </thead>
           <tbody id="tableBody" class="divide-y divide-slate-100 text-slate-700">
@@ -2461,12 +2464,13 @@
             <div style="font-size:12px; line-height:1.6; color:#334155; margin-bottom:8px;">
               <div><strong>格局：</strong>${p.layout} (${p.floor})</div>
               <div><strong>室內實坪：</strong><span style="color:#d97706; font-weight:bold;">${p.indoor} 坪</span> (主${p.mainArea}+附${p.subArea})</div>
-
+              ${p.showingAgent ? `<div style="margin-top:2px;"><strong>帶看房仲：</strong><span style="color:#059669; font-weight:bold;">${p.showingAgent}</span></div>` : ''}
               <div style="color:#64748b; font-size:11px; margin-top:4px;">${p.note}</div>
             </div>
             <!-- Quick Move in Popup -->
             ${quickMoveButtons}
             <div style="display:flex; gap:4px;">
+              <button onclick="openEditModal('${p.id}')" style="flex:1; text-align:center; background:#d97706; color:white; padding:5px 6px; border:none; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;" title="手動修改物件各項欄位"><i class="fa-solid fa-pen-to-square mr-1"></i>編輯</button>
               <button onclick="openPhotoModal('${p.id}', '${p.name.replace(/'/g, "\\'")}')" style="flex:1; text-align:center; background:#7c3aed; color:white; padding:5px 6px; border:none; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;" title="查看現場照片"><i class="fa-solid fa-camera mr-1"></i>照片</button>
               <a href="${p.url}" target="_blank" style="flex:1; text-align:center; background:#2563eb; color:white; padding:5px 6px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">原始網頁</a>
               <a href="https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}" target="_blank" style="flex:1; text-align:center; background:#0f172a; color:white; padding:5px 6px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:bold;">導航</a>
@@ -2697,6 +2701,12 @@
     function renderTable(items) {
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = '';
+
+      const thShowingAgent = document.getElementById('thShowingAgent');
+      if (thShowingAgent) {
+        thShowingAgent.classList.toggle('hidden', activeCategoryTab !== 'consider');
+      }
+
       items.forEach(p => {
         const tr = document.createElement('tr');
         const cat = propertyCategories[p.id];
@@ -2709,12 +2719,12 @@
         tr.className = rowBg;
 
         let parkingBadge = '';
-        if (p.parkingType.indexOf('平面') !== -1) {
+        if (p.parkingType && p.parkingType.indexOf('平面') !== -1) {
           parkingBadge = '<span class="badge bg-emerald-100 text-emerald-800 font-bold"><i class="fa-solid fa-car mr-1"></i>' + p.parkingType + '</span>';
-        } else if (p.parkingType.indexOf('機械') !== -1) {
+        } else if (p.parkingType && p.parkingType.indexOf('機械') !== -1) {
           parkingBadge = '<span class="badge bg-slate-100 text-slate-700">' + p.parkingType + '</span>';
         } else {
-          parkingBadge = '<span class="badge bg-rose-50 text-rose-700">' + p.parkingType + '</span>';
+          parkingBadge = '<span class="badge bg-rose-50 text-rose-700">' + (p.parkingType || '無車位') + '</span>';
         }
 
         // Action Buttons based on category
@@ -2727,6 +2737,9 @@
               </button>
               <button onclick="movePropertyCategory('${p.id}', 'rejected')" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="看完不考慮 (寫入資料庫)">
                 <i class="fa-solid fa-xmark"></i> 不考慮
+              </button>
+              <button onclick="openEditModal('${p.id}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="手動修改物件各項欄位 (屋齡、實坪、總價等)">
+                <i class="fa-solid fa-pen-to-square"></i> 修改
               </button>
               <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
                 <i class="fa-solid fa-trash-can"></i> 刪除
@@ -2743,6 +2756,9 @@
               <button onclick="movePropertyCategory('${p.id}', 'rejected')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded text-[11px] transition" title="改為不考慮">
                 <i class="fa-solid fa-xmark"></i> 不考慮
               </button>
+              <button onclick="openEditModal('${p.id}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="手動修改物件各項欄位">
+                <i class="fa-solid fa-pen-to-square"></i> 修改
+              </button>
               <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
                 <i class="fa-solid fa-trash-can"></i> 刪除
               </button>
@@ -2757,6 +2773,9 @@
               </button>
               <button onclick="movePropertyCategory('${p.id}', 'consider')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded text-[11px] transition" title="改為考慮">
                 <i class="fa-solid fa-heart"></i> 改考慮
+              </button>
+              <button onclick="openEditModal('${p.id}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="手動修改物件各項欄位">
+                <i class="fa-solid fa-pen-to-square"></i> 修改
               </button>
               <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
                 <i class="fa-solid fa-trash-can"></i> 刪除
@@ -2773,8 +2792,8 @@
               <button onclick="movePropertyCategory('${p.id}', 'consider')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded text-[11px] font-medium transition" title="改為考慮">
                 <i class="fa-solid fa-heart"></i> 改考慮
               </button>
-              <button onclick="movePropertyCategory('${p.id}', 'rejected')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded text-[11px] font-medium transition" title="改為不考慮">
-                <i class="fa-solid fa-xmark"></i> 不考慮
+              <button onclick="openEditModal('${p.id}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="手動修改物件各項欄位">
+                <i class="fa-solid fa-pen-to-square"></i> 修改
               </button>
               <button onclick="permanentDeleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-[11px] flex items-center gap-1 shadow-sm transition" title="徹底從資料庫永久清除此物件">
                 <i class="fa-solid fa-trash-can"></i> 永久刪除
@@ -2789,6 +2808,23 @@
         } else if (p.isNew) {
           if (p.source === '永慶') newBadge = '<span class="ml-1 px-1.5 py-0.5 bg-rose-600 text-white rounded text-[10px] font-bold">永慶</span>';
           else newBadge = '<span class="ml-1 px-1.5 py-0.5 bg-green-600 text-white rounded text-[10px] font-bold">信義</span>';
+        }
+
+        // Showing Agent Cell (Exclusive for 'consider' tab)
+        let showingAgentCell = '';
+        if (activeCategoryTab === 'consider') {
+          const sa = p.showingAgent || '';
+          showingAgentCell = `
+            <td class="py-2.5 px-3 text-center whitespace-nowrap bg-emerald-50/20">
+              <select onchange="updateShowingAgent('${p.id}', this.value)" class="text-xs font-bold border border-emerald-300 rounded-lg px-2.5 py-1.5 bg-white text-emerald-950 focus:ring-2 focus:ring-emerald-500 shadow-sm cursor-pointer hover:bg-emerald-50 transition" title="選擇帶看房仲品牌">
+                <option value="" ${!sa ? 'selected' : ''}>-- 選擇房仲 --</option>
+                <option value="信義房屋" ${sa === '信義房屋' ? 'selected' : ''}>信義房屋</option>
+                <option value="永義房屋" ${sa === '永義房屋' ? 'selected' : ''}>永義房屋</option>
+                <option value="永慶房屋" ${sa === '永慶房屋' ? 'selected' : ''}>永慶房屋</option>
+                <option value="其他" ${sa === '其他' ? 'selected' : ''}>其他房仲</option>
+              </select>
+            </td>
+          `;
         }
 
         tr.innerHTML = `
@@ -2806,16 +2842,22 @@
             <div class="text-[11px] font-normal text-slate-500">${p.area}</div>
           </td>
           <td class="py-3 px-3 text-center whitespace-nowrap font-medium text-slate-700">${p.district}</td>
-          <td class="py-3 px-4 text-right font-extrabold text-rose-600 text-base whitespace-nowrap">${p.price} 萬</td>
+          <td class="py-3 px-4 text-right font-extrabold text-rose-600 text-base whitespace-nowrap cursor-pointer hover:bg-rose-50 transition rounded" onclick="openEditModal('${p.id}', 'price')" title="點擊手動修改總價">
+            ${p.price} 萬
+          </td>
           <td class="py-3 px-4 text-right font-semibold text-slate-700 whitespace-nowrap">${p.unitPrice} 萬</td>
-          <td class="py-3 px-3 text-center whitespace-nowrap">
+          <td class="py-3 px-3 text-center whitespace-nowrap cursor-pointer hover:bg-slate-100 transition rounded" onclick="openEditModal('${p.id}', 'layout')" title="點擊手動修改格局">
             <div class="font-semibold text-slate-800">${p.layout}</div>
             <span class="badge bg-emerald-50 text-emerald-700 border border-emerald-200 mt-0.5">2衛</span>
           </td>
-          <td class="py-3 px-3 text-center whitespace-nowrap text-slate-600 font-medium">${p.floor}</td>
-          <td class="py-3 px-3 text-center text-slate-600 whitespace-nowrap">${p.age}</td>
-          <td class="py-3 px-4 text-right font-bold text-amber-600 text-sm whitespace-nowrap bg-amber-50/40">
-            ${p.indoor} 坪
+          <td class="py-3 px-3 text-center whitespace-nowrap text-slate-600 font-medium cursor-pointer hover:bg-sky-50 transition rounded" onclick="openEditModal('${p.id}', 'floor')" title="點擊手動修改樓層">
+            ${p.floor}
+          </td>
+          <td class="py-3 px-3 text-center text-slate-600 whitespace-nowrap cursor-pointer hover:bg-amber-50 hover:text-amber-900 transition rounded" onclick="openEditModal('${p.id}', 'age')" title="點擊手動修改屋齡">
+            ${p.age} <i class="fa-solid fa-pen text-[9px] text-amber-500 opacity-50 ml-0.5"></i>
+          </td>
+          <td class="py-3 px-4 text-right font-bold text-amber-600 text-sm whitespace-nowrap bg-amber-50/40 cursor-pointer hover:bg-amber-100/60 transition rounded" onclick="openEditModal('${p.id}', 'indoor')" title="點擊手動修改室內實坪">
+            ${p.indoor} 坪 <i class="fa-solid fa-pen text-[9px] text-amber-500 opacity-50 ml-0.5"></i>
             <div class="text-[10px] font-normal text-slate-400">主${p.mainArea} / 附${p.subArea}</div>
           </td>
 
@@ -2824,12 +2866,16 @@
             <div class="text-[11px] text-slate-500 mt-0.5 max-w-[150px] truncate" title="${p.parkingNote}">${p.parkingNote}</div>
           </td>
           <td class="py-3 px-3 text-right text-slate-600 whitespace-nowrap">${p.mgmtFee}</td>
+          ${showingAgentCell}
           <td class="py-3 px-4 text-xs text-slate-600">
             <div class="font-medium text-slate-800">${p.note}</div>
             <div class="text-[11px] text-slate-400 mt-0.5 truncate max-w-[200px]" title="${p.title}">${p.title}</div>
           </td>
           <td class="py-3 px-3 text-center whitespace-nowrap">
             <div class="flex items-center justify-center gap-1.5">
+              <button onclick="openEditModal('${p.id}')" class="p-1.5 bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white rounded-lg transition" title="手動修改物件各項欄位 (屋齡、實坪、總價、樓層、帶看房仲等)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
               <button onclick="openPhotoModal('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="p-1.5 bg-purple-50 text-purple-600 hover:bg-purple-600 hover:text-white rounded-lg transition" title="查看現場照片 (${p.imgCount || 0}張)">
                 <i class="fa-solid fa-camera"></i>
               </button>
@@ -3021,6 +3067,7 @@
               lng: p.lng,
               url: p.original_url || '',
               category: p.decision_status || 'pending',
+              showingAgent: p.showing_agent || '',
               themeCategory: (p.parking_type && p.parking_type.includes('平面') ? 'plane' : 'view'),
               source: p.original_source_platform || '591',
               imgCount: p.img_count || 0,
@@ -3439,6 +3486,213 @@
       }
     }
 
+    // ==========================================
+    // Manual Property Edit & Showing Agent Logic
+    // ==========================================
+    function openEditModal(id, focusField) {
+      const p = allProperties.find(x => String(x.id) === String(id));
+      if (!p) {
+        showToast('找不到該物件資料', '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>');
+        return;
+      }
+
+      document.getElementById('editPropId').value = p.id;
+      document.getElementById('editPropCodeBadge').innerText = `#${p.id} ${p.code || ''}`;
+      document.getElementById('editPropName').value = p.name || '';
+      document.getElementById('editPropDistrict').value = p.district || '南屯區';
+      document.getElementById('editPropPrice').value = p.price !== undefined ? p.price : '';
+      document.getElementById('editPropUnitPrice').value = p.unitPrice !== undefined ? p.unitPrice : '';
+      document.getElementById('editPropAge').value = p.ageNum !== undefined ? p.ageNum : (parseFloat(String(p.age).replace(/[^0-9.]/g, '')) || '');
+      document.getElementById('editPropFloor').value = p.floor || '';
+      document.getElementById('editPropIndoor').value = p.indoor !== undefined ? p.indoor : '';
+      document.getElementById('editPropTotalArea').value = p.totalArea !== undefined ? p.totalArea : '';
+      document.getElementById('editPropMainArea').value = p.mainArea !== undefined ? p.mainArea : '';
+      document.getElementById('editPropSubArea').value = p.subArea !== undefined ? p.subArea : '';
+      document.getElementById('editPropLayout').value = p.layout || '';
+      document.getElementById('editPropParking').value = p.parkingType || '';
+      document.getElementById('editPropMgmtFee').value = p.mgmtFee || '';
+      document.getElementById('editPropShowingAgent').value = p.showingAgent || '';
+      document.getElementById('editPropNote').value = p.note || p.title || '';
+      document.getElementById('editPropUrl').value = p.url || '';
+
+      const modal = document.getElementById('editPropertyModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+
+      if (focusField) {
+        setTimeout(() => {
+          if (focusField === 'age') document.getElementById('editPropAge').focus();
+          else if (focusField === 'indoor') document.getElementById('editPropIndoor').focus();
+          else if (focusField === 'price') document.getElementById('editPropPrice').focus();
+          else if (focusField === 'floor') document.getElementById('editPropFloor').focus();
+          else if (focusField === 'layout') document.getElementById('editPropLayout').focus();
+        }, 120);
+      }
+    }
+
+    function closeEditModal() {
+      const modal = document.getElementById('editPropertyModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+      document.body.style.overflow = '';
+    }
+
+    async function savePropertyEdit() {
+      const id = document.getElementById('editPropId').value;
+      const p = allProperties.find(x => String(x.id) === String(id));
+      if (!p) return;
+
+      const name = document.getElementById('editPropName').value.trim();
+      if (!name) {
+        alert('請輸入社區/建案名稱');
+        document.getElementById('editPropName').focus();
+        return;
+      }
+
+      const district = document.getElementById('editPropDistrict').value;
+      const priceVal = parseFloat(document.getElementById('editPropPrice').value);
+      const price = isNaN(priceVal) ? p.price : priceVal;
+      let unitPriceVal = parseFloat(document.getElementById('editPropUnitPrice').value);
+      const ageVal = parseFloat(document.getElementById('editPropAge').value);
+      const floor = document.getElementById('editPropFloor').value.trim() || p.floor;
+      const indoorVal = parseFloat(document.getElementById('editPropIndoor').value);
+      const totalAreaVal = parseFloat(document.getElementById('editPropTotalArea').value);
+      const mainAreaVal = parseFloat(document.getElementById('editPropMainArea').value);
+      const subAreaVal = parseFloat(document.getElementById('editPropSubArea').value);
+      const layout = document.getElementById('editPropLayout').value.trim() || p.layout;
+      const parking = document.getElementById('editPropParking').value.trim() || p.parkingType;
+      const mgmtFee = document.getElementById('editPropMgmtFee').value.trim() || p.mgmtFee;
+      const showingAgent = document.getElementById('editPropShowingAgent').value;
+      const note = document.getElementById('editPropNote').value.trim();
+      const url = document.getElementById('editPropUrl').value.trim();
+
+      const totalArea = !isNaN(totalAreaVal) ? totalAreaVal : p.totalArea;
+      const indoor = !isNaN(indoorVal) ? indoorVal : p.indoor;
+      const mainArea = !isNaN(mainAreaVal) ? mainAreaVal : p.mainArea;
+      const subArea = !isNaN(subAreaVal) ? subAreaVal : p.subArea;
+
+      if (isNaN(unitPriceVal) || unitPriceVal <= 0) {
+        if (price > 0 && totalArea > 0) unitPriceVal = Math.round((price / totalArea) * 100) / 100;
+        else if (price > 0 && indoor > 0) unitPriceVal = Math.round((price / indoor) * 100) / 100;
+        else unitPriceVal = p.unitPrice;
+      }
+
+      const saveBtn = document.getElementById('btnSavePropertyEdit');
+      const originalText = saveBtn.innerHTML;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 儲存中...';
+      saveBtn.disabled = true;
+
+      // Update in-memory property
+      p.name = name;
+      p.district = district;
+      p.price = price;
+      p.unitPrice = unitPriceVal;
+      if (!isNaN(ageVal)) {
+        p.age = ageVal + '年';
+        p.ageNum = ageVal;
+      }
+      p.floor = floor;
+      p.indoor = indoor;
+      p.totalArea = totalArea;
+      p.mainArea = mainArea;
+      p.subArea = subArea;
+      p.layout = layout;
+      p.parkingType = parking;
+      p.parkingNote = parking;
+      p.mgmtFee = mgmtFee;
+      p.mgmtFeeNum = parseInt(mgmtFee.replace(/[^0-9]/g, '')) || 0;
+      p.showingAgent = showingAgent;
+      p.note = note;
+      p.url = url;
+
+      const payload = {
+        id: p.id,
+        community_name: name,
+        district: district,
+        price_total: price,
+        unit_price: unitPriceVal,
+        age: !isNaN(ageVal) ? ageVal : null,
+        floor_info: floor,
+        indoor_total: indoor,
+        total_area: totalArea,
+        indoor_area: mainArea,
+        attached_area: subArea,
+        layout_raw: layout,
+        parking_type: parking,
+        parking_desc: parking,
+        management_fee: mgmtFee,
+        showing_agent: showingAgent,
+        title: note,
+        original_url: url
+      };
+
+      let dbSaved = false;
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
+        const res = await fetch(getApiUrl('/api/update_property'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          const respData = await res.json();
+          if (respData.success) {
+            dbSaved = true;
+          }
+        }
+      } catch (err) {
+        console.warn('API update_property failed', err);
+      }
+
+      // Fallback local storage for offline preservation
+      try {
+        const raw = localStorage.getItem('taichung_house_manual_edits');
+        let editMap = raw ? JSON.parse(raw) : {};
+        editMap[p.id] = payload;
+        localStorage.setItem('taichung_house_manual_edits', JSON.stringify(editMap));
+      } catch (e) {}
+
+      saveBtn.innerHTML = originalText;
+      saveBtn.disabled = false;
+      closeEditModal();
+      applyFiltersAndSort();
+
+      if (dbSaved) {
+        showToast(`✅ <strong>【資料庫已同步更新】</strong><br>物件「${name}」修改已即時寫入 PostgreSQL 資料庫！`, '<i class="fa-solid fa-database text-emerald-400"></i>');
+      } else {
+        showToast(`✏️ <strong>【已修改】</strong>已更新「${name}」的欄位資訊！<br><span style="color:#94a3b8;">(資料已暫存於瀏覽器)</span>`, '<i class="fa-solid fa-circle-check text-amber-400"></i>');
+      }
+    }
+
+    async function updateShowingAgent(id, agentValue) {
+      const p = allProperties.find(x => String(x.id) === String(id));
+      if (!p) return;
+
+      p.showingAgent = agentValue;
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
+        await fetch(getApiUrl('/api/update_property'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: p.id, showing_agent: agentValue }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+      } catch (e) {
+        console.warn('Failed to update showing_agent', e);
+      }
+
+      showToast(`💼 <strong>【帶看房仲已設定】</strong><br>已將「${p.name}」的帶看房仲設定為【${agentValue || '未指定'}】！`, '<i class="fa-solid fa-user-tie text-emerald-400"></i>');
+    }
+
     // Keyboard listener for modal navigation & ESC
     window.addEventListener('keydown', (e) => {
       const photoModal = document.getElementById('photoModal');
@@ -3451,6 +3705,11 @@
       const quickModal = document.getElementById('cloudQuickAddModal');
       if (quickModal && !quickModal.classList.contains('hidden')) {
         if (e.key === 'Escape') closeCloudQuickAddModal();
+        return;
+      }
+      const editModal = document.getElementById('editPropertyModal');
+      if (editModal && !editModal.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeEditModal();
       }
     });
 
@@ -3639,6 +3898,160 @@
         </button>
         <button onclick="saveCloudQuickAddProperty()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs sm:text-sm font-extrabold flex items-center gap-1.5 shadow-lg transition">
           <i class="fa-solid fa-check"></i> 加入待看清單
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Property Modal (手動修改物件各項欄位) -->
+  <div id="editPropertyModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity duration-200" onclick="if(event.target === this) closeEditModal()">
+    <div class="relative w-full max-w-2xl bg-slate-900 rounded-2xl shadow-2xl border border-amber-500/40 flex flex-col max-h-[92vh] overflow-hidden" onclick="event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90 text-white">
+        <div class="flex items-center gap-3">
+          <span class="p-2.5 bg-gradient-to-br from-amber-500 to-amber-600 text-slate-950 rounded-xl shadow">
+            <i class="fa-solid fa-pen-to-square text-lg"></i>
+          </span>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              手動修改物件資料
+              <span id="editPropCodeBadge" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">#--</span>
+            </h3>
+            <p class="text-xs text-amber-200/80 mt-0.5">可自訂屋齡、室內實坪、樓層、總價等資訊，修改後將即時同步儲存至資料庫</p>
+          </div>
+        </div>
+        <button onclick="closeEditModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition" title="關閉視窗 (Esc)">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Form) -->
+      <div class="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-200">
+        <input type="hidden" id="editPropId">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Community Name -->
+          <div>
+            <label class="block text-xs font-bold text-amber-300 mb-1">
+              社區 / 建案名稱 <span class="text-rose-400">*</span>
+            </label>
+            <input type="text" id="editPropName" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm" required>
+          </div>
+
+          <!-- District -->
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">行政區域</label>
+            <select id="editPropDistrict" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+              <option value="南屯區">南屯區</option>
+              <option value="南區">南區</option>
+              <option value="西區">西區</option>
+              <option value="西屯區">西屯區</option>
+              <option value="北屯區">北屯區</option>
+              <option value="北區">北區</option>
+              <option value="東區">東區</option>
+              <option value="中區">中區</option>
+            </select>
+          </div>
+
+          <!-- Total Price -->
+          <div>
+            <label class="block text-xs font-bold text-rose-300 mb-1">總價 (萬元)</label>
+            <input type="number" id="editPropPrice" step="0.1" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Unit Price -->
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">單價 (萬/坪，留空由系統自動計算)</label>
+            <input type="number" id="editPropUnitPrice" step="0.01" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Age -->
+          <div>
+            <label class="block text-xs font-bold text-amber-300 mb-1">屋齡 (年)</label>
+            <input type="number" id="editPropAge" step="0.1" placeholder="例如：29.5" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Floor -->
+          <div>
+            <label class="block text-xs font-bold text-sky-300 mb-1">樓層 (精確樓層，例如 4/12F, 9/15F)</label>
+            <input type="text" id="editPropFloor" placeholder="例如：4/12F" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Indoor Area (Total) -->
+          <div>
+            <label class="block text-xs font-bold text-amber-300 mb-1">室內實坪 (主+附總計)</label>
+            <input type="number" id="editPropIndoor" step="0.01" placeholder="例如：24.25" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Total Area -->
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">權狀總坪數 (總建坪)</label>
+            <input type="number" id="editPropTotalArea" step="0.01" placeholder="例如：31.16" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Main Area & Sub Area -->
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">主建物坪數</label>
+            <input type="number" id="editPropMainArea" step="0.01" placeholder="例如：20.95" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">附屬建物坪數 (陽台/雨遮)</label>
+            <input type="number" id="editPropSubArea" step="0.01" placeholder="例如：3.3" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Layout -->
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">格局</label>
+            <input type="text" id="editPropLayout" placeholder="例如：3房2廳2衛" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Parking Type -->
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">車位型態</label>
+            <input type="text" id="editPropParking" placeholder="例如：坡道平面、坡道機械、無車位" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Management Fee -->
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">管理費</label>
+            <input type="text" id="editPropMgmtFee" placeholder="例如：2450元/月" class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+          </div>
+
+          <!-- Showing Agent (帶看房仲) -->
+          <div>
+            <label class="block text-xs font-bold text-emerald-400 mb-1">
+              <i class="fa-solid fa-user-tie mr-1"></i> 帶看房仲 (信義 / 永義 等)
+            </label>
+            <select id="editPropShowingAgent" class="w-full bg-slate-800 border border-slate-700 focus:border-emerald-400 text-white rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-sm">
+              <option value="">-- 未指定房仲 --</option>
+              <option value="信義房屋">信義房屋</option>
+              <option value="永義房屋">永義房屋</option>
+              <option value="永慶房屋">永慶房屋</option>
+              <option value="其他">其他房仲</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Note & URL -->
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">特色優勢與生活機能備註</label>
+          <input type="text" id="editPropNote" placeholder="例如：南區核心、文心秀泰商圈、高樓採光佳..." class="w-full bg-slate-800 border border-slate-700 focus:border-amber-400 text-white rounded-xl px-3.5 py-2 focus:outline-none focus:ring-1 focus:ring-amber-400 text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-400 mb-1">原始房屋網頁網址 (URL)</label>
+          <input type="url" id="editPropUrl" placeholder="https://..." class="w-full bg-slate-900 border border-slate-800 focus:border-amber-400 text-slate-300 rounded-xl px-3.5 py-2 focus:outline-none focus:ring-1 focus:ring-amber-400 text-xs">
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-slate-800 bg-slate-900/90">
+        <button onclick="closeEditModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-semibold transition">
+          取消
+        </button>
+        <button onclick="savePropertyEdit()" id="btnSavePropertyEdit" class="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs sm:text-sm font-extrabold flex items-center gap-1.5 shadow-lg transition">
+          <i class="fa-solid fa-floppy-disk"></i> 儲存修改
         </button>
       </div>
     </div>
