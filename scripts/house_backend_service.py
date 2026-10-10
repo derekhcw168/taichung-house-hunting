@@ -738,6 +738,7 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                             p.current_floor, p.total_floors, p.age, p.total_area, p.indoor_area,
                             p.attached_area, p.indoor_total, p.public_area, p.public_ratio,
                             p.public_ratio_has_parking, p.public_ratio_desc, p.parking_type,
+                            p.parking_desc, p.orientation, p.management_fee, p.decision_status,
                             p.original_source_platform, p.original_url, p.district, p.showing_agent,
                             COUNT(pi.id) as img_count,
                             MIN(pi.file_relpath) as sample_img
