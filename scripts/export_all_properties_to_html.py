@@ -17,7 +17,7 @@ def export_db_to_html():
             p.attached_area, p.indoor_total, p.public_area, p.public_ratio,
             p.public_ratio_has_parking, p.public_ratio_desc, p.parking_type,
             p.parking_desc, p.orientation, p.management_fee, p.decision_status,
-            p.original_source_platform, p.original_url, p.district,
+            p.original_source_platform, p.original_url, p.district, p.showing_agent,
             COUNT(pi.id) as img_count,
             MIN(pi.file_relpath) as sample_img
         FROM properties p
@@ -109,6 +109,7 @@ def export_db_to_html():
             "lng": lng,
             "url": item.get('original_url') or '',
             "category": item.get('decision_status') or 'pending',
+            "showingAgent": item.get('showing_agent') or '',
             "themeCategory": 'plane' if (item.get('parking_type') and '平面' in item.get('parking_type')) else 'view',
             "isNew": False,
             "source": item.get('original_source_platform') or '591',

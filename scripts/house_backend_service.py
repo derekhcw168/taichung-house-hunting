@@ -696,6 +696,8 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_api_crawl(url_arg)
         elif path == '/api/quick-add':
             self.handle_api_quick_add(req_data)
+        elif path in ['/api/update_property', '/api/update-property', '/api/edit']:
+            self.handle_api_update_property(req_data)
         else:
             self.send_error(404, "Endpoint not found")
 
@@ -736,8 +738,7 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                             p.current_floor, p.total_floors, p.age, p.total_area, p.indoor_area,
                             p.attached_area, p.indoor_total, p.public_area, p.public_ratio,
                             p.public_ratio_has_parking, p.public_ratio_desc, p.parking_type,
-                            p.parking_desc, p.orientation, p.management_fee, p.decision_status,
-                            p.original_source_platform, p.original_url, p.district,
+                            p.original_source_platform, p.original_url, p.district, p.showing_agent,
                             COUNT(pi.id) as img_count,
                             MIN(pi.file_relpath) as sample_img
                         FROM properties p
@@ -855,6 +856,125 @@ class HouseRequestHandler(http.server.SimpleHTTPRequestHandler):
                         "code": code,
                         "community_name": comm_name,
                         "message": msg
+                    })
+        except Exception as e:
+            self.send_json({"success": False, "error": str(e)}, status=500)
+
+    def handle_api_update_property(self, req_data):
+        prop_id = req_data.get('id')
+        if not prop_id:
+            self.send_json({"success": False, "error": "缺少物件編號 (id)"}, status=400)
+            return
+
+        try:
+            with get_db() as conn:
+                with conn.cursor() as cur:
+                    if str(prop_id).isdigit():
+                        cur.execute("SELECT id, code, community_name, price_total, total_area, indoor_total, showing_agent FROM properties WHERE id = %s;", (int(prop_id),))
+                    else:
+                        cur.execute("SELECT id, code, community_name, price_total, total_area, indoor_total, showing_agent FROM properties WHERE code = %s;", (str(prop_id),))
+                    row = cur.fetchone()
+                    if not row:
+                        self.send_json({"success": False, "error": f"找不到編號為 {prop_id} 的物件"}, status=404)
+                        return
+
+                    real_id, code, comm_name, curr_price, curr_total_area, curr_indoor, curr_showing_agent = row
+
+                    mapping = {
+                        'name': 'community_name',
+                        'community': 'community_name',
+                        'price': 'price_total',
+                        'unitPrice': 'unit_price',
+                        'indoor': 'indoor_total',
+                        'mainArea': 'indoor_area',
+                        'subArea': 'attached_area',
+                        'totalArea': 'total_area',
+                        'floor': 'floor_info',
+                        'layout': 'layout_raw',
+                        'parking': 'parking_type',
+                        'parkingNote': 'parking_desc',
+                        'mgmtFee': 'management_fee',
+                        'url': 'original_url',
+                        'showingAgent': 'showing_agent',
+                        'showing_agent': 'showing_agent',
+                        'category': 'decision_status',
+                        'status': 'decision_status',
+                        'note': 'title'
+                    }
+
+                    col_values = {}
+                    for k, v in req_data.items():
+                        col = mapping.get(k, k)
+                        if col in [
+                            'community_name', 'district', 'price_total', 'unit_price', 'age',
+                            'indoor_total', 'indoor_area', 'attached_area', 'total_area',
+                            'floor_info', 'layout_raw', 'parking_type', 'parking_desc',
+                            'management_fee', 'orientation', 'original_url', 'showing_agent',
+                            'decision_status', 'title'
+                        ]:
+                            if v is not None and str(v).strip() != "":
+                                if col in ['price_total', 'unit_price', 'age', 'indoor_total', 'indoor_area', 'attached_area', 'total_area']:
+                                    cleaned_num = re.sub(r'[^0-9.]', '', str(v))
+                                    if cleaned_num:
+                                        try:
+                                            col_values[col] = float(cleaned_num)
+                                        except Exception:
+                                            pass
+                                else:
+                                    col_values[col] = str(v).strip()
+                            elif v == "" or v is None:
+                                if col in ['showing_agent', 'management_fee', 'original_url', 'title']:
+                                    col_values[col] = ""
+
+                    if not col_values:
+                        self.send_json({"success": False, "error": "未提供任何欲更新的有效欄位"}, status=400)
+                        return
+
+                    calc_price = col_values.get('price_total', float(curr_price or 0))
+                    calc_tot_area = col_values.get('total_area', float(curr_total_area or 0))
+                    calc_indoor = col_values.get('indoor_total', float(curr_indoor or 0))
+                    if 'unit_price' not in col_values and calc_price > 0:
+                        if calc_tot_area > 0:
+                            col_values['unit_price'] = round(calc_price / calc_tot_area, 2)
+                        elif calc_indoor > 0:
+                            col_values['unit_price'] = round(calc_price / calc_indoor, 2)
+
+                    if 'floor_info' in col_values:
+                        fm = re.search(r'(\d+)\s*[/／]\s*(\d+)', col_values['floor_info'])
+                        if fm:
+                            col_values['current_floor'] = int(fm.group(1))
+                            col_values['total_floors'] = int(fm.group(2))
+
+                    set_clauses = []
+                    vals = []
+                    for c, val in col_values.items():
+                        set_clauses.append(f"{c} = %s")
+                        vals.append(val)
+
+                    set_clauses.append("updated_at = NOW()")
+                    vals.append(real_id)
+
+                    sql = f"UPDATE properties SET {', '.join(set_clauses)} WHERE id = %s RETURNING id, code, community_name, price_total, unit_price, age, indoor_total, total_area, floor_info, showing_agent, decision_status;"
+                    cur.execute(sql, tuple(vals))
+                    res = cur.fetchone()
+
+                    # Trigger async sync
+                    trigger_async_github_sync(f"Manual update property {res[2]} (#{real_id})")
+
+                    self.send_json({
+                        "success": True,
+                        "property_id": res[0],
+                        "code": res[1],
+                        "name": res[2],
+                        "price": float(res[3]) if res[3] is not None else 0,
+                        "unit_price": float(res[4]) if res[4] is not None else 0,
+                        "age": float(res[5]) if res[5] is not None else None,
+                        "indoor": float(res[6]) if res[6] is not None else None,
+                        "total_area": float(res[7]) if res[7] is not None else None,
+                        "floor": res[8] or "",
+                        "showing_agent": res[9] or "",
+                        "status": res[10] or "",
+                        "message": f"成功更新物件「{res[2]}」資料！"
                     })
         except Exception as e:
             self.send_json({"success": False, "error": str(e)}, status=500)
