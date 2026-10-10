@@ -360,7 +360,6 @@
               <th id="thShowingAgent" class="py-3 px-3 text-center whitespace-nowrap hidden">
                 <span class="inline-flex items-center gap-1 text-emerald-800"><i class="fa-solid fa-user-tie"></i> 帶看房仲</span>
               </th>
-              <th class="py-3 px-4">特色優勢與生活機能</th>
               <th class="py-3 px-3 text-center rounded-r-lg">外部查看 / 操作</th>
             </tr>
           </thead>
@@ -3031,10 +3030,6 @@
           </td>
           <td class="py-3 px-3 text-right text-slate-600 whitespace-nowrap">${p.mgmtFee}</td>
           ${showingAgentCell}
-          <td class="py-3 px-4 text-xs text-slate-600">
-            <div class="font-medium text-slate-800">${p.note}</div>
-            <div class="text-[11px] text-slate-400 mt-0.5 truncate max-w-[200px]" title="${p.title}">${p.title}</div>
-          </td>
           <td class="py-3 px-3 text-center whitespace-nowrap">
             <div class="flex items-center justify-center gap-1.5">
               <button onclick="openEditModal('${p.id}')" class="p-1.5 bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white rounded-lg transition" title="手動修改物件各項欄位 (屋齡、實坪、總價、樓層、帶看房仲等)">
