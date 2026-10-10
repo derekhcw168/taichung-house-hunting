@@ -322,45 +322,45 @@
         <table class="min-w-full text-left text-xs whitespace-nowrap" id="compareTable">
           <thead class="bg-slate-100 text-slate-700 text-[11px] uppercase font-bold tracking-wider">
             <tr>
-              <th onclick="sortTable('id')" class="sortable py-3 px-3 text-center rounded-l-lg">
+              <th onclick="sortTable('id')" class="sortable py-2.5 px-2 text-center rounded-l-lg">
                 編號 <span id="sort-icon-id" class="sort-icon sort-active">▲</span>
               </th>
-              <th class="py-3 px-3 text-center">看屋決策分類</th>
-              <th onclick="sortTable('name')" class="sortable py-3 px-4">
+              <th class="py-2.5 px-2 text-center w-[124px]">看屋決策</th>
+              <th onclick="sortTable('name')" class="sortable py-2.5 px-3">
                 社區名稱 <span id="sort-icon-name" class="sort-icon">⇅</span>
               </th>
-              <th onclick="sortTable('district')" class="sortable py-3 px-3 text-center">
+              <th onclick="sortTable('district')" class="sortable py-2.5 px-2 text-center">
                 行政區 <span id="sort-icon-district" class="sort-icon">⇅</span>
               </th>
-              <th onclick="sortTable('price')" class="sortable py-3 px-4 text-right">
+              <th onclick="sortTable('price')" class="sortable py-2.5 px-3 text-right">
                 總價 (萬) <span id="sort-icon-price" class="sort-icon">⇅</span>
               </th>
-              <th onclick="sortTable('unitPrice')" class="sortable py-3 px-4 text-right">
+              <th onclick="sortTable('unitPrice')" class="sortable py-2.5 px-3 text-right">
                 單價 <span id="sort-icon-unitPrice" class="sort-icon">⇅</span>
               </th>
-              <th onclick="sortTable('rooms')" class="sortable py-3 px-3 text-center">
+              <th onclick="sortTable('rooms')" class="sortable py-2.5 px-2 text-center">
                 格局 <span id="sort-icon-rooms" class="sort-icon">⇅</span>
               </th>
-              <th onclick="sortTable('floorNum')" class="sortable py-3 px-3 text-center">
+              <th onclick="sortTable('floorNum')" class="sortable py-2.5 px-2 text-center">
                 樓層 <span id="sort-icon-floorNum" class="sort-icon">⇅</span>
               </th>
-              <th onclick="sortTable('ageNum')" class="sortable py-3 px-3 text-center">
+              <th onclick="sortTable('ageNum')" class="sortable py-2.5 px-2 text-center">
                 屋齡 <span id="sort-icon-ageNum" class="sort-icon">⇅</span>
               </th>
-              <th onclick="sortTable('indoor')" class="sortable py-3 px-4 text-right bg-amber-50/60">
+              <th onclick="sortTable('indoor')" class="sortable py-2.5 px-3 text-right bg-amber-50/60">
                 室內實坪 <span id="sort-icon-indoor" class="sort-icon">⇅</span>
               </th>
 
-              <th onclick="sortTable('parkingType')" class="sortable py-3 px-4">
+              <th onclick="sortTable('parkingType')" class="sortable py-2.5 px-3">
                 車位型態 <span id="sort-icon-parkingType" class="sort-icon">⇅</span>
               </th>
-              <th onclick="sortTable('mgmtFeeNum')" class="sortable py-3 px-3 text-right">
+              <th onclick="sortTable('mgmtFeeNum')" class="sortable py-2.5 px-2.5 text-right">
                 管理費 <span id="sort-icon-mgmtFeeNum" class="sort-icon">⇅</span>
               </th>
-              <th id="thShowingAgent" class="py-3 px-3 text-center whitespace-nowrap hidden">
+              <th id="thShowingAgent" class="py-2.5 px-2 text-center whitespace-nowrap hidden">
                 <span class="inline-flex items-center gap-1 text-emerald-800"><i class="fa-solid fa-user-tie"></i> 帶看房仲</span>
               </th>
-              <th class="py-3 px-3 text-center rounded-r-lg">外部查看 / 操作</th>
+              <th class="py-2.5 px-2 text-center w-[58px] rounded-r-lg" title="查看原始網頁、地圖、照片與編輯">操作</th>
             </tr>
           </thead>
           <tbody id="tableBody" class="divide-y divide-slate-100 text-slate-700">
@@ -375,52 +375,6 @@
         <div class="text-slate-400 text-xs mt-1">您可在「待看物件」中將看完的物件標記為「列入考慮」或「不考慮」</div>
       </div>
     </section>
-
-    <!-- Excluded List Card -->
-    <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 md:p-6">
-      <div class="pb-3 border-b border-slate-100 flex items-center justify-between">
-        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-folder-minus text-rose-500"></i>
-          已移至「看完之後不考慮的物件」清單說明 (原重複與未符需求物件・共 28 筆)
-        </h3>
-        <span class="text-xs text-slate-400 font-medium">依清單原則嚴格把關</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 text-xs">
-        <div class="p-3.5 bg-rose-50/60 rounded-xl border border-rose-100">
-          <div class="font-bold text-rose-800 mb-1 flex items-center gap-1.5">
-            <i class="fa-solid fa-shower"></i> 單一衛浴排除 (9 件)
-          </div>
-          <p class="text-slate-600 leading-relaxed text-[11px]">
-            綠郡大廈、黎明春秋、大台中新市、英棋尊邸、台中蓮莊、現代經典、櫻木花道、傑出名門 (2件)。
-          </p>
-        </div>
-        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-          <div class="font-bold text-slate-800 mb-1 flex items-center gap-1.5">
-            <i class="fa-solid fa-copy"></i> 重複刊登排除 (9 件)
-          </div>
-          <p class="text-slate-600 leading-relaxed text-[11px]">
-            文心大國民 (市民獨家永慶)、大安黃金城 (永慶)、靜園A區 (永慶美三房)、寧靜海 (2件)、中興大學、文心大三元、南區專任 (2件)。
-          </p>
-        </div>
-        <div class="p-3.5 bg-amber-50/60 rounded-xl border border-amber-100">
-          <div class="font-bold text-amber-800 mb-1 flex items-center gap-1.5">
-            <i class="fa-solid fa-ban"></i> 特定社區排除 (5 件)
-          </div>
-          <p class="text-slate-600 leading-relaxed text-[11px]">
-            長億南園 (3件)、長億城攬翠區、德昌中華大樓（符合需求書排除長億/德昌老舊系列原則）。
-          </p>
-        </div>
-        <div class="p-3.5 bg-purple-50/60 rounded-xl border border-purple-100">
-          <div class="font-bold text-purple-800 mb-1 flex items-center gap-1.5">
-            <i class="fa-solid fa-triangle-exclamation"></i> 其他原因排除 (5 件)
-          </div>
-          <p class="text-slate-600 leading-relaxed text-[11px]">
-            廣三大時代大廈 (921黃標震損)、別人家花兩千萬 (公寓無電梯)、八期好市多 (公寓二樓無電梯)、樂福 (2+1房平車)。
-          </p>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- Footer -->
@@ -2890,76 +2844,73 @@
           parkingBadge = '<span class="badge bg-rose-50 text-rose-700">' + (p.parkingType || '無車位') + '</span>';
         }
 
-        // Action Buttons based on category
+        // Action Buttons based on category (Compact 2x2 grid)
         let actionButtons = '';
         if (cat === 'pending') {
           actionButtons = `
-            <div class="flex items-center justify-center gap-1.5">
-              <button onclick="movePropertyCategory('${p.id}', 'consider')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center gap-1 shadow-sm transition" title="看完列入考慮 (寫入資料庫)">
-                <i class="fa-solid fa-heart"></i> 列入考慮
+            <div class="grid grid-cols-2 gap-1 w-[116px] mx-auto">
+              <button onclick="movePropertyCategory('${p.id}', 'consider')" class="w-full py-0.5 px-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-bold text-[10px] flex items-center justify-center gap-0.5 shadow-sm transition" title="看完列入考慮 (寫入資料庫)">
+                <i class="fa-solid fa-heart text-[9px]"></i> 考慮
               </button>
-              <button onclick="movePropertyCategory('${p.id}', 'rejected')" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="看完不考慮 (寫入資料庫)">
-                <i class="fa-solid fa-xmark"></i> 不考慮
+              <button onclick="movePropertyCategory('${p.id}', 'rejected')" class="w-full py-0.5 px-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="看完不考慮 (寫入資料庫)">
+                <i class="fa-solid fa-xmark text-[9px]"></i> 不考慮
               </button>
-              <button onclick="openEditModal('${p.id}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="手動修改物件各項欄位 (屋齡、實坪、總價等)">
-                <i class="fa-solid fa-pen-to-square"></i> 修改
+              <button onclick="openEditModal('${p.id}')" class="w-full py-0.5 px-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="手動修改物件各項欄位 (屋齡、實坪、總價等)">
+                <i class="fa-solid fa-pen-to-square text-[9px]"></i> 修改
               </button>
-              <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
-                <i class="fa-solid fa-trash-can"></i> 刪除
+              <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="w-full py-0.5 px-1 bg-red-50 hover:bg-red-100 text-red-600 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="移至刪除物件類別">
+                <i class="fa-solid fa-trash-can text-[9px]"></i> 刪除
               </button>
             </div>
           `;
         } else if (cat === 'consider') {
           actionButtons = `
-            <div class="flex items-center justify-center gap-1.5">
-              <span class="badge bg-emerald-100 text-emerald-800 font-bold mr-1"><i class="fa-solid fa-heart text-emerald-600 mr-1"></i>已列考慮</span>
-              <button onclick="movePropertyCategory('${p.id}', 'pending')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded text-[11px] transition" title="移回待看">
-                <i class="fa-solid fa-rotate-left"></i> 回待看
+            <div class="grid grid-cols-2 gap-1 w-[116px] mx-auto">
+              <button onclick="movePropertyCategory('${p.id}', 'pending')" class="w-full py-0.5 px-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="移回待看名單">
+                <i class="fa-solid fa-rotate-left text-[9px]"></i> 回待看
               </button>
-              <button onclick="movePropertyCategory('${p.id}', 'rejected')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded text-[11px] transition" title="改為不考慮">
-                <i class="fa-solid fa-xmark"></i> 不考慮
+              <button onclick="movePropertyCategory('${p.id}', 'rejected')" class="w-full py-0.5 px-1 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="改為不考慮">
+                <i class="fa-solid fa-xmark text-[9px]"></i> 不考慮
               </button>
-              <button onclick="openEditModal('${p.id}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="手動修改物件各項欄位">
-                <i class="fa-solid fa-pen-to-square"></i> 修改
+              <button onclick="openEditModal('${p.id}')" class="w-full py-0.5 px-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="手動修改物件各項欄位">
+                <i class="fa-solid fa-pen-to-square text-[9px]"></i> 修改
               </button>
-              <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
-                <i class="fa-solid fa-trash-can"></i> 刪除
+              <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="w-full py-0.5 px-1 bg-red-50 hover:bg-red-100 text-red-600 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="移至刪除物件類別">
+                <i class="fa-solid fa-trash-can text-[9px]"></i> 刪除
               </button>
             </div>
           `;
         } else if (cat === 'rejected') {
           actionButtons = `
-            <div class="flex items-center justify-center gap-1.5">
-              <span class="badge bg-slate-200 text-slate-600 font-medium mr-1"><i class="fa-solid fa-ban mr-1"></i>不考慮</span>
-              <button onclick="movePropertyCategory('${p.id}', 'pending')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded text-[11px] transition" title="移回待看">
-                <i class="fa-solid fa-rotate-left"></i> 回待看
+            <div class="grid grid-cols-2 gap-1 w-[116px] mx-auto">
+              <button onclick="movePropertyCategory('${p.id}', 'pending')" class="w-full py-0.5 px-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="移回待看名單">
+                <i class="fa-solid fa-rotate-left text-[9px]"></i> 回待看
               </button>
-              <button onclick="movePropertyCategory('${p.id}', 'consider')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded text-[11px] transition" title="改為考慮">
-                <i class="fa-solid fa-heart"></i> 改考慮
+              <button onclick="movePropertyCategory('${p.id}', 'consider')" class="w-full py-0.5 px-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="改為考慮">
+                <i class="fa-solid fa-heart text-[9px]"></i> 改考慮
               </button>
-              <button onclick="openEditModal('${p.id}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="手動修改物件各項欄位">
-                <i class="fa-solid fa-pen-to-square"></i> 修改
+              <button onclick="openEditModal('${p.id}')" class="w-full py-0.5 px-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="手動修改物件各項欄位">
+                <i class="fa-solid fa-pen-to-square text-[9px]"></i> 修改
               </button>
-              <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="移至刪除物件類別">
-                <i class="fa-solid fa-trash-can"></i> 刪除
+              <button onclick="deleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="w-full py-0.5 px-1 bg-red-50 hover:bg-red-100 text-red-600 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="移至刪除物件類別">
+                <i class="fa-solid fa-trash-can text-[9px]"></i> 刪除
               </button>
             </div>
           `;
         } else if (cat === 'deleted') {
           actionButtons = `
-            <div class="flex items-center justify-center gap-1.5">
-              <span class="badge bg-slate-200 text-slate-600 font-bold mr-1"><i class="fa-solid fa-trash-can mr-1"></i>已刪除</span>
-              <button onclick="movePropertyCategory('${p.id}', 'pending')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-[11px] flex items-center gap-1 shadow-sm transition" title="還原回待看名單">
-                <i class="fa-solid fa-rotate-left"></i> 還原待看
+            <div class="grid grid-cols-2 gap-1 w-[116px] mx-auto">
+              <button onclick="movePropertyCategory('${p.id}', 'pending')" class="w-full py-0.5 px-1 bg-blue-600 hover:bg-blue-700 text-white rounded font-bold text-[10px] flex items-center justify-center gap-0.5 shadow-sm transition" title="還原回待看名單">
+                <i class="fa-solid fa-rotate-left text-[9px]"></i> 還原
               </button>
-              <button onclick="movePropertyCategory('${p.id}', 'consider')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded text-[11px] font-medium transition" title="改為考慮">
-                <i class="fa-solid fa-heart"></i> 改考慮
+              <button onclick="movePropertyCategory('${p.id}', 'consider')" class="w-full py-0.5 px-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="改為考慮">
+                <i class="fa-solid fa-heart text-[9px]"></i> 改考慮
               </button>
-              <button onclick="openEditModal('${p.id}')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg font-bold text-[11px] flex items-center gap-1 transition" title="手動修改物件各項欄位">
-                <i class="fa-solid fa-pen-to-square"></i> 修改
+              <button onclick="openEditModal('${p.id}')" class="w-full py-0.5 px-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded font-bold text-[10px] flex items-center justify-center gap-0.5 transition" title="手動修改物件各項欄位">
+                <i class="fa-solid fa-pen-to-square text-[9px]"></i> 修改
               </button>
-              <button onclick="permanentDeleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-bold text-[11px] flex items-center gap-1 shadow-sm transition" title="徹底從資料庫永久清除此物件">
-                <i class="fa-solid fa-trash-can"></i> 永久刪除
+              <button onclick="permanentDeleteProperty('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="w-full py-0.5 px-1 bg-rose-600 hover:bg-rose-700 text-white rounded font-bold text-[10px] flex items-center justify-center gap-0.5 shadow-sm transition" title="徹底從資料庫永久清除此物件">
+                <i class="fa-solid fa-trash-can text-[9px]"></i> 永刪
               </button>
             </div>
           `;
@@ -2978,8 +2929,8 @@
         if (activeCategoryTab === 'consider') {
           const sa = p.showingAgent || '';
           showingAgentCell = `
-            <td class="py-2.5 px-3 text-center whitespace-nowrap bg-emerald-50/20">
-              <select onchange="updateShowingAgent('${p.id}', this.value)" class="text-xs font-bold border border-emerald-300 rounded-lg px-2.5 py-1.5 bg-white text-emerald-950 focus:ring-2 focus:ring-emerald-500 shadow-sm cursor-pointer hover:bg-emerald-50 transition" title="選擇帶看房仲品牌">
+            <td class="py-2.5 px-2 text-center whitespace-nowrap bg-emerald-50/20">
+              <select onchange="updateShowingAgent('${p.id}', this.value)" class="text-xs font-bold border border-emerald-300 rounded-lg px-2 py-1 bg-white text-emerald-950 focus:ring-2 focus:ring-emerald-500 shadow-sm cursor-pointer hover:bg-emerald-50 transition" title="選擇帶看房仲品牌">
                 <option value="" ${!sa ? 'selected' : ''}>-- 選擇房仲 --</option>
                 <option value="信義房屋" ${sa === '信義房屋' ? 'selected' : ''}>信義房屋</option>
                 <option value="永義房屋" ${sa === '永義房屋' ? 'selected' : ''}>永義房屋</option>
@@ -2991,11 +2942,11 @@
         }
 
         tr.innerHTML = `
-          <td class="py-3 px-3 text-center font-bold text-slate-500">#${p.id}</td>
-          <td class="py-3 px-3 text-center whitespace-nowrap">
+          <td class="py-2.5 px-2 text-center font-bold text-slate-500">#${p.id}</td>
+          <td class="py-2.5 px-2 text-center whitespace-nowrap">
             ${actionButtons}
           </td>
-          <td class="py-3 px-4 font-semibold text-slate-900">
+          <td class="py-2.5 px-3 font-semibold text-slate-900">
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="${(cat === 'rejected' || cat === 'deleted') ? 'line-through text-slate-400' : ''}">${p.name}</span>${newBadge}
               <button onclick="openPhotoModal('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition" title="檢視現場照片">
@@ -3004,46 +2955,46 @@
             </div>
             <div class="text-[11px] font-normal text-slate-500">${p.area}</div>
           </td>
-          <td class="py-3 px-3 text-center whitespace-nowrap font-medium text-slate-700">${p.district}</td>
-          <td class="py-3 px-4 text-right font-extrabold text-rose-600 text-base whitespace-nowrap cursor-pointer hover:bg-rose-50 transition rounded" onclick="openEditModal('${p.id}', 'price')" title="點擊手動修改總價">
+          <td class="py-2.5 px-2 text-center whitespace-nowrap font-medium text-slate-700">${p.district}</td>
+          <td class="py-2.5 px-3 text-right font-extrabold text-rose-600 text-base whitespace-nowrap cursor-pointer hover:bg-rose-50 transition rounded" onclick="openEditModal('${p.id}', 'price')" title="點擊手動修改總價">
             ${p.price} 萬
           </td>
-          <td class="py-3 px-4 text-right font-semibold text-slate-700 whitespace-nowrap">${p.unitPrice} 萬</td>
-          <td class="py-3 px-3 text-center whitespace-nowrap cursor-pointer hover:bg-slate-100 transition rounded" onclick="openEditModal('${p.id}', 'layout')" title="點擊手動修改格局">
+          <td class="py-2.5 px-3 text-right font-semibold text-slate-700 whitespace-nowrap">${p.unitPrice} 萬</td>
+          <td class="py-2.5 px-2 text-center whitespace-nowrap cursor-pointer hover:bg-slate-100 transition rounded" onclick="openEditModal('${p.id}', 'layout')" title="點擊手動修改格局">
             <div class="font-semibold text-slate-800">${p.layout}</div>
             <span class="badge bg-emerald-50 text-emerald-700 border border-emerald-200 mt-0.5">2衛</span>
           </td>
-          <td class="py-3 px-3 text-center whitespace-nowrap text-slate-600 font-medium cursor-pointer hover:bg-sky-50 transition rounded" onclick="openEditModal('${p.id}', 'floor')" title="點擊手動修改樓層">
+          <td class="py-2.5 px-2 text-center whitespace-nowrap text-slate-600 font-medium cursor-pointer hover:bg-sky-50 transition rounded" onclick="openEditModal('${p.id}', 'floor')" title="點擊手動修改樓層">
             ${p.floor}
           </td>
-          <td class="py-3 px-3 text-center text-slate-600 whitespace-nowrap cursor-pointer hover:bg-amber-50 hover:text-amber-900 transition rounded" onclick="openEditModal('${p.id}', 'age')" title="點擊手動修改屋齡">
+          <td class="py-2.5 px-2 text-center text-slate-600 whitespace-nowrap cursor-pointer hover:bg-amber-50 hover:text-amber-900 transition rounded" onclick="openEditModal('${p.id}', 'age')" title="點擊手動修改屋齡">
             ${p.age} <i class="fa-solid fa-pen text-[9px] text-amber-500 opacity-50 ml-0.5"></i>
           </td>
-          <td class="py-3 px-4 text-right font-bold text-amber-600 text-sm whitespace-nowrap bg-amber-50/40 cursor-pointer hover:bg-amber-100/60 transition rounded" onclick="openEditModal('${p.id}', 'indoor')" title="點擊手動修改室內實坪">
+          <td class="py-2.5 px-3 text-right font-bold text-amber-600 text-sm whitespace-nowrap bg-amber-50/40 cursor-pointer hover:bg-amber-100/60 transition rounded" onclick="openEditModal('${p.id}', 'indoor')" title="點擊手動修改室內實坪">
             ${p.indoor} 坪 <i class="fa-solid fa-pen text-[9px] text-amber-500 opacity-50 ml-0.5"></i>
             <div class="text-[10px] font-normal text-slate-400">主${p.mainArea} / 附${p.subArea}</div>
           </td>
 
-          <td class="py-3 px-4">
+          <td class="py-2.5 px-3">
             ${parkingBadge}
             <div class="text-[11px] text-slate-500 mt-0.5 max-w-[150px] truncate" title="${p.parkingNote}">${p.parkingNote}</div>
           </td>
-          <td class="py-3 px-3 text-right text-slate-600 whitespace-nowrap">${p.mgmtFee}</td>
+          <td class="py-2.5 px-2.5 text-right text-slate-600 whitespace-nowrap">${p.mgmtFee}</td>
           ${showingAgentCell}
-          <td class="py-3 px-3 text-center whitespace-nowrap">
-            <div class="flex items-center justify-center gap-1.5">
-              <button onclick="openEditModal('${p.id}')" class="p-1.5 bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white rounded-lg transition" title="手動修改物件各項欄位 (屋齡、實坪、總價、樓層、帶看房仲等)">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </button>
-              <button onclick="openPhotoModal('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="p-1.5 bg-purple-50 text-purple-600 hover:bg-purple-600 hover:text-white rounded-lg transition" title="查看現場照片 (${p.imgCount || 0}張)">
-                <i class="fa-solid fa-camera"></i>
-              </button>
-              <button onclick="focusProperty('${p.id}')" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition" title="在地圖上檢視">
+          <td class="py-2.5 px-2 text-center whitespace-nowrap">
+            <div class="grid grid-cols-2 gap-1 w-[52px] mx-auto">
+              <button onclick="focusProperty('${p.id}')" class="p-1 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded text-xs transition inline-flex items-center justify-center" title="在地圖上檢視">
                 <i class="fa-solid fa-location-dot"></i>
               </button>
-              <a href="${p.url}" target="_blank" class="p-1.5 bg-slate-100 text-slate-600 hover:bg-slate-700 hover:text-white rounded-lg transition" title="開啟原始房屋網頁">
+              <a href="${p.url}" target="_blank" class="p-1 bg-slate-100 text-slate-600 hover:bg-slate-700 hover:text-white rounded text-xs transition inline-flex items-center justify-center" title="開啟原始房屋網頁">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>
+              <button onclick="openPhotoModal('${p.id}', '${p.name.replace(/'/g, "\\'")}')" class="p-1 bg-purple-50 text-purple-600 hover:bg-purple-600 hover:text-white rounded text-xs transition inline-flex items-center justify-center" title="查看現場照片 (${p.imgCount || 0}張)">
+                <i class="fa-solid fa-camera"></i>
+              </button>
+              <button onclick="openEditModal('${p.id}')" class="p-1 bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white rounded text-xs transition inline-flex items-center justify-center" title="手動修改物件各項欄位 (屋齡、實坪、總價等)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
             </div>
           </td>
         `;
