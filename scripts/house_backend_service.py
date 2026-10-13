@@ -43,6 +43,16 @@ def trigger_async_github_sync(commit_msg):
             print(f"[AsyncSync] GitHub sync failed: {e}")
     threading.Thread(target=_worker, daemon=True).start()
 
+TUNNEL_LOCK = threading.Lock()
+CURRENT_TUNNEL_PROC = None
+RESTART_EVENT = threading.Event()
+
+def kill_all_cloudflared():
+    try:
+        subprocess.run("taskkill /F /IM cloudflared.exe", shell=True, capture_output=True)
+    except Exception:
+        pass
+
 def update_api_config(url):
     global CURRENT_TUNNEL_URL
     if CURRENT_TUNNEL_URL == url:
@@ -65,25 +75,46 @@ def update_api_config(url):
     trigger_async_github_sync(f"Update Cloud API tunnel URL: {url}")
 
 def start_tunnel_thread():
-    def _tunnel_loop():
+    def _tunnel_worker():
+        global CURRENT_TUNNEL_PROC
         cloudflared_bin = os.path.join(BASE_DIR, "cloudflared.exe")
         while True:
+            kill_all_cloudflared()
+            time.sleep(1)
+            RESTART_EVENT.clear()
             try:
                 if os.path.exists(cloudflared_bin):
                     cmd = [cloudflared_bin, 'tunnel', '--url', f'http://127.0.0.1:{PORT}']
                     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding='utf-8', errors='ignore', bufsize=1)
+                    with TUNNEL_LOCK:
+                        CURRENT_TUNNEL_PROC = proc
+
+                    found_url = False
                     for line in iter(proc.stdout.readline, ''):
-                        m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.trycloudflare\.com', line)
-                        if m:
-                            t_url = m.group(0)
-                            print(f"==================================================")
-                            print(f" 🌐 Cloudflare 高速穿透服務已就緒: {t_url}")
-                            print(f"==================================================")
-                            update_api_config(t_url)
-                    proc.wait()
+                        if not found_url:
+                            m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.trycloudflare\.com', line)
+                            if m:
+                                t_url = m.group(0)
+                                found_url = True
+                                print(f"==================================================")
+                                print(f" 🌐 Cloudflare 高速穿透服務已就緒: {t_url}")
+                                print(f"==================================================")
+                                update_api_config(t_url)
+                        if RESTART_EVENT.is_set():
+                            break
+                    try:
+                        proc.terminate()
+                        proc.wait(timeout=2)
+                    except Exception:
+                        try:
+                            proc.kill()
+                        except Exception:
+                            pass
                 else:
                     cmd = ['ssh', '-o', 'StrictHostKeyChecking=no', '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=3', '-R', f'80:127.0.0.1:{PORT}', 'nokey@localhost.run']
                     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding='utf-8', errors='ignore', bufsize=1)
+                    with TUNNEL_LOCK:
+                        CURRENT_TUNNEL_PROC = proc
                     for line in iter(proc.stdout.readline, ''):
                         m = re.search(r'https://[a-zA-Z0-9\.\-_]+\.lhr\.life', line)
                         if m:
@@ -92,11 +123,51 @@ def start_tunnel_thread():
                             print(f" 🌐 雲端穿透服務已就緒: {t_url}")
                             print(f"==================================================")
                             update_api_config(t_url)
-                    proc.wait()
+                        if RESTART_EVENT.is_set():
+                            break
+                    try:
+                        proc.terminate()
+                        proc.wait(timeout=2)
+                    except Exception:
+                        pass
             except Exception as e:
                 print(f"[TunnelError]: {e}")
             time.sleep(3)
-    threading.Thread(target=_tunnel_loop, daemon=True).start()
+
+    def _watchdog_worker():
+        global CURRENT_TUNNEL_PROC
+        fail_count = 0
+        while True:
+            time.sleep(30)
+            if not CURRENT_TUNNEL_URL:
+                continue
+            try:
+                test_url = f"{CURRENT_TUNNEL_URL}/api/status"
+                req = urllib.request.Request(test_url, headers={'User-Agent': 'TunnelHealthCheck/1.0'})
+                with urllib.request.urlopen(req, context=ssl_ctx, timeout=7) as resp:
+                    if resp.status == 200:
+                        fail_count = 0
+                    else:
+                        fail_count += 1
+            except Exception as e:
+                fail_count += 1
+                print(f"[TunnelWatchdog] 雲端穿透探測異常 ({fail_count}/2): {e}")
+
+            if fail_count >= 2:
+                print(f"[TunnelWatchdog] ⚠️ 雲端穿透通道已失效，立即自動重啟通道並更新 GitHub Pages...")
+                fail_count = 0
+                RESTART_EVENT.set()
+                with TUNNEL_LOCK:
+                    if CURRENT_TUNNEL_PROC:
+                        try:
+                            CURRENT_TUNNEL_PROC.terminate()
+                        except Exception:
+                            pass
+                kill_all_cloudflared()
+                time.sleep(2)
+
+    threading.Thread(target=_tunnel_worker, daemon=True).start()
+    threading.Thread(target=_watchdog_worker, daemon=True).start()
 
 def get_db():
     return psycopg.connect(DB_CONFIG, autocommit=True)
@@ -1259,6 +1330,7 @@ def kill_existing_port_processes(port):
 
 def run_server():
     kill_existing_port_processes(PORT)
+    kill_all_cloudflared()
     server_address = ('0.0.0.0', PORT)
     httpd = http.server.ThreadingHTTPServer(server_address, HouseRequestHandler)
     print(f"==================================================")

@@ -3282,7 +3282,8 @@
         }
       } catch (e) {
         statusBox.classList.add('hidden');
-        showToast(`⚠️ <strong>後端服務連線逾時</strong><br>請確認後端連線正常，或稍後再試。`, '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>');
+        showToast(`⚠️ <strong>雲端後端連線逾時</strong><br>已為您開啟快速收錄視窗，您可直接確認並儲存！`, '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>');
+        openCloudQuickAddModal(url, '雲端後端連線逾時，已轉為快速收錄模式');
       } finally {
         btn.disabled = false;
         btn.classList.remove('opacity-50');
