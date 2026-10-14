@@ -90,7 +90,7 @@ def add_header_footer(doc):
     header = section.header
     hp = header.paragraphs[0]
     hp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    hr = hp.add_run("大墩人文 11 樓｜房仲向屋主議價說服專用說帖（內部實戰版）")
+    hr = hp.add_run("大墩人文 11 樓｜房仲向屋主議價溝通文件（內部實戰版）")
     format_run(hr, size_pt=8.5, color_rgb=(148, 163, 184))
 
     # Footer
@@ -121,7 +121,7 @@ def main():
     badge_p = doc.add_paragraph()
     badge_p.paragraph_format.space_before = Pt(0)
     badge_p.paragraph_format.space_after = Pt(4)
-    run_badge = badge_p.add_run("【內部洽談專用】信義房屋專任委託物件・議價撮合策略說帖")
+    run_badge = badge_p.add_run("【內部洽談專用】信義房屋專任委託物件・議價溝通文件")
     format_run(run_badge, size_pt=9.5, bold=True, color_rgb=(37, 99, 235))
 
     # 2. Document Title
@@ -135,7 +135,7 @@ def main():
     sub_p = doc.add_paragraph()
     sub_p.paragraph_format.space_before = Pt(0)
     sub_p.paragraph_format.space_after = Pt(12)
-    run_sub = sub_p.add_run("房仲向屋主議價說服專用說帖（經紀人視角實戰版）")
+    run_sub = sub_p.add_run("房仲向屋主議價溝通文件（經紀人視角實戰版）")
     format_run(run_sub, size_pt=13, bold=True, color_rgb=(71, 85, 105))
 
     # 4. Meta Table (Quick Fact Sheet Box)
@@ -182,7 +182,7 @@ def main():
 
     np = note_cell.paragraphs[0]
     np.paragraph_format.space_after = Pt(4)
-    nr_title = np.add_run("📋 本說帖使用說明與核心戰略方針：")
+    nr_title = np.add_run("📋 本文件使用說明與核心戰略方針：")
     format_run(nr_title, size_pt=10.5, bold=True, color_rgb=(30, 58, 138))
 
     points = [
@@ -430,7 +430,7 @@ def main():
         format_run(r_td, size_pt=10, bold=False, color_rgb=(51, 65, 85))
 
     # Output path
-    output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "大墩人文", "大墩人文11樓_房仲向屋主議價說服專用說帖.docx")
+    output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "大墩人文", "大墩人文11樓_房仲向屋主議價溝通文件.docx")
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     doc.save(output_path)
     print(f"✅ 成功生成 Word 檔案：{output_path}")
