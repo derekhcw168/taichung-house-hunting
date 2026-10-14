@@ -97,6 +97,12 @@ def main(commit_msg=None):
             if os.path.basename(file).lower() != 'readme.md' or not os.path.exists(dest_file):
                 shutil.copy2(file, dest_file)
 
+    # E. Specialty folders (e.g. 大墩人文 dossier & Word documents)
+    dadun_src = os.path.join(base_dir, "大墩人文")
+    dadun_dst = os.path.join(repo_dir, "大墩人文")
+    if os.path.exists(dadun_src):
+        shutil.copytree(dadun_src, dadun_dst, dirs_exist_ok=True)
+
     # Ensure .gitignore exists
     gitignore_path = os.path.join(repo_dir, ".gitignore")
     if not os.path.exists(gitignore_path):
