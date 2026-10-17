@@ -97,29 +97,30 @@ def main(commit_msg=None):
             if os.path.basename(file).lower() != 'readme.md' or not os.path.exists(dest_file):
                 shutil.copy2(file, dest_file)
 
-    # E. Specialty folders (e.g. 大墩人文 dossier & Word documents)
-    dadun_src = os.path.join(base_dir, "大墩人文")
-    dadun_dst = os.path.join(repo_dir, "大墩人文")
-    if os.path.exists(dadun_src):
-        os.makedirs(dadun_dst, exist_ok=True)
-        src_files = set(os.listdir(dadun_src))
-        for f in os.listdir(dadun_dst):
-            if f not in src_files:
-                p = os.path.join(dadun_dst, f)
-                try:
-                    if os.path.isdir(p):
-                        shutil.rmtree(p, ignore_errors=True)
-                    else:
-                        os.remove(p)
-                except Exception as e:
-                    print(f"Warning: could not remove {p}: {e}")
-        for f in src_files:
-            s_path = os.path.join(dadun_src, f)
-            d_path = os.path.join(dadun_dst, f)
-            if os.path.isdir(s_path):
-                shutil.copytree(s_path, d_path, dirs_exist_ok=True)
-            else:
-                shutil.copy2(s_path, d_path)
+    # E. Specialty folders (e.g. 大墩人文, 長億南園8樓, 工學天下15樓 dossiers)
+    for folder_name in ["大墩人文", "長億南園8樓", "工學天下15樓"]:
+        folder_src = os.path.join(base_dir, folder_name)
+        folder_dst = os.path.join(repo_dir, folder_name)
+        if os.path.exists(folder_src):
+            os.makedirs(folder_dst, exist_ok=True)
+            src_files = set(os.listdir(folder_src))
+            for f in os.listdir(folder_dst):
+                if f not in src_files:
+                    p = os.path.join(folder_dst, f)
+                    try:
+                        if os.path.isdir(p):
+                            shutil.rmtree(p, ignore_errors=True)
+                        else:
+                            os.remove(p)
+                    except Exception as e:
+                        print(f"Warning: could not remove {p}: {e}")
+            for f in src_files:
+                s_path = os.path.join(folder_src, f)
+                d_path = os.path.join(folder_dst, f)
+                if os.path.isdir(s_path):
+                    shutil.copytree(s_path, d_path, dirs_exist_ok=True)
+                else:
+                    shutil.copy2(s_path, d_path)
 
     # Ensure .gitignore exists
     gitignore_path = os.path.join(repo_dir, ".gitignore")
