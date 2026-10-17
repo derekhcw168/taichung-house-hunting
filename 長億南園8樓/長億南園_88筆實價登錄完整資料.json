@@ -1,0 +1,6609 @@
+[
+  {
+    "id": 12199923,
+    "date": "115-09-08",
+    "trans_date": "2026-09-08",
+    "month": "115-09",
+    "address": "德富路378號 | 4樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.29坪",
+    "build_area_v": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "34.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "745",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "2.6",
+      "unit": "坪",
+      "estimate": 1
+    },
+    "unit_price": {
+      "price": "21.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "22.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "825萬",
+    "total_price_v": "825",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "4樓",
+    "shift_floor_val": "4",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "80",
+    "real_park_total_price_v": {
+      "price": "80",
+      "unit": "萬",
+      "estimate": 1
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "115年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "4",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 10300814,
+    "date": "115-06-27",
+    "trans_date": "2026-06-27",
+    "month": "115-06",
+    "address": "德富路370號 | 6樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "40.74坪",
+    "build_area_v": {
+      "area": "40.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "38.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "870",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "2.6",
+      "unit": "坪",
+      "estimate": 1
+    },
+    "unit_price": {
+      "price": "22.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "23.3",
+      "unit": "萬/坪"
+    },
+    "total_price": "950萬",
+    "total_price_v": "950",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "6樓",
+    "shift_floor_val": "6",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "80",
+    "real_park_total_price_v": {
+      "price": "80",
+      "unit": "萬",
+      "estimate": 1
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "115年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 3,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "6",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 9407546,
+    "date": "115-04-02",
+    "trans_date": "2026-04-02",
+    "month": "115-04",
+    "address": "德富路378號 | 9樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "34.85坪",
+    "build_area_v": {
+      "area": "34.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "34.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "782",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "22.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "22.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "782萬",
+    "total_price_v": "782",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "9樓",
+    "shift_floor_val": "9",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "115年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "9",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 7112844,
+    "date": "114-07-18",
+    "trans_date": "2025-07-18",
+    "month": "114-07",
+    "address": "德富路386號 | 7樓之2",
+    "layout": "4房",
+    "layout_v2": "4房2廳",
+    "room_search": 4,
+    "build_area": "49.21坪",
+    "build_area_v": {
+      "area": "49.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "46.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,120",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "2.6",
+      "unit": "坪",
+      "estimate": 1
+    },
+    "unit_price": {
+      "price": "24.0",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "24.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,200萬",
+    "total_price_v": "1,200",
+    "price_tips": "",
+    "context": "親友、員工、共有人或其他特殊關係間之交易；",
+    "is_special": 1,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "80",
+    "real_park_total_price_v": {
+      "price": "80",
+      "unit": "萬",
+      "estimate": 1
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "114年",
+    "tag": [
+      "中樓層",
+      "機械車位",
+      "特殊交易"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "親友或員工等關係人間交易",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 7027067,
+    "date": "114-05-13",
+    "trans_date": "2025-05-13",
+    "month": "114-05",
+    "address": "德富路372號 | 12,13樓之1",
+    "layout": "5房",
+    "layout_v2": "5房3廳",
+    "room_search": 5,
+    "build_area": "56.82坪",
+    "build_area_v": {
+      "area": "56.8",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "56.8",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,170",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "20.6",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "20.6",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,170萬",
+    "total_price_v": "1,170",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12,13樓",
+    "shift_floor_val": "12,13",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "114年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12,13",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6980568,
+    "date": "114-04-19",
+    "trans_date": "2025-04-19",
+    "month": "114-04",
+    "address": "德富路382號 | 10樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "38.82坪",
+    "build_area_v": {
+      "area": "38.8",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "38.8",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,040",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "26.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "26.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,040萬",
+    "total_price_v": "1,040",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "10樓",
+    "shift_floor_val": "10",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "114年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "10",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 7005794,
+    "date": "114-03-31",
+    "trans_date": "2025-03-31",
+    "month": "114-03",
+    "address": "德富路378號 | 5樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.29坪",
+    "build_area_v": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "969",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "26.0",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "26.0",
+      "unit": "萬/坪"
+    },
+    "total_price": "969萬",
+    "total_price_v": "969",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "114年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 7046706,
+    "date": "114-03-26",
+    "trans_date": "2025-03-26",
+    "month": "114-03",
+    "address": "德富路370號 | 5樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.10坪",
+    "build_area_v": {
+      "area": "36.1",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.1",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "900",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "24.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "24.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "900萬",
+    "total_price_v": "900",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "114年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6908547,
+    "date": "114-01-24",
+    "trans_date": "2025-01-24",
+    "month": "114-01",
+    "address": "高工路131號 | 1,2樓",
+    "layout": "2房",
+    "layout_v2": "2房2廳",
+    "room_search": 2,
+    "build_area": "43.71坪",
+    "build_area_v": {
+      "area": "43.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "43.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,606",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "36.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "36.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,606萬",
+    "total_price_v": "1,606",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "114年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6721330,
+    "date": "113-09-21",
+    "trans_date": "2024-09-21",
+    "month": "113-09",
+    "address": "德富路382號 | 7樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.42坪",
+    "build_area_v": {
+      "area": "37.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.4",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,080",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "28.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "28.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,080萬",
+    "total_price_v": "1,080",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "113年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6701317,
+    "date": "113-08-31",
+    "trans_date": "2024-08-31",
+    "month": "113-08",
+    "address": "德富路388號 | 11樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "38.30坪",
+    "build_area_v": {
+      "area": "38.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "38.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,060",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "27.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "27.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,060萬",
+    "total_price_v": "1,060",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "11樓",
+    "shift_floor_val": "11",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "113年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "11",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6652757,
+    "date": "113-07-14",
+    "trans_date": "2024-07-14",
+    "month": "113-07",
+    "address": "德富路390號 | 5樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.34坪",
+    "build_area_v": {
+      "area": "36.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "890",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "24.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "24.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "890萬",
+    "total_price_v": "890",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "113年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6538460,
+    "date": "113-05-10",
+    "trans_date": "2024-05-10",
+    "month": "113-05",
+    "address": "德富路378號 | 3樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.29坪",
+    "build_area_v": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "880",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "23.6",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "23.6",
+      "unit": "萬/坪"
+    },
+    "total_price": "880萬",
+    "total_price_v": "880",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "3樓",
+    "shift_floor_val": "3",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "113年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "3",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6465972,
+    "date": "113-04-15",
+    "trans_date": "2024-04-15",
+    "month": "113-04",
+    "address": "德富路382號 | 7樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.42坪",
+    "build_area_v": {
+      "area": "37.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.4",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "851",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "22.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "22.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "851萬",
+    "total_price_v": "851",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "113年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6366830,
+    "date": "113-02-04",
+    "trans_date": "2024-02-04",
+    "month": "113-02",
+    "address": "德富路370號 | 9樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.10坪",
+    "build_area_v": {
+      "area": "36.1",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.1",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,133",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "31.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "31.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,133萬",
+    "total_price_v": "1,133",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "9樓",
+    "shift_floor_val": "9",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "113年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "9",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 6083125,
+    "date": "112-07-14",
+    "trans_date": "2023-07-14",
+    "month": "112-07",
+    "address": "德富路368號 | 5樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "31.71坪",
+    "build_area_v": {
+      "area": "31.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "31.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "750",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "23.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "23.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "750萬",
+    "total_price_v": "750",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "112年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 4,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5942138,
+    "date": "112-04-09",
+    "trans_date": "2023-04-09",
+    "month": "112-04",
+    "address": "德富路382號 | 8樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.61坪",
+    "build_area_v": {
+      "area": "36.6",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.6",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "827",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "22.6",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "22.6",
+      "unit": "萬/坪"
+    },
+    "total_price": "827萬",
+    "total_price_v": "827",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "112年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5942413,
+    "date": "112-04-01",
+    "trans_date": "2023-04-01",
+    "month": "112-04",
+    "address": "德富路368號 | 5樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "31.71坪",
+    "build_area_v": {
+      "area": "31.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "31.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "628",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "19.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "19.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "628萬",
+    "total_price_v": "628",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "112年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 4,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5720246,
+    "date": "111-10-12",
+    "trans_date": "2022-10-12",
+    "month": "111-10",
+    "address": "德富路382號 | 12,13樓之1",
+    "layout": "5房",
+    "layout_v2": "5房2廳",
+    "room_search": 5,
+    "build_area": "56.17坪",
+    "build_area_v": {
+      "area": "56.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "56.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,150",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "20.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "20.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,150萬",
+    "total_price_v": "1,150",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12,13樓",
+    "shift_floor_val": "12,13",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "111年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12,13",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5728026,
+    "date": "111-09-17",
+    "trans_date": "2022-09-17",
+    "month": "111-09",
+    "address": "德富路376號 | 3樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "64.96坪",
+    "build_area_v": {
+      "area": "65.0",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "65.0",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "938",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "938萬",
+    "total_price_v": "938",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "3樓",
+    "shift_floor_val": "3",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "111年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "3",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5684047,
+    "date": "111-08-30",
+    "trans_date": "2022-08-30",
+    "month": "111-08",
+    "address": "德富路382號 | 8樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.61坪",
+    "build_area_v": {
+      "area": "36.6",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.6",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "700",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "19.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "19.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "700萬",
+    "total_price_v": "700",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "111年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5575837,
+    "date": "111-05-19",
+    "trans_date": "2022-05-19",
+    "month": "111-05",
+    "address": "德富路372號 | 8樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.52坪",
+    "build_area_v": {
+      "area": "36.5",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.5",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "745",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "20.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "20.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "745萬",
+    "total_price_v": "745",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "111年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "建築物含未登記或增建",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5326700,
+    "date": "110-11-13",
+    "trans_date": "2021-11-13",
+    "month": "110-11",
+    "address": "德富路368號 | 10樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "31.94坪",
+    "build_area_v": {
+      "area": "31.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "31.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "622",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "19.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "19.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "622萬",
+    "total_price_v": "622",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "10樓",
+    "shift_floor_val": "10",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "110年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "10",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5111517,
+    "date": "110-10-18",
+    "trans_date": "2021-10-18",
+    "month": "110-10",
+    "address": "德富路368號 | 2樓",
+    "layout": "3房",
+    "layout_v2": "3房1廳",
+    "room_search": 3,
+    "build_area": "36.94坪",
+    "build_area_v": {
+      "area": "36.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "350",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "9.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "9.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "350萬",
+    "total_price_v": "350",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "2樓",
+    "shift_floor_val": "2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "110年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "建築物含未登記或增建",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 5045167,
+    "date": "110-09-28",
+    "trans_date": "2021-09-28",
+    "month": "110-09",
+    "address": "德富路380號 | 2樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.75坪",
+    "build_area_v": {
+      "area": "36.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "525",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.3",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.3",
+      "unit": "萬/坪"
+    },
+    "total_price": "525萬",
+    "total_price_v": "525",
+    "price_tips": "",
+    "context": "親友、員工、共有人或其他特殊關係間之交易；",
+    "is_special": 1,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "2樓",
+    "shift_floor_val": "2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "110年",
+    "tag": [
+      "低樓層",
+      "無車位",
+      "特殊交易"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "親友或員工等關係人間交易",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4646266,
+    "date": "110-04-11",
+    "trans_date": "2021-04-11",
+    "month": "110-04",
+    "address": "德富路370號 | 7樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "33.39坪",
+    "build_area_v": {
+      "area": "33.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "33.4",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "615",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "18.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "18.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "615萬",
+    "total_price_v": "615",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "110年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4462840,
+    "date": "109-11-25",
+    "trans_date": "2020-11-25",
+    "month": "109-11",
+    "address": "德富路378號 | 1樓",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "33.91坪",
+    "build_area_v": {
+      "area": "33.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "33.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "585",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "17.3",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "17.3",
+      "unit": "萬/坪"
+    },
+    "total_price": "585萬",
+    "total_price_v": "585",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "1樓",
+    "shift_floor_val": "1",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4432486,
+    "date": "109-11-18",
+    "trans_date": "2020-11-18",
+    "month": "109-11",
+    "address": "德富路378號 | 12,13樓之1",
+    "layout": "5房",
+    "layout_v2": "5房2廳",
+    "room_search": 5,
+    "build_area": "56.69坪",
+    "build_area_v": {
+      "area": "56.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "56.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "936",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "16.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "16.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "936萬",
+    "total_price_v": "936",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12,13樓",
+    "shift_floor_val": "12,13",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12,13",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4462297,
+    "date": "109-11-16",
+    "trans_date": "2020-11-16",
+    "month": "109-11",
+    "address": "德富路370號 | 10樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "35.61坪",
+    "build_area_v": {
+      "area": "35.6",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "35.6",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "600",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "16.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "16.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "600萬",
+    "total_price_v": "600",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "10樓",
+    "shift_floor_val": "10",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "10",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4337570,
+    "date": "109-08-16",
+    "trans_date": "2020-08-16",
+    "month": "109-08",
+    "address": "德富路370號 | 12樓之3",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "38.74坪",
+    "build_area_v": {
+      "area": "38.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "38.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "700",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "18.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "18.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "700萬",
+    "total_price_v": "700",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12樓",
+    "shift_floor_val": "12",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4280992,
+    "date": "109-06-08",
+    "trans_date": "2020-06-08",
+    "month": "109-06",
+    "address": "德富路378號 | 12,13樓之1",
+    "layout": "5房",
+    "layout_v2": "5房3廳",
+    "room_search": 5,
+    "build_area": "56.69坪",
+    "build_area_v": {
+      "area": "56.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "56.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "799",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "799萬",
+    "total_price_v": "799",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12,13樓",
+    "shift_floor_val": "12,13",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12,13",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4255845,
+    "date": "109-05-23",
+    "trans_date": "2020-05-23",
+    "month": "109-05",
+    "address": "德富路370號 | 10樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "33.66坪",
+    "build_area_v": {
+      "area": "33.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "33.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "536",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "536萬",
+    "total_price_v": "536",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "10樓",
+    "shift_floor_val": "10",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "10",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4255151,
+    "date": "109-05-12",
+    "trans_date": "2020-05-12",
+    "month": "109-05",
+    "address": "德富路380號 | 12,13樓之2",
+    "layout": "4房",
+    "layout_v2": "4房2廳",
+    "room_search": 4,
+    "build_area": "63.40坪",
+    "build_area_v": {
+      "area": "63.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "63.4",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "960",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "960萬",
+    "total_price_v": "960",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12,13樓",
+    "shift_floor_val": "12,13",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "高樓層",
+      "平面車位"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12,13",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4222957,
+    "date": "109-04-15",
+    "trans_date": "2020-04-15",
+    "month": "109-04",
+    "address": "德富路386號 | 7樓之1",
+    "layout": "4房",
+    "layout_v2": "4房2廳",
+    "room_search": 4,
+    "build_area": "48.99坪",
+    "build_area_v": {
+      "area": "49.0",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "49.0",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "725",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "725萬",
+    "total_price_v": "725",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4223554,
+    "date": "109-03-21",
+    "trans_date": "2020-03-21",
+    "month": "109-03",
+    "address": "德富路382號 | 3樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "40.11坪",
+    "build_area_v": {
+      "area": "40.1",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "40.1",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "650",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "16.2",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "16.2",
+      "unit": "萬/坪"
+    },
+    "total_price": "650萬",
+    "total_price_v": "650",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "3樓",
+    "shift_floor_val": "3",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "3",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4170589,
+    "date": "109-02-29",
+    "trans_date": "2020-02-29",
+    "month": "109-02",
+    "address": "德富路370號 | 12樓之3",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "38.74坪",
+    "build_area_v": {
+      "area": "38.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "38.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "560",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "560萬",
+    "total_price_v": "560",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12樓",
+    "shift_floor_val": "12",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 4143758,
+    "date": "109-01-15",
+    "trans_date": "2020-01-15",
+    "month": "109-01",
+    "address": "德富路388號 | 9樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "40.51坪",
+    "build_area_v": {
+      "area": "40.5",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "32.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "600",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "7.6",
+      "unit": "坪",
+      "estimate": 1
+    },
+    "unit_price": {
+      "price": "18.2",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "16.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "680萬",
+    "total_price_v": "680",
+    "price_tips": "",
+    "context": "含增建或未登記建物。；",
+    "is_special": 1,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "9樓",
+    "shift_floor_val": "9",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "80",
+    "real_park_total_price_v": {
+      "price": "80",
+      "unit": "萬",
+      "estimate": 1
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "109年",
+    "tag": [
+      "中樓層",
+      "平面車位",
+      "特殊交易"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "建築物含未登記或增建",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "9",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3979434,
+    "date": "108-08-14",
+    "trans_date": "2019-08-14",
+    "month": "108-08",
+    "address": "德富路368號 | 9樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "34.15坪",
+    "build_area_v": {
+      "area": "34.1",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "34.1",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "540",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "540萬",
+    "total_price_v": "540",
+    "price_tips": "",
+    "context": "含增建或未登記建物。；",
+    "is_special": 1,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "9樓",
+    "shift_floor_val": "9",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "108年",
+    "tag": [
+      "中樓層",
+      "機械車位",
+      "特殊交易"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "建築物含未登記或增建",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "9",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3979412,
+    "date": "108-08-07",
+    "trans_date": "2019-08-07",
+    "month": "108-08",
+    "address": "大慶街一段81號之3 | 1,2樓",
+    "layout": "1房",
+    "layout_v2": "1房3廳",
+    "room_search": 1,
+    "build_area": "47.48坪",
+    "build_area_v": {
+      "area": "47.5",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "47.5",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "838",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "17.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "17.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "838萬",
+    "total_price_v": "838",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "108年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3891760,
+    "date": "108-05-04",
+    "trans_date": "2019-05-04",
+    "month": "108-05",
+    "address": "高工路127號 | 1,2樓",
+    "layout": "1房",
+    "layout_v2": "1房2廳",
+    "room_search": 1,
+    "build_area": "43.22坪",
+    "build_area_v": {
+      "area": "43.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "43.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,268",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "29.3",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "29.3",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,268萬",
+    "total_price_v": "1,268",
+    "price_tips": "",
+    "context": "含增建或未登記建物。",
+    "is_special": 1,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "108年",
+    "tag": [
+      "低樓層",
+      "無車位",
+      "特殊交易"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "建築物含未登記或增建",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3891415,
+    "date": "108-05-01",
+    "trans_date": "2019-05-01",
+    "month": "108-05",
+    "address": "德富路370號 | 5樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "35.61坪",
+    "build_area_v": {
+      "area": "35.6",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "35.6",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "608",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "17.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "17.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "608萬",
+    "total_price_v": "608",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "108年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3851857,
+    "date": "108-04-13",
+    "trans_date": "2019-04-13",
+    "month": "108-04",
+    "address": "德富路388號 | 4樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.95坪",
+    "build_area_v": {
+      "area": "37.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "600",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "600萬",
+    "total_price_v": "600",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "4樓",
+    "shift_floor_val": "4",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "108年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "4",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3843111,
+    "date": "108-03-13",
+    "trans_date": "2019-03-13",
+    "month": "108-03",
+    "address": "德富路380號 | 2樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.75坪",
+    "build_area_v": {
+      "area": "36.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "510",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "13.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "13.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "510萬",
+    "total_price_v": "510",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "2樓",
+    "shift_floor_val": "2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "108年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3826142,
+    "date": "108-02-28",
+    "trans_date": "2019-02-28",
+    "month": "108-02",
+    "address": "德富路382號 | 11樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.42坪",
+    "build_area_v": {
+      "area": "37.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.4",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "550",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "550萬",
+    "total_price_v": "550",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "11樓",
+    "shift_floor_val": "11",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "108年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "11",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 2318498,
+    "date": "107-12-18",
+    "trans_date": "2018-12-18",
+    "month": "107-12",
+    "address": "德富路390號 | 7樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "44.44坪",
+    "build_area_v": {
+      "area": "44.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.8",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "592",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "7.6",
+      "unit": "坪",
+      "estimate": 1
+    },
+    "unit_price": {
+      "price": "16.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.6",
+      "unit": "萬/坪"
+    },
+    "total_price": "692萬",
+    "total_price_v": "692",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "100",
+    "real_park_total_price_v": {
+      "price": "100",
+      "unit": "萬",
+      "estimate": 1
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "107年",
+    "tag": [
+      "中樓層",
+      "平面車位"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 2337177,
+    "date": "107-11-30",
+    "trans_date": "2018-11-30",
+    "month": "107-11",
+    "address": "德富路388號 | 11樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "38.39坪",
+    "build_area_v": {
+      "area": "38.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "38.4",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "565",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "565萬",
+    "total_price_v": "565",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "11樓",
+    "shift_floor_val": "11",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "107年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "11",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 2309987,
+    "date": "107-11-16",
+    "trans_date": "2018-11-16",
+    "month": "107-11",
+    "address": "德富路376號 | 6樓之2",
+    "layout": "2房",
+    "layout_v2": "2房2廳",
+    "room_search": 2,
+    "build_area": "24.66坪",
+    "build_area_v": {
+      "area": "24.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "24.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "410",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "16.6",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "16.6",
+      "unit": "萬/坪"
+    },
+    "total_price": "410萬",
+    "total_price_v": "410",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "6樓",
+    "shift_floor_val": "6",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "107年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "6",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3081043,
+    "date": "107-06-15",
+    "trans_date": "2018-06-15",
+    "month": "107-06",
+    "address": "德富路370號 | 8樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "35.61坪",
+    "build_area_v": {
+      "area": "35.6",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "35.6",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "550",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "550萬",
+    "total_price_v": "550",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "107年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3078195,
+    "date": "107-06-10",
+    "trans_date": "2018-06-10",
+    "month": "107-06",
+    "address": "德富路390號 | 8樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "42.23坪",
+    "build_area_v": {
+      "area": "42.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "42.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "670",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "670萬",
+    "total_price_v": "670",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "107年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3077545,
+    "date": "107-05-20",
+    "trans_date": "2018-05-20",
+    "month": "107-05",
+    "address": "德富路390號 | 9樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "42.23坪",
+    "build_area_v": {
+      "area": "42.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "42.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "670",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "670萬",
+    "total_price_v": "670",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "9樓",
+    "shift_floor_val": "9",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "107年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "9",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3510934,
+    "date": "106-12-21",
+    "trans_date": "2017-12-21",
+    "month": "106-12",
+    "address": "德富路372號 | 4樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.52坪",
+    "build_area_v": {
+      "area": "36.5",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.5",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "600",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "16.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "16.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "600萬",
+    "total_price_v": "600",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "4樓",
+    "shift_floor_val": "4",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "106年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "4",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 2051633,
+    "date": "106-08-09",
+    "trans_date": "2017-08-09",
+    "month": "106-08",
+    "address": "德富路372號 | 6樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "39.27坪",
+    "build_area_v": {
+      "area": "39.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.0",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "560",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "2.3",
+      "unit": "坪",
+      "estimate": 1
+    },
+    "unit_price": {
+      "price": "15.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.3",
+      "unit": "萬/坪"
+    },
+    "total_price": "600萬",
+    "total_price_v": "600",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "6樓",
+    "shift_floor_val": "6",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "40",
+    "real_park_total_price_v": {
+      "price": "40",
+      "unit": "萬",
+      "estimate": 1
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "106年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "6",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 2923208,
+    "date": "106-07-06",
+    "trans_date": "2017-07-06",
+    "month": "106-07",
+    "address": "德富路370號 | 8樓之3",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.30坪",
+    "build_area_v": {
+      "area": "36.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "550",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.2",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.2",
+      "unit": "萬/坪"
+    },
+    "total_price": "550萬",
+    "total_price_v": "550",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "106年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 2921177,
+    "date": "106-06-05",
+    "trans_date": "2017-06-05",
+    "month": "106-06",
+    "address": "德富路372號 | 6樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "39.27坪",
+    "build_area_v": {
+      "area": "39.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "39.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "538",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "13.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "13.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "538萬",
+    "total_price_v": "538",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "6樓",
+    "shift_floor_val": "6",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "106年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "6",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 989489,
+    "date": "106-04-08",
+    "trans_date": "2017-04-08",
+    "month": "106-04",
+    "address": "德富路388號 | 6樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "40.16坪",
+    "build_area_v": {
+      "area": "40.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "465",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "2.3",
+      "unit": "坪",
+      "estimate": 1
+    },
+    "unit_price": {
+      "price": "12.3",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "12.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "515萬",
+    "total_price_v": "515",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "6樓",
+    "shift_floor_val": "6",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "50",
+    "real_park_total_price_v": {
+      "price": "50",
+      "unit": "萬",
+      "estimate": 1
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "106年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "6",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 982572,
+    "date": "106-03-23",
+    "trans_date": "2017-03-23",
+    "month": "106-03",
+    "address": "德富路386號 | 10樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "46.56坪",
+    "build_area_v": {
+      "area": "46.6",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "46.6",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "580",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "12.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "12.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "580萬",
+    "total_price_v": "580",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "10樓",
+    "shift_floor_val": "10",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "106年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "10",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 973486,
+    "date": "106-02-11",
+    "trans_date": "2017-02-11",
+    "month": "106-02",
+    "address": "高工路115號 | 1,2樓",
+    "layout": "0房",
+    "layout_v2": "0房0廳",
+    "room_search": 5,
+    "build_area": "35.91坪",
+    "build_area_v": {
+      "area": "35.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "35.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,165",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "32.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "32.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,165萬",
+    "total_price_v": "1,165",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "106年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 1
+  },
+  {
+    "id": 964024,
+    "date": "106-01-02",
+    "trans_date": "2017-01-02",
+    "month": "106-01",
+    "address": "德富路368號 | 10樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "31.94坪",
+    "build_area_v": {
+      "area": "31.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "31.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "485",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.2",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.2",
+      "unit": "萬/坪"
+    },
+    "total_price": "485萬",
+    "total_price_v": "485",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "10樓",
+    "shift_floor_val": "10",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "106年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "10",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 1268495,
+    "date": "105-12-23",
+    "trans_date": "2016-12-23",
+    "month": "105-12",
+    "address": "德富路370號 | 8樓之3",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.30坪",
+    "build_area_v": {
+      "area": "36.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "500",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "13.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "13.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "500萬",
+    "total_price_v": "500",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "105年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 1256828,
+    "date": "105-10-08",
+    "trans_date": "2016-10-08",
+    "month": "105-10",
+    "address": "大慶街一段81號 | 1,2樓",
+    "layout": "2房",
+    "layout_v2": "2房2廳",
+    "room_search": 2,
+    "build_area": "41.18坪",
+    "build_area_v": {
+      "area": "41.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "41.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "700",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "17.0",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "17.0",
+      "unit": "萬/坪"
+    },
+    "total_price": "700萬",
+    "total_price_v": "700",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "105年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3409713,
+    "date": "105-05-24",
+    "trans_date": "2016-05-24",
+    "month": "105-05",
+    "address": "德富路390號 | 6樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "36.34坪",
+    "build_area_v": {
+      "area": "36.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "36.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "106",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "2.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "2.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "106萬",
+    "total_price_v": "106",
+    "price_tips": "",
+    "context": "親友、員工或其他特殊關係間之交易。",
+    "is_special": 1,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "6樓",
+    "shift_floor_val": "6",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "105年",
+    "tag": [
+      "中樓層",
+      "無車位",
+      "特殊交易"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "親友或員工等關係人間交易",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "6",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 350732,
+    "date": "105-03-27",
+    "trans_date": "2016-03-27",
+    "month": "105-03",
+    "address": "德富路370號 | 6樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "40.74坪",
+    "build_area_v": {
+      "area": "40.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "40.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "532",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "13.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "13.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "532萬",
+    "total_price_v": "532",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "6樓",
+    "shift_floor_val": "6",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "105年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 3,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "6",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 549694,
+    "date": "104-10-20",
+    "trans_date": "2015-10-20",
+    "month": "104-10",
+    "address": "德富路370號 | 3樓之1",
+    "layout": "3房",
+    "layout_v2": "3房1廳",
+    "room_search": 3,
+    "build_area": "48.33坪",
+    "build_area_v": {
+      "area": "48.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "48.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "520",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "10.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "10.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "520萬",
+    "total_price_v": "520",
+    "price_tips": "",
+    "context": "親友、員工或其他特殊關係間之交易。",
+    "is_special": 1,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "3樓",
+    "shift_floor_val": "3",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "104年",
+    "tag": [
+      "低樓層",
+      "平面車位",
+      "特殊交易"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "親友或員工等關係人間交易",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "3",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3624602,
+    "date": "104-08-27",
+    "trans_date": "2015-08-27",
+    "month": "104-08",
+    "address": "德富路388號 | 9樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "40.51坪",
+    "build_area_v": {
+      "area": "40.5",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "40.5",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "610",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "610萬",
+    "total_price_v": "610",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "9樓",
+    "shift_floor_val": "9",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "104年",
+    "tag": [
+      "中樓層",
+      "平面車位"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "9",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3619253,
+    "date": "104-06-28",
+    "trans_date": "2015-06-28",
+    "month": "104-06",
+    "address": "德富路388號 | 13,14樓",
+    "layout": "5房",
+    "layout_v2": "5房2廳",
+    "room_search": 5,
+    "build_area": "72.03坪",
+    "build_area_v": {
+      "area": "72.0",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "72.0",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "990",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "13.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "13.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "990萬",
+    "total_price_v": "990",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "13,14樓",
+    "shift_floor_val": "13,14",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "104年",
+    "tag": [
+      "高樓層",
+      "平面車位"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "13,14",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 2999378,
+    "date": "104-06-18",
+    "trans_date": "2015-06-18",
+    "month": "104-06",
+    "address": "德富路376號 | 8樓之2",
+    "layout": "2房",
+    "layout_v2": "2房2廳",
+    "room_search": 2,
+    "build_area": "24.66坪",
+    "build_area_v": {
+      "area": "24.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "24.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "408",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "16.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "16.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "408萬",
+    "total_price_v": "408",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "104年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 361975,
+    "date": "104-01-27",
+    "trans_date": "2015-01-27",
+    "month": "104-01",
+    "address": "德富路390號 | 11樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "39.79坪",
+    "build_area_v": {
+      "area": "39.8",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "39.8",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "560",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "560萬",
+    "total_price_v": "560",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "11樓",
+    "shift_floor_val": "11",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "104年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "11",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 616892,
+    "date": "103-11-26",
+    "trans_date": "2014-11-26",
+    "month": "103-11",
+    "address": "德富路382號 | 12,13樓之1",
+    "layout": "5房",
+    "layout_v2": "5房2廳",
+    "room_search": 5,
+    "build_area": "56.17坪",
+    "build_area_v": {
+      "area": "56.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "56.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "715",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "12.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "12.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "715萬",
+    "total_price_v": "715",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12,13樓",
+    "shift_floor_val": "12,13",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "103年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12,13",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 1015656,
+    "date": "103-09-16",
+    "trans_date": "2014-09-16",
+    "month": "103-09",
+    "address": "德富路370號 | 7樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "33.39坪",
+    "build_area_v": {
+      "area": "33.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "33.4",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "450",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "13.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "13.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "450萬",
+    "total_price_v": "450",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "103年",
+    "tag": [
+      "中樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 1007239,
+    "date": "103-08-30",
+    "trans_date": "2014-08-30",
+    "month": "103-08",
+    "address": "高工路133號 | 1,2樓",
+    "layout": "2房",
+    "layout_v2": "2房2廳",
+    "room_search": 2,
+    "build_area": "35.05坪",
+    "build_area_v": {
+      "area": "35.1",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "35.1",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,000",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "28.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "28.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,000萬",
+    "total_price_v": "1,000",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "店面",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "103年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3722783,
+    "date": "103-05-15",
+    "trans_date": "2014-05-15",
+    "month": "103-05",
+    "address": "德富路378號 | 8樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.29坪",
+    "build_area_v": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "535",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.3",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.3",
+      "unit": "萬/坪"
+    },
+    "total_price": "535萬",
+    "total_price_v": "535",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "103年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3721504,
+    "date": "103-04-28",
+    "trans_date": "2014-04-28",
+    "month": "103-04",
+    "address": "德富路368號 | 5樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "31.71坪",
+    "build_area_v": {
+      "area": "31.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "31.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "500",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "15.8",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "15.8",
+      "unit": "萬/坪"
+    },
+    "total_price": "500萬",
+    "total_price_v": "500",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "103年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 4,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 410525,
+    "date": "103-03-15",
+    "trans_date": "2014-03-15",
+    "month": "103-03",
+    "address": "高工路115號 | 1,2樓",
+    "layout": "1房",
+    "layout_v2": "1房2廳",
+    "room_search": 1,
+    "build_area": "35.91坪",
+    "build_area_v": {
+      "area": "35.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "35.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "988",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "27.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "27.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "988萬",
+    "total_price_v": "988",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "店面",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "103年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 398328,
+    "date": "103-02-23",
+    "trans_date": "2014-02-23",
+    "month": "103-02",
+    "address": "德富路376號 | 13樓之2",
+    "layout": "2房",
+    "layout_v2": "2房2廳",
+    "room_search": 2,
+    "build_area": "24.66坪",
+    "build_area_v": {
+      "area": "24.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "24.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "320",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "13.0",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "13.0",
+      "unit": "萬/坪"
+    },
+    "total_price": "320萬",
+    "total_price_v": "320",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "13樓",
+    "shift_floor_val": "13",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "103年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "13",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 402982,
+    "date": "103-02-23",
+    "trans_date": "2014-02-23",
+    "month": "103-02",
+    "address": "德富路390號 | 11樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "39.79坪",
+    "build_area_v": {
+      "area": "39.8",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "39.8",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "435",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "10.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "10.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "435萬",
+    "total_price_v": "435",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "11樓",
+    "shift_floor_val": "11",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "103年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "11",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 789074,
+    "date": "102-12-04",
+    "trans_date": "2013-12-04",
+    "month": "102-12",
+    "address": "德富路372號 | 5樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "38.95坪",
+    "build_area_v": {
+      "area": "39.0",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "39.0",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "475",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "12.2",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "12.2",
+      "unit": "萬/坪"
+    },
+    "total_price": "475萬",
+    "total_price_v": "475",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "102年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 383845,
+    "date": "102-11-08",
+    "trans_date": "2013-11-08",
+    "month": "102-11",
+    "address": "大慶街一段81號之3 | 1,2樓",
+    "layout": "1房",
+    "layout_v2": "1房2廳",
+    "room_search": 1,
+    "build_area": "47.48坪",
+    "build_area_v": {
+      "area": "47.5",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "47.5",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "690",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "14.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "14.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "690萬",
+    "total_price_v": "690",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "102年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 700017,
+    "date": "102-10-08",
+    "trans_date": "2013-10-08",
+    "month": "102-10",
+    "address": "德富路368號 | 5樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "31.71坪",
+    "build_area_v": {
+      "area": "31.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "31.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "345",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "10.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "10.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "345萬",
+    "total_price_v": "345",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "5樓",
+    "shift_floor_val": "5",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "102年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 4,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "5",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 1221881,
+    "date": "102-07-20",
+    "trans_date": "2013-07-20",
+    "month": "102-07",
+    "address": "德富路388號 | 9樓之1",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "40.51坪",
+    "build_area_v": {
+      "area": "40.5",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "40.5",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "450",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "11.1",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "11.1",
+      "unit": "萬/坪"
+    },
+    "total_price": "450萬",
+    "total_price_v": "450",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "9樓",
+    "shift_floor_val": "9",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "102年",
+    "tag": [
+      "中樓層",
+      "平面車位"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 2,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "9",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3364092,
+    "date": "102-06-25",
+    "trans_date": "2013-06-25",
+    "month": "102-06",
+    "address": "高工路131號 | 1,2樓",
+    "layout": "2房",
+    "layout_v2": "2房1廳",
+    "room_search": 2,
+    "build_area": "43.71坪",
+    "build_area_v": {
+      "area": "43.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "43.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "1,160",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "26.5",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "26.5",
+      "unit": "萬/坪"
+    },
+    "total_price": "1,160萬",
+    "total_price_v": "1,160",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "1,2樓",
+    "shift_floor_val": "1,2",
+    "total_floor": "14樓",
+    "build_purpose_str": "店面",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "102年",
+    "tag": [
+      "低樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "1,2",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3361945,
+    "date": "102-05-27",
+    "trans_date": "2013-05-27",
+    "month": "102-05",
+    "address": "德富路388號 | 12,13樓之1",
+    "layout": "4房",
+    "layout_v2": "4房2廳",
+    "room_search": 4,
+    "build_area": "57.38坪",
+    "build_area_v": {
+      "area": "57.4",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "57.4",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "650",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "11.3",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "11.3",
+      "unit": "萬/坪"
+    },
+    "total_price": "650萬",
+    "total_price_v": "650",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12,13樓",
+    "shift_floor_val": "12,13",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "102年",
+    "tag": [
+      "高樓層",
+      "平面車位"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12,13",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 3354002,
+    "date": "102-05-16",
+    "trans_date": "2013-05-16",
+    "month": "102-05",
+    "address": "德富路370號 | 3樓之3",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "48.62坪",
+    "build_area_v": {
+      "area": "48.6",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "48.6",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "580",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "11.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "11.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "580萬",
+    "total_price_v": "580",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "3樓",
+    "shift_floor_val": "3",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "102年",
+    "tag": [
+      "低樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "3",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 168851,
+    "date": "102-03-25",
+    "trans_date": "2013-03-25",
+    "month": "102-03",
+    "address": "德富路386號 | 12樓之1",
+    "layout": "4房",
+    "layout_v2": "4房2廳",
+    "room_search": 4,
+    "build_area": "51.48坪",
+    "build_area_v": {
+      "area": "51.5",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "51.5",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "585",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "11.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "11.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "585萬",
+    "total_price_v": "585",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "12樓",
+    "shift_floor_val": "12",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "102年",
+    "tag": [
+      "高樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "12",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 112568,
+    "date": "101-10-01",
+    "trans_date": "2012-10-01",
+    "month": "101-10",
+    "address": "德富路378號 | 7樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "37.29坪",
+    "build_area_v": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "37.3",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "360",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "9.7",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "9.7",
+      "unit": "萬/坪"
+    },
+    "total_price": "360萬",
+    "total_price_v": "360",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "101年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 116587,
+    "date": "101-09-20",
+    "trans_date": "2012-09-20",
+    "month": "101-09",
+    "address": "德富路370號 | 6樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "40.74坪",
+    "build_area_v": {
+      "area": "40.7",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "40.7",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "408",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "10.0",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "10.0",
+      "unit": "萬/坪"
+    },
+    "total_price": "408萬",
+    "total_price_v": "408",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "6樓",
+    "shift_floor_val": "6",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "101年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 3,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "6",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 116416,
+    "date": "101-09-18",
+    "trans_date": "2012-09-18",
+    "month": "101-09",
+    "address": "德富路378號 | 11樓之2",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "34.85坪",
+    "build_area_v": {
+      "area": "34.9",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "34.9",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "362",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "10.4",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "10.4",
+      "unit": "萬/坪"
+    },
+    "total_price": "362萬",
+    "total_price_v": "362",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "0",
+    "unit_has_park": "0",
+    "shift_floor": "11樓",
+    "shift_floor_val": "11",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "101年",
+    "tag": [
+      "高樓層",
+      "無車位"
+    ],
+    "park_type_str": "無車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 0,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "11",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 98102,
+    "date": "101-08-12",
+    "trans_date": "2012-08-12",
+    "month": "101-08",
+    "address": "德富路388號 | 7樓之1",
+    "layout": "3房",
+    "layout_v2": "3房1廳",
+    "room_search": 3,
+    "build_area": "29.23坪",
+    "build_area_v": {
+      "area": "29.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "29.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "405",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "13.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "13.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "405萬",
+    "total_price_v": "405",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "7樓",
+    "shift_floor_val": "7",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "101年",
+    "tag": [
+      "中樓層",
+      "平面車位"
+    ],
+    "park_type_str": "平面車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "7",
+    "original_total_floor": 14,
+    "price_error": 0
+  },
+  {
+    "id": 97322,
+    "date": "101-08-10",
+    "trans_date": "2012-08-10",
+    "month": "101-08",
+    "address": "德富路386號 | 8樓",
+    "layout": "3房",
+    "layout_v2": "3房2廳",
+    "room_search": 3,
+    "build_area": "49.21坪",
+    "build_area_v": {
+      "area": "49.2",
+      "unit": "坪"
+    },
+    "building_area": {
+      "area": "49.2",
+      "unit": "坪"
+    },
+    "building_total_price": {
+      "price": "536",
+      "unit": "萬"
+    },
+    "real_park_area": {
+      "area": "-",
+      "unit": "坪",
+      "estimate": 0
+    },
+    "unit_price": {
+      "price": "10.9",
+      "unit": "萬/坪"
+    },
+    "src_unit_price": {
+      "price": "10.9",
+      "unit": "萬/坪"
+    },
+    "total_price": "536萬",
+    "total_price_v": "536",
+    "price_tips": "",
+    "context": "",
+    "is_special": 0,
+    "has_park": "1",
+    "unit_has_park": "1",
+    "shift_floor": "8樓",
+    "shift_floor_val": "8",
+    "total_floor": "14樓",
+    "build_purpose_str": "住宅",
+    "real_park_total_price": "-",
+    "real_park_total_price_v": {
+      "price": "-",
+      "unit": "萬",
+      "estimate": 0
+    },
+    "community": {
+      "id": 20580,
+      "name": "長億南園",
+      "build_type": 1
+    },
+    "trans_rep_year": "101年",
+    "tag": [
+      "中樓層",
+      "機械車位"
+    ],
+    "park_type_str": "機械車位",
+    "match_type": 1,
+    "tips": "",
+    "park_count": 1,
+    "history_trans_count": 1,
+    "is_new_tag": 0,
+    "assoc_type": 0,
+    "business_circle_id": 0,
+    "build_date": "1992-02-21",
+    "original_shift_floor": "8",
+    "original_total_floor": 14,
+    "price_error": 0
+  }
+]
