@@ -1,0 +1,2702 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台中市南區 25 年以上大型社區歷史成交行情大盤與走勢圖全覽</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #0B1120;
+      color: #F8FAFC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif;
+    }
+    .card-hover {
+      transition: all 0.25s ease-in-out;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      border-color: #38BDF8;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-8">
+
+  <!-- Top Sticky Header -->
+  <header class="max-w-7xl mx-auto mb-8 bg-slate-900/90 backdrop-blur border border-slate-800 rounded-2xl p-6 shadow-xl sticky top-4 z-30">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🏛️</span>
+          <h1 class="text-xl sm:text-2xl font-black text-white tracking-wide">
+            台中市南區【25年以上・150戶以上】大型社區成交行情走勢全圖鑑
+          </h1>
+        </div>
+        <p class="text-slate-400 text-sm mt-1.5 flex items-center gap-2">
+          <span>完整納入南區 <strong class="text-sky-400">53 個大型指標老牌建案</strong></span>
+          <span>•</span>
+          <span>涵蓋總戶數 <strong class="text-sky-400">21,208 戶</strong></span>
+          <span>•</span>
+          <span>實價登錄 <strong class="text-amber-400">7,022 筆</strong> 歷史完整明細</span>
+        </p>
+      </div>
+      <div class="flex items-center gap-3 w-full md:w-auto">
+        <input id="searchInput" type="text" placeholder="🔍 搜尋社區名稱或路段..."
+               oninput="filterCards()"
+               class="w-full md:w-64 px-4 py-2 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500">
+        <a href="#macroChart" class="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white font-medium text-sm rounded-xl transition whitespace-nowrap shadow-md">
+          📊 查看大盤總圖
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto space-y-10">
+
+    <!-- Macro Summary Section -->
+    <section id="macroChart" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mb-4">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-bold uppercase tracking-wider">
+              全區大盤匯總
+            </span>
+            <h2 class="text-lg sm:text-xl font-bold text-white">
+              南區 53 個 25 年以上大型社區歷史實價登錄價量大盤總覽走勢圖（101～118年）
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            將南區所有 25 年以上、150 戶以上社區 7,022 筆成交資料完整加總整合，呈現十年大循環與後續三年大盤走勢預估。
+          </p>
+        </div>
+        <button onclick="openModal('00_台中市南區25年以上大型社區_大盤匯總走勢圖.png', '台中市南區 25 年以上大型社區 大盤匯總走勢全圖')"
+                class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-medium rounded-xl transition flex items-center gap-1.5 shadow-sm">
+          <span>🔍 點擊展開超高解析大圖</span>
+        </button>
+      </div>
+
+      <div class="rounded-xl overflow-hidden border border-slate-800/80 cursor-pointer group bg-slate-950"
+           onclick="openModal('00_台中市南區25年以上大型社區_大盤匯總走勢圖.png', '台中市南區 25 年以上大型社區 大盤匯總走勢全圖')">
+        <img src="00_台中市南區25年以上大型社區_大盤匯總走勢圖.png" alt="南區25年以上大型社區大盤匯總走勢圖"
+             class="w-full h-auto object-cover group-hover:opacity-95 transition">
+      </div>
+    </section>
+
+    <!-- Individual Communities Grid -->
+    <section>
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+            <span>🏢</span>
+            <span>各別社區獨立歷史行情走勢圖（共 53 棟，按戶數規模排序）</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
+            點擊任一社區圖片可放大檢視高解析圖表、單價成交點、歷史高點與三年走低預估線
+          </p>
+        </div>
+        <div class="text-xs text-slate-500" id="cardCount">顯示 53 / 53 棟社區</div>
+      </div>
+
+      <div id="cardGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card: 賺錢時代 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="賺錢時代" data-address="學府路170號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #01
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 29.5 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="賺錢時代">
+              賺錢時代
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="學府路170號">
+              📍 學府路170號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">2,077 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1997-04-28</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">408 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('01_賺錢時代_成交行情走勢圖.png', '賺錢時代 成交行情走勢圖')">
+            <img src="01_賺錢時代_成交行情走勢圖.png" alt="賺錢時代 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 廣三大時代大廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="廣三大時代大廈" data-address="工學二街115巷5號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #02
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 28.0 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="廣三大時代大廈">
+              廣三大時代大廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="工學二街115巷5號">
+              📍 工學二街115巷5號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">1,214 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1998-09-30</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">797 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('02_廣三大時代大廈_成交行情走勢圖.png', '廣三大時代大廈 成交行情走勢圖')">
+            <img src="02_廣三大時代大廈_成交行情走勢圖.png" alt="廣三大時代大廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 長億城攬翠區陽光區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="長億城攬翠區陽光區" data-address="工學路116號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #03
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 30.9 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="長億城攬翠區陽光區">
+              長億城攬翠區陽光區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="工學路116號">
+              📍 工學路116號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">669 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-11-30</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">388 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('03_長億城攬翠區陽光區_成交行情走勢圖.png', '長億城攬翠區陽光區 成交行情走勢圖')">
+            <img src="03_長億城攬翠區陽光區_成交行情走勢圖.png" alt="長億城攬翠區陽光區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 長億城香榭區綠茵區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="長億城香榭區綠茵區" data-address="工學北路71巷5號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #04
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 29.0 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="長億城香榭區綠茵區">
+              長億城香榭區綠茵區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="工學北路71巷5號">
+              📍 工學北路71巷5號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">572 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1997-09-18</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">331 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('04_長億城香榭區綠茵區_成交行情走勢圖.png', '長億城香榭區綠茵區 成交行情走勢圖')">
+            <img src="04_長億城香榭區綠茵區_成交行情走勢圖.png" alt="長億城香榭區綠茵區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 文心大三元翡翠區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="文心大三元翡翠區" data-address="大慶街二段6之16巷32號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #05
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="文心大三元翡翠區">
+              文心大三元翡翠區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="大慶街二段6之16巷32號">
+              📍 大慶街二段6之16巷32號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">558 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-05-25</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">6 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('05_文心大三元翡翠區_成交行情走勢圖.png', '文心大三元翡翠區 成交行情走勢圖')">
+            <img src="05_文心大三元翡翠區_成交行情走勢圖.png" alt="文心大三元翡翠區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 朋莊大樓 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="朋莊大樓" data-address="美村南路82號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #06
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.5 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="朋莊大樓">
+              朋莊大樓
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="美村南路82號">
+              📍 美村南路82號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">462 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-03-15</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">32 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('06_朋莊大樓_成交行情走勢圖.png', '朋莊大樓 成交行情走勢圖')">
+            <img src="06_朋莊大樓_成交行情走勢圖.png" alt="朋莊大樓 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 工學天下 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="工學天下" data-address="工學北路135號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #07
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.7 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="工學天下">
+              工學天下
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="工學北路135號">
+              📍 工學北路135號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">452 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-01-23</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">129 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('07_工學天下_成交行情走勢圖.png', '工學天下 成交行情走勢圖')">
+            <img src="07_工學天下_成交行情走勢圖.png" alt="工學天下 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 京都特區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="京都特區" data-address="學府路168巷6號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #08
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 30.3 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="京都特區">
+              京都特區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="學府路168巷6號">
+              📍 學府路168巷6號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">420 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1996-06-27</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">243 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('08_京都特區_成交行情走勢圖.png', '京都特區 成交行情走勢圖')">
+            <img src="08_京都特區_成交行情走勢圖.png" alt="京都特區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 京華大鎮京國特區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="京華大鎮京國特區" data-address="學府路125號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #09
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 29.8 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="京華大鎮京國特區">
+              京華大鎮京國特區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="學府路125號">
+              📍 學府路125號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">416 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1996-12-11</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">182 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('09_京華大鎮京國特區_成交行情走勢圖.png', '京華大鎮京國特區 成交行情走勢圖')">
+            <img src="09_京華大鎮京國特區_成交行情走勢圖.png" alt="京華大鎮京國特區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 德昌中華大樓 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="德昌中華大樓" data-address="五權南一路1號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #10
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 32.2 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="德昌中華大樓">
+              德昌中華大樓
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="五權南一路1號">
+              📍 五權南一路1號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">409 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1994-07-18</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">204 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('10_德昌中華大樓_成交行情走勢圖.png', '德昌中華大樓 成交行情走勢圖')">
+            <img src="10_德昌中華大樓_成交行情走勢圖.png" alt="德昌中華大樓 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 京城特區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="京城特區" data-address="學府路135巷30號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #11
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 29.0 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="京城特區">
+              京城特區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="學府路135巷30號">
+              📍 學府路135巷30號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">388 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1997-09-25</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">128 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('11_京城特區_成交行情走勢圖.png', '京城特區 成交行情走勢圖')">
+            <img src="11_京城特區_成交行情走勢圖.png" alt="京城特區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 大慶中山 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="大慶中山" data-address="高工南路1號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #12
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 24.5 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="大慶中山">
+              大慶中山
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="高工南路1號">
+              📍 高工南路1號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">362 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">2002-04-01</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">49 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('12_大慶中山_成交行情走勢圖.png', '大慶中山 成交行情走勢圖')">
+            <img src="12_大慶中山_成交行情走勢圖.png" alt="大慶中山 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 順天完全社區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="順天完全社區" data-address="福田二街389號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #13
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 25.1 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="順天完全社區">
+              順天完全社區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="福田二街389號">
+              📍 福田二街389號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">344 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">2001-08-10</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">151 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('13_順天完全社區_成交行情走勢圖.png', '順天完全社區 成交行情走勢圖')">
+            <img src="13_順天完全社區_成交行情走勢圖.png" alt="順天完全社區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 廣三大帝國 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="廣三大帝國" data-address="工學路59巷1號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #14
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.2 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="廣三大帝國">
+              廣三大帝國
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="工學路59巷1號">
+              📍 工學路59巷1號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">323 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-07-06</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">108 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('14_廣三大帝國_成交行情走勢圖.png', '廣三大帝國 成交行情走勢圖')">
+            <img src="14_廣三大帝國_成交行情走勢圖.png" alt="廣三大帝國 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 龍邦綠園道 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="龍邦綠園道" data-address="南和路197號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #15
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 33.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="龍邦綠園道">
+              龍邦綠園道
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="南和路197號">
+              📍 南和路197號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">322 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1993-05-19</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">117 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('15_龍邦綠園道_成交行情走勢圖.png', '龍邦綠園道 成交行情走勢圖')">
+            <img src="15_龍邦綠園道_成交行情走勢圖.png" alt="龍邦綠園道 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 望族二期 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="望族二期" data-address="復興北路517號之1">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #16
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 32.9 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="望族二期">
+              望族二期
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="復興北路517號之1">
+              📍 復興北路517號之1
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">314 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1993-11-25</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">120 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('16_望族二期_成交行情走勢圖.png', '望族二期 成交行情走勢圖')">
+            <img src="16_望族二期_成交行情走勢圖.png" alt="望族二期 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 比佛利山莊 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="比佛利山莊" data-address="忠明南路730巷24號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #17
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 33.9 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="比佛利山莊">
+              比佛利山莊
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="忠明南路730巷24號">
+              📍 忠明南路730巷24號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">309 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1992-11-20</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">158 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('17_比佛利山莊_成交行情走勢圖.png', '比佛利山莊 成交行情走勢圖')">
+            <img src="17_比佛利山莊_成交行情走勢圖.png" alt="比佛利山莊 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 大安黃金城大廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="大安黃金城大廈" data-address="南陽街59號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #18
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 32.2 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="大安黃金城大廈">
+              大安黃金城大廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="南陽街59號">
+              📍 南陽街59號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">307 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1994-07-28</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">141 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('18_大安黃金城大廈_成交行情走勢圖.png', '大安黃金城大廈 成交行情走勢圖')">
+            <img src="18_大安黃金城大廈_成交行情走勢圖.png" alt="大安黃金城大廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 遠見天下大樓 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="遠見天下大樓" data-address="仁義街76號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #19
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.7 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="遠見天下大樓">
+              遠見天下大樓
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="仁義街76號">
+              📍 仁義街76號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">298 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-01-07</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">106 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('19_遠見天下大樓_成交行情走勢圖.png', '遠見天下大樓 成交行情走勢圖')">
+            <img src="19_遠見天下大樓_成交行情走勢圖.png" alt="遠見天下大樓 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 公園苑 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="公園苑" data-address="德富路122號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #20
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 26.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="公園苑">
+              公園苑
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="德富路122號">
+              📍 德富路122號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">285 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">2000-05-18</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">102 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('20_公園苑_成交行情走勢圖.png', '公園苑 成交行情走勢圖')">
+            <img src="20_公園苑_成交行情走勢圖.png" alt="公園苑 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 大東家樸園 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="大東家樸園" data-address="學府路175號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #21
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.8 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="大東家樸園">
+              大東家樸園
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="學府路175號">
+              📍 學府路175號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">285 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1994-12-07</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">157 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('21_大東家樸園_成交行情走勢圖.png', '大東家樸園 成交行情走勢圖')">
+            <img src="21_大東家樸園_成交行情走勢圖.png" alt="大東家樸園 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 柳岸花明 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="柳岸花明" data-address="復興路一段271號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #22
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 33.5 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="柳岸花明">
+              柳岸花明
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="復興路一段271號">
+              📍 復興路一段271號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">280 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1993-03-31</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">127 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('22_柳岸花明_成交行情走勢圖.png', '柳岸花明 成交行情走勢圖')">
+            <img src="22_柳岸花明_成交行情走勢圖.png" alt="柳岸花明 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 健康世界 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="健康世界" data-address="大慶街二段7巷4號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #23
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 33.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="健康世界">
+              健康世界
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="大慶街二段7巷4號">
+              📍 大慶街二段7巷4號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">278 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1993-05-24</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">180 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('23_健康世界_成交行情走勢圖.png', '健康世界 成交行情走勢圖')">
+            <img src="23_健康世界_成交行情走勢圖.png" alt="健康世界 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 大安紫金城大樓 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="大安紫金城大樓" data-address="建國南路一段262號之1">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #24
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.5 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="大安紫金城大樓">
+              大安紫金城大樓
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="建國南路一段262號之1">
+              📍 建國南路一段262號之1
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">268 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-04-29</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">155 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('24_大安紫金城大樓_成交行情走勢圖.png', '大安紫金城大樓 成交行情走勢圖')">
+            <img src="24_大安紫金城大樓_成交行情走勢圖.png" alt="大安紫金城大樓 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 綠灣大樓 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="綠灣大樓" data-address="復興路二段71巷65弄6號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #25
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 32.1 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="綠灣大樓">
+              綠灣大樓
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="復興路二段71巷65弄6號">
+              📍 復興路二段71巷65弄6號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">268 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1994-08-25</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">125 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('25_綠灣大樓_成交行情走勢圖.png', '綠灣大樓 成交行情走勢圖')">
+            <img src="25_綠灣大樓_成交行情走勢圖.png" alt="綠灣大樓 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 文心高第 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="文心高第" data-address="東興路一段25巷19號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #26
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 24.9 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="文心高第">
+              文心高第
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="東興路一段25巷19號">
+              📍 東興路一段25巷19號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">266 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">2001-11-26</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">142 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('26_文心高第_成交行情走勢圖.png', '文心高第 成交行情走勢圖')">
+            <img src="26_文心高第_成交行情走勢圖.png" alt="文心高第 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 文心及第(文心南路) -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="文心及第(文心南路)" data-address="文心南路747號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #27
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 27.2 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="文心及第(文心南路)">
+              文心及第(文心南路)
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="文心南路747號">
+              📍 文心南路747號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">259 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1999-07-02</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">86 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('27_文心及第文心南路_成交行情走勢圖.png', '文心及第(文心南路) 成交行情走勢圖')">
+            <img src="27_文心及第文心南路_成交行情走勢圖.png" alt="文心及第(文心南路) 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 長億南園 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="長億南園" data-address="大慶街一段79號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #28
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 34.6 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="長億南園">
+              長億南園
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="大慶街一段79號">
+              📍 大慶街一段79號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">250 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1992-02-21</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">88 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('28_長億南園_成交行情走勢圖.png', '長億南園 成交行情走勢圖')">
+            <img src="28_長億南園_成交行情走勢圖.png" alt="長億南園 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 歌德堡 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="歌德堡" data-address="德富路96巷2號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #29
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 27.8 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="歌德堡">
+              歌德堡
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="德富路96巷2號">
+              📍 德富路96巷2號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">248 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1998-12-19</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">94 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('29_歌德堡_成交行情走勢圖.png', '歌德堡 成交行情走勢圖')">
+            <img src="29_歌德堡_成交行情走勢圖.png" alt="歌德堡 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 靜園A區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="靜園A區" data-address="文心南路901巷1號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #30
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 29.6 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="靜園A區">
+              靜園A區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="文心南路901巷1號">
+              📍 文心南路901巷1號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">248 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1997-02-04</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">110 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('30_靜園A區_成交行情走勢圖.png', '靜園A區 成交行情走勢圖')">
+            <img src="30_靜園A區_成交行情走勢圖.png" alt="靜園A區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 五權天下 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="五權天下" data-address="五權南路167號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #31
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 30.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="五權天下">
+              五權天下
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="五權南路167號">
+              📍 五權南路167號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">242 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1996-05-03</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">61 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('31_五權天下_成交行情走勢圖.png', '五權天下 成交行情走勢圖')">
+            <img src="31_五權天下_成交行情走勢圖.png" alt="五權天下 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 佛羅里達 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="佛羅里達" data-address="忠明南路763號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #32
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 28.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="佛羅里達">
+              佛羅里達
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="忠明南路763號">
+              📍 忠明南路763號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">240 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1998-05-07</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">122 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('32_佛羅里達_成交行情走勢圖.png', '佛羅里達 成交行情走勢圖')">
+            <img src="32_佛羅里達_成交行情走勢圖.png" alt="佛羅里達 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 望族一期 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="望族一期" data-address="大慶街二段15巷11號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #33
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 33.6 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="望族一期">
+              望族一期
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="大慶街二段15巷11號">
+              📍 大慶街二段15巷11號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">236 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1993-02-11</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">105 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('33_望族一期_成交行情走勢圖.png', '望族一期 成交行情走勢圖')">
+            <img src="33_望族一期_成交行情走勢圖.png" alt="望族一期 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 椰城 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="椰城" data-address="德吉街307號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #34
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 27.6 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="椰城">
+              椰城
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="德吉街307號">
+              📍 德吉街307號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">233 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1999-02-11</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">99 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('34_椰城_成交行情走勢圖.png', '椰城 成交行情走勢圖')">
+            <img src="34_椰城_成交行情走勢圖.png" alt="椰城 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 大東家華園 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="大東家華園" data-address="學府路190號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #35
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.1 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="大東家華園">
+              大東家華園
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="學府路190號">
+              📍 學府路190號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">227 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-08-17</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">80 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('35_大東家華園_成交行情走勢圖.png', '大東家華園 成交行情走勢圖')">
+            <img src="35_大東家華園_成交行情走勢圖.png" alt="大東家華園 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 君臨天廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="君臨天廈" data-address="柳川東路一段79號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #36
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 30.5 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="君臨天廈">
+              君臨天廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="柳川東路一段79號">
+              📍 柳川東路一段79號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">221 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1996-03-12</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">71 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('36_君臨天廈_成交行情走勢圖.png', '君臨天廈 成交行情走勢圖')">
+            <img src="36_君臨天廈_成交行情走勢圖.png" alt="君臨天廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 領袖勳章 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="領袖勳章" data-address="懷寧街198號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #37
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 32.0 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="領袖勳章">
+              領袖勳章
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="懷寧街198號">
+              📍 懷寧街198號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">219 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1994-09-12</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">95 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('37_領袖勳章_成交行情走勢圖.png', '領袖勳章 成交行情走勢圖')">
+            <img src="37_領袖勳章_成交行情走勢圖.png" alt="領袖勳章 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 假日半島 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="假日半島" data-address="復興路二段34號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #38
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 32.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="假日半島">
+              假日半島
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="復興路二段34號">
+              📍 復興路二段34號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">219 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1994-05-26</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">169 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('38_假日半島_成交行情走勢圖.png', '假日半島 成交行情走勢圖')">
+            <img src="38_假日半島_成交行情走勢圖.png" alt="假日半島 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 我家大樓 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="我家大樓" data-address="建國南路一段240巷1號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #39
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 26.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="我家大樓">
+              我家大樓
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="建國南路一段240巷1號">
+              📍 建國南路一段240巷1號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">214 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">2000-05-05</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">92 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('39_我家大樓_成交行情走勢圖.png', '我家大樓 成交行情走勢圖')">
+            <img src="39_我家大樓_成交行情走勢圖.png" alt="我家大樓 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 碧夏庭花園大廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="碧夏庭花園大廈" data-address="光輝街90巷1號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #40
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.6 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="碧夏庭花園大廈">
+              碧夏庭花園大廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="光輝街90巷1號">
+              📍 光輝街90巷1號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">209 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-02-20</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">63 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('40_碧夏庭花園大廈_成交行情走勢圖.png', '碧夏庭花園大廈 成交行情走勢圖')">
+            <img src="40_碧夏庭花園大廈_成交行情走勢圖.png" alt="碧夏庭花園大廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 文心大地 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="文心大地" data-address="文心南路901巷21號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #41
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 27.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="文心大地">
+              文心大地
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="文心南路901巷21號">
+              📍 文心南路901巷21號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">207 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1999-05-15</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">68 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('41_文心大地_成交行情走勢圖.png', '文心大地 成交行情走勢圖')">
+            <img src="41_文心大地_成交行情走勢圖.png" alt="文心大地 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 大東家南園 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="大東家南園" data-address="學府路147巷2號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #42
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.8 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="大東家南園">
+              大東家南園
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="學府路147巷2號">
+              📍 學府路147巷2號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">203 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1994-12-28</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">77 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('42_大東家南園_成交行情走勢圖.png', '大東家南園 成交行情走勢圖')">
+            <img src="42_大東家南園_成交行情走勢圖.png" alt="大東家南園 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 裕國大廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="裕國大廈" data-address="美村路二段168巷10號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #43
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 35.2 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="裕國大廈">
+              裕國大廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="美村路二段168巷10號">
+              📍 美村路二段168巷10號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">198 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1991-07-25</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">64 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('43_裕國大廈_成交行情走勢圖.png', '裕國大廈 成交行情走勢圖')">
+            <img src="43_裕國大廈_成交行情走勢圖.png" alt="裕國大廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 家綠寶大廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="家綠寶大廈" data-address="忠明南路780號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #44
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 30.7 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="家綠寶大廈">
+              家綠寶大廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="忠明南路780號">
+              📍 忠明南路780號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">196 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1996-01-31</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">66 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('44_家綠寶大廈_成交行情走勢圖.png', '家綠寶大廈 成交行情走勢圖')">
+            <img src="44_家綠寶大廈_成交行情走勢圖.png" alt="家綠寶大廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 永和國宅 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="永和國宅" data-address="南和路40號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #45
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 47.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="永和國宅">
+              永和國宅
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="南和路40號">
+              📍 南和路40號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">192 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1979-05-22</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">56 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('45_永和國宅_成交行情走勢圖.png', '永和國宅 成交行情走勢圖')">
+            <img src="45_永和國宅_成交行情走勢圖.png" alt="永和國宅 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 龍族儷園 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="龍族儷園" data-address="南平路39號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #46
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="龍族儷園">
+              龍族儷園
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="南平路39號">
+              📍 南平路39號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">188 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-05-10</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">115 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('46_龍族儷園_成交行情走勢圖.png', '龍族儷園 成交行情走勢圖')">
+            <img src="46_龍族儷園_成交行情走勢圖.png" alt="龍族儷園 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 南京大廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="南京大廈" data-address="五權南路610號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #47
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 34.0 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="南京大廈">
+              南京大廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="五權南路610號">
+              📍 五權南路610號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">185 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1992-10-23</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">70 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('47_南京大廈_成交行情走勢圖.png', '南京大廈 成交行情走勢圖')">
+            <img src="47_南京大廈_成交行情走勢圖.png" alt="南京大廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 京華大鎮京馥特區 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="京華大鎮京馥特區" data-address="信義南街120號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #48
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 30.0 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="京華大鎮京馥特區">
+              京華大鎮京馥特區
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="信義南街120號">
+              📍 信義南街120號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">171 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1996-10-12</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">66 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('48_京華大鎮京馥特區_成交行情走勢圖.png', '京華大鎮京馥特區 成交行情走勢圖')">
+            <img src="48_京華大鎮京馥特區_成交行情走勢圖.png" alt="京華大鎮京馥特區 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 陽光普照 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="陽光普照" data-address="文心南十路210號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #49
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 27.6 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="陽光普照">
+              陽光普照
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="文心南十路210號">
+              📍 文心南十路210號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">171 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1999-02-08</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">58 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('49_陽光普照_成交行情走勢圖.png', '陽光普照 成交行情走勢圖')">
+            <img src="49_陽光普照_成交行情走勢圖.png" alt="陽光普照 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 我家天廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="我家天廈" data-address="建國南路一段155號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #50
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 34.9 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="我家天廈">
+              我家天廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="建國南路一段155號">
+              📍 建國南路一段155號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">168 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1991-11-01</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">57 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('50_我家天廈_成交行情走勢圖.png', '我家天廈 成交行情走勢圖')">
+            <img src="50_我家天廈_成交行情走勢圖.png" alt="我家天廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 德昌中國大廈 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="德昌中國大廈" data-address="忠明南路908號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #51
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.4 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="德昌中國大廈">
+              德昌中國大廈
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="忠明南路908號">
+              📍 忠明南路908號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">159 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1995-05-25</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">84 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('51_德昌中國大廈_成交行情走勢圖.png', '德昌中國大廈 成交行情走勢圖')">
+            <img src="51_德昌中國大廈_成交行情走勢圖.png" alt="德昌中國大廈 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 聖學府 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="聖學府" data-address="工學路60號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #52
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 33.3 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="聖學府">
+              聖學府
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="工學路60號">
+              📍 工學路60號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">157 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1993-06-12</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">68 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('52_聖學府_成交行情走勢圖.png', '聖學府 成交行情走勢圖')">
+            <img src="52_聖學府_成交行情走勢圖.png" alt="聖學府 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: 劃江山 -->
+        <div class="community-card bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg card-hover flex flex-col justify-between"
+             data-name="劃江山" data-address="復興北路500號">
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 bg-slate-800 border border-slate-700 text-sky-400 font-mono text-xs font-bold rounded-lg">
+                #53
+              </span>
+              <span class="text-xs text-amber-400/90 font-medium bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+                屋齡約 31.9 年
+              </span>
+            </div>
+            
+            <h3 class="text-base font-bold text-white tracking-wide truncate" title="劃江山">
+              劃江山
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5 truncate" title="復興北路500號">
+              📍 復興北路500號
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 my-3 p-2 bg-slate-950/60 rounded-xl border border-slate-800/80 text-center">
+              <div>
+                <span class="text-[10px] text-slate-500 block">總戶數</span>
+                <span class="text-xs font-bold text-slate-200">151 戶</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">完工日期</span>
+                <span class="text-xs font-bold text-slate-200">1994-11-18</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-500 block">實登筆數</span>
+                <span class="text-xs font-bold text-emerald-400">52 筆</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 cursor-pointer group relative"
+               onclick="openModal('53_劃江山_成交行情走勢圖.png', '劃江山 成交行情走勢圖')">
+            <img src="53_劃江山_成交行情走勢圖.png" alt="劃江山 成交行情走勢圖"
+                 class="w-full h-44 object-cover object-top group-hover:scale-[1.02] transition duration-200">
+            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <span class="px-3 py-1.5 bg-sky-600/90 text-white text-xs font-bold rounded-lg shadow-lg">
+                🔍 點擊放大檢視
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Image Lightbox Modal -->
+  <div id="imageModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-7xl flex items-center justify-between pb-3 text-white border-b border-slate-800 mb-3">
+      <h3 id="modalTitle" class="text-lg font-bold text-sky-400"></h3>
+      <button onclick="closeModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-sm font-bold transition">
+        ✕ 關閉
+      </button>
+    </div>
+    <div class="w-full max-w-7xl max-h-[85vh] overflow-auto flex items-center justify-center rounded-xl border border-slate-800 bg-slate-950 p-2">
+      <img id="modalImage" src="" class="max-w-full max-h-[82vh] object-contain rounded-lg">
+    </div>
+  </div>
+
+  <script>
+    function openModal(imgSrc, title) {
+      document.getElementById('modalImage').src = imgSrc;
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('imageModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.add('hidden');
+      document.getElementById('modalImage').src = '';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function filterCards() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const cards = document.querySelectorAll('.community-card');
+      let visible = 0;
+      cards.forEach(c => {
+        const name = (c.getAttribute('data-name') || '').toLowerCase();
+        const addr = (c.getAttribute('data-address') || '').toLowerCase();
+        if (!q || name.includes(q) || addr.includes(q)) {
+          c.style.display = '';
+          visible++;
+        } else {
+          c.style.display = 'none';
+        }
+      });
+      document.getElementById('cardCount').innerText = `顯示 ${visible} / ${cards.length} 棟社區`;
+    }
+  </script>
+</body>
+</html>

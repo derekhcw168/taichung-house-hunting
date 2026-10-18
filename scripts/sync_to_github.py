@@ -97,8 +97,8 @@ def main(commit_msg=None):
             if os.path.basename(file).lower() != 'readme.md' or not os.path.exists(dest_file):
                 shutil.copy2(file, dest_file)
 
-    # E. Specialty folders (e.g. 大墩人文, 長億南園8樓, 工學天下15樓 dossiers)
-    for folder_name in ["大墩人文", "長億南園8樓", "工學天下15樓"]:
+    # E. Specialty folders (e.g. 大墩人文, 長億南園8樓, 工學天下15樓 dossiers, 南區25年以上大型社區走勢圖)
+    for folder_name in ["大墩人文", "長億南園8樓", "工學天下15樓", "南區25年以上大型社區走勢圖"]:
         folder_src = os.path.join(base_dir, folder_name)
         folder_dst = os.path.join(repo_dir, folder_name)
         if os.path.exists(folder_src):
