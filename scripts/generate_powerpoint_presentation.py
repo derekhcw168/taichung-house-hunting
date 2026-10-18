@@ -2,15 +2,17 @@
 """
 生成《長億南園8樓_房仲向屋主議價溝通簡報.pptx》
 高品質 16:9 商業簡報，具備圖表、數據卡片、結構對比與精美配色
-嚴格落實使用者最新需求：
+嚴格落實使用者最新修改與指示：
 1. 檔名改為：長億南園8樓_房仲向屋主議價溝通簡報.pptx
 2. "實質4戶競售剖析" -> "同社區4戶競售剖析"
 3. "同一社區即有4戶同時銷售，競爭激烈。鄰近社區總計也有數十戶在賣。"
-4. 買方曾租住南屯「大墩人文」有感情，正由信義房屋積極洽談中（約188戶）
-5. 買方願意立即下斡旋金（若屋主願意談）
-6. 加強近兩年買方稀缺說明與原因
-7. 刪除出價邏輯頁面，刪除貸款七成解約條款
-8. 完整呈現 10 大說服理由
+4. 買方曾租住南屯「大墩人文」有感情，正由信義房屋積極洽談中（約188戶，室內達31.5坪）
+5. 買方願意立即下斡旋金（若屋主願意談，無具體金額）
+6. 震後宅對比加入大慶國宅
+7. 說服理由 7 裝修部分新增：原本舊有的裝潢、衣櫃、固定書桌，買方都需要拆除清運，重新施作泥作、粉刷、油漆等工程，因此買方也會有額外的成本需要負擔。
+8. 屋主獲利出場說帖採用「在較高價位順利成交」、「賣屋收回 670 萬本金加獲利」、「把現金穩穩落袋」、「今天就做決定」
+9. 加強近兩年買方稀缺說明與原因
+10. 完整呈現 10 大說服理由
 """
 
 import os
@@ -65,33 +67,28 @@ def add_header(slide, title_text, category="長億南園 8 樓・房仲向屋主
     bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, Inches(13.333), Inches(7.5))
     set_shape_flat(bg, LIGHT_BG)
     
-    top_bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, Inches(13.333), Inches(0.12))
-    set_shape_flat(top_bar, NAVY)
-
-    pill = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(0.35), Inches(4.5), Inches(0.32))
-    set_shape_flat(pill, RGBColor(234, 242, 250), SLATE, 1)
-    tf_p = pill.text_frame
-    tf_p.word_wrap = True
-    tf_p.vertical_anchor = MSO_ANCHOR.MIDDLE
-    p_p = tf_p.paragraphs[0]
-    p_p.text = category
-    p_p.font.name = "微軟正黑體"
-    p_p.font.size = Pt(10)
-    p_p.font.bold = True
-    p_p.font.color.rgb = SLATE
-
-    tb = slide.shapes.add_textbox(Inches(0.8), Inches(0.68), Inches(11.7), Inches(0.65))
+    tb = slide.shapes.add_textbox(Inches(0.8), Inches(0.4), Inches(11.733), Inches(0.9))
     tf = tb.text_frame
     tf.word_wrap = True
-    p = tf.paragraphs[0]
-    p.text = title_text
-    p.font.name = "微軟正黑體"
-    p.font.size = Pt(20)
-    p.font.bold = True
-    p.font.color.rgb = NAVY
+    tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
+    
+    p_cat = tf.paragraphs[0]
+    p_cat.text = category.upper()
+    p_cat.font.name = "微軟正黑體"
+    p_cat.font.size = Pt(10)
+    p_cat.font.bold = True
+    p_cat.font.color.rgb = GOLD
+    
+    p_title = tf.add_paragraph()
+    p_title.text = title_text
+    p_title.font.name = "微軟正黑體"
+    p_title.font.size = Pt(20)
+    p_title.font.bold = True
+    p_title.font.color.rgb = NAVY
+    p_title.space_before = Pt(2)
 
 def add_card(slide, left, top, width, height, bg_color=CARD_BG, border_color=BORDER_GRAY):
-    card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
+    card = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, height)
     set_shape_flat(card, bg_color, border_color, 1)
     return card
 
@@ -102,139 +99,55 @@ s1 = prs.slides.add_slide(blank_layout)
 bg1 = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, Inches(13.333), Inches(7.5))
 set_shape_flat(bg1, DARK_BLUE)
 
-dec = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(1.8), Inches(0.15), Inches(3.2))
-set_shape_flat(dec, GOLD)
-
-tb1 = s1.shapes.add_textbox(Inches(1.2), Inches(1.6), Inches(11), Inches(3.5))
+tb1 = s1.shapes.add_textbox(Inches(1.0), Inches(1.8), Inches(11.333), Inches(4.0))
 tf1 = tb1.text_frame
 tf1.word_wrap = True
 
-p1 = tf1.paragraphs[0]
-p1.text = "長億南園 8 樓"
-p1.font.name = "微軟正黑體"
-p1.font.size = Pt(24)
-p1.font.bold = True
-p1.font.color.rgb = GOLD
+p1_sub1 = tf1.paragraphs[0]
+p1_sub1.text = "長億南園 8 樓"
+p1_sub1.font.name = "微軟正黑體"
+p1_sub1.font.size = Pt(22)
+p1_sub1.font.bold = True
+p1_sub1.font.color.rgb = GOLD
 
-p2 = tf1.add_paragraph()
-p2.text = "房仲向屋主議價溝通簡報"
-p2.font.name = "微軟正黑體"
-p2.font.size = Pt(34)
-p2.font.bold = True
-p2.font.color.rgb = WHITE
-p2.space_before = Pt(8)
+p1_main = tf1.add_paragraph()
+p1_main.text = "房仲向屋主議價溝通簡報"
+p1_main.font.name = "微軟正黑體"
+p1_main.font.size = Pt(36)
+p1_main.font.bold = True
+p1_main.font.color.rgb = WHITE
+p1_main.space_before = Pt(8)
 
-p3 = tf1.add_paragraph()
-p3.text = "【市場大盤反轉急凍・同社區4戶競售剖析・南屯大墩人文競品威脅・掌握稀缺中年自住買盤】"
-p3.font.name = "微軟正黑體"
-p3.font.size = Pt(14)
-p3.font.color.rgb = RGBColor(190, 210, 240)
-p3.space_before = Pt(12)
+p1_desc = tf1.add_paragraph()
+p1_desc.text = "【市場大盤反轉急凍・同社區4戶競售剖析・南屯大墩人文競品威脅・掌握稀缺中年自住買盤】"
+p1_desc.font.name = "微軟正黑體"
+p1_desc.font.size = Pt(15)
+p1_desc.font.color.rgb = RGBColor(200, 215, 235)
+p1_desc.space_before = Pt(14)
 
-card_foot = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(5.6), Inches(11.733), Inches(1.1))
-set_shape_flat(card_foot, RGBColor(22, 45, 85), RGBColor(40, 75, 130), 1)
-tf_foot = card_foot.text_frame
-tf_foot.vertical_anchor = MSO_ANCHOR.MIDDLE
-p_foot = tf_foot.paragraphs[0]
-p_foot.text = "報告單位：永義房屋專案團隊  |  標的：長億南園 8 樓（德富路 390 號）  |  買方狀況：成熟中年家庭・自住・屋主願談可立即下斡旋金"
-p_foot.font.name = "微軟正黑體"
-p_foot.font.size = Pt(12)
-p_foot.font.color.rgb = WHITE
-p_foot.alignment = PP_ALIGN.CENTER
+p1_foot = tf1.add_paragraph()
+p1_foot.text = "報告單位：永義房屋專案團隊  |  標的：長億南園 8 樓（德富路 390 號）  |  買方狀況：成熟中年家庭・自住・屋主願談可立即下斡旋金"
+p1_foot.font.name = "微軟正黑體"
+p1_foot.font.size = Pt(11)
+p1_foot.font.color.rgb = RGBColor(150, 175, 205)
+p1_foot.space_before = Pt(36)
 
 # ==========================================
-# SLIDE 2: 執行摘要 (Executive Summary)
+# SLIDE 2: 執行摘要（4大關鍵局勢）
 # ==========================================
 s2 = prs.slides.add_slide(blank_layout)
 add_header(s2, "執行摘要：屋主當下面臨的 4 大關鍵決策局勢")
 
-cards_data_s2 = [
-    ("📉 大盤確認反轉下修", "第七波信用管制後，南區 53 棟老牌社區成交量暴跌 76.4%！單價中位數自 26.9 萬見頂回落，價格正式進入『緩跌』格局，近兩年買盤極端稀缺，越晚賣越難賣。", RED, Inches(0.8), Inches(1.5)),
-    ("🏢 同社區 4 戶競售剖析", "同社區即有 4 戶在售，附近社區類似總價更有數十戶在賣！4 樓開 898 萬搶低總、3 樓巨露台平車大降 70 萬，周邊供給大量湧出，削價競爭劇烈。", GOLD, Inches(6.8), Inches(1.5)),
-    ("⚡ 南屯大墩人文強烈威脅", "買方曾租住南屯『大墩人文』社區有感情，目前正由信義房屋積極洽談中。若本案屋主無意願協調溝通，買方將轉向信義房屋購買大墩人文！", SLATE, Inches(0.8), Inches(4.3)),
-    ("🎯 把握稀缺中年自住買方", "近年年輕人只買新成屋小宅，買 34 年老屋的只剩中年家庭。買方純自住，只要屋主願意談，可立即下斡旋金，是目前市場極罕見的實質好買盤！", GREEN, Inches(6.8), Inches(4.3))
+exec_cards = [
+    ("📉 大盤確認反轉下修", "第七波信用管制後，南區 53 棟老牌社區成交量暴跌 76.4%！單價中位數自 26.9 萬見頂回落，價格正式進入『緩跌』格局，近兩年買盤極端稀缺，越晚賣越難賣。", RED, Inches(0.8)),
+    ("🏢 同社區 4 戶競售剖析", "同社區即有 4 戶在售，附近社區類似總價更有數十戶在賣！4 樓開 898 萬搶低總、3 樓巨露台平車大降 70 萬，周邊供給大量湧出，削價競爭劇烈。", GOLD, Inches(3.8)),
+    ("⚡ 南屯大墩人文強烈威脅", "買方曾租住南屯『大墩人文』社區有感情，目前正由信義房屋積極洽談中。若本案屋主無意願協調溝通，買方將轉向信義房屋購買大墩人文！", SLATE, Inches(6.8)),
+    ("🎯 把握稀缺中年自住買方", "近年年輕人只買新成屋小宅，買 34 年老屋的只剩中年家庭。買方純自住，只要屋主願意談，可立即下斡旋金，是目前市場極罕見的實質好買盤！", GREEN, Inches(9.8))
 ]
 
-for title, desc, color, left, top in cards_data_s2:
-    card = add_card(s2, left, top, Inches(5.7), Inches(2.6))
-    tb_t = s2.shapes.add_textbox(left + Inches(0.2), top + Inches(0.15), Inches(5.3), Inches(0.5))
-    tf_t = tb_t.text_frame
-    p_t = tf_t.paragraphs[0]
-    p_t.text = title
-    p_t.font.name = "微軟正黑體"
-    p_t.font.size = Pt(16)
-    p_t.font.bold = True
-    p_t.font.color.rgb = color
-    
-    tb_d = s2.shapes.add_textbox(left + Inches(0.2), top + Inches(0.7), Inches(5.3), Inches(1.7))
-    tf_d = tb_d.text_frame
-    tf_d.word_wrap = True
-    p_d = tf_d.paragraphs[0]
-    p_d.text = desc
-    p_d.font.name = "微軟正黑體"
-    p_d.font.size = Pt(12)
-    p_d.font.color.rgb = TEXT_DARK
-    p_d.line_spacing = 1.3
-
-# ==========================================
-# SLIDE 3: 理由 1【南區大盤成交量暴跌 76.4%，價格正式向下反轉】
-# ==========================================
-s3 = prs.slides.add_slide(blank_layout)
-add_header(s3, "說服理由 1：南區大盤暴跌 76.4%，價格正式向下反轉")
-
-macro_img = os.path.join(trend_dir, "00_台中市南區25年以上大型社區_大盤匯總走勢圖.png")
-if os.path.exists(macro_img):
-    s3.shapes.add_picture(macro_img, Inches(0.8), Inches(1.5), width=Inches(7.2))
-
-add_card(s3, Inches(8.2), Inches(1.5), Inches(4.3), Inches(5.5))
-tb_r3 = s3.shapes.add_textbox(Inches(8.4), Inches(1.7), Inches(3.9), Inches(5.1))
-tf_r3 = tb_r3.text_frame
-tf_r3.word_wrap = True
-
-p_r3_1 = tf_r3.paragraphs[0]
-p_r3_1.text = "📊 全南區大盤關鍵數據"
-p_r3_1.font.name = "微軟正黑體"
-p_r3_1.font.size = Pt(15)
-p_r3_1.font.bold = True
-p_r3_1.font.color.rgb = NAVY
-
-points_s3 = [
-    ("大盤樣本完整", "全南區 53 棟 25 年以上老牌大社區、涵蓋 21,208 戶、累計 7,022 筆成交實價登錄。"),
-    ("歷史見頂反轉", "113 年大盤中位數衝上 26.9 萬/坪歷史極值，第七波信用管制後急速反轉下修至 24.6 萬/坪。"),
-    ("成交量雪崩 76.4%", "年成交量自高峰 738 件崩縮至 115 年僅 174 件，市場動能徹底急凍！"),
-    ("『量先價行』鐵律", "沒有成交量支撐，老屋價格只有緩跌修正一途，不可再心存追高幻想！")
-]
-
-for title, desc in points_s3:
-    p_t = tf_r3.add_paragraph()
-    p_t.text = f"• {title}"
-    p_t.font.name = "微軟正黑體"
-    p_t.font.size = Pt(12)
-    p_t.font.bold = True
-    p_t.font.color.rgb = RED
-    p_t.space_before = Pt(8)
-    
-    p_d = tf_r3.add_paragraph()
-    p_d.text = desc
-    p_d.font.name = "微軟正黑體"
-    p_d.font.size = Pt(10.5)
-    p_d.font.color.rgb = TEXT_DARK
-
-# ==========================================
-# SLIDE 4: 理由 1 延伸【房市趨冷只會緩跌，房屋年齡越老越便宜】
-# ==========================================
-s4 = prs.slides.add_slide(blank_layout)
-add_header(s4, "大盤走勢預估：房市趨冷只會緩跌，房屋年齡越老越便宜")
-
-s4_cards = [
-    ("1. 信用管制掐死市場流動性", "• 央行第七波信用管制全面收緊房貸成數。\n• 銀行鑑價極度保守，放款滿水位持續延燒。\n• 實質房貸利率站穩 2.5%～3.0%，買方負擔能力大幅縮水，只會持續觀望砍價。", Inches(0.8)),
-    ("2. 35 年老屋金融大關縮限", "• 長億南園已 34.7 年，跨越 35 年金融門檻。\n• 銀行內規『屋齡＋貸款年限』嚴格受限，無法貸滿 30/40 年長天期。\n• 買方每月還款本金加重，老屋接手門檻越來越高，未來只剩全現金買方。", Inches(4.8)),
-    ("3. 未來三年價格逐年回測", "• 根據南區大盤模型推估：\n  - 116 年下探：21.1 萬/坪\n  - 117 年下探：18.0 萬/坪\n  - 118 年回測歷史支撐：15.8 萬/坪\n• 趁目前 20 幾萬高檔反轉初期賣出，是資產最佳安全落袋窗口！", Inches(8.8))
-]
-
-for title, desc, left in s4_cards:
-    add_card(s4, left, Inches(1.5), Inches(3.7), Inches(5.3))
-    tb = s4.shapes.add_textbox(left + Inches(0.2), Inches(1.7), Inches(3.3), Inches(4.9))
+for title, desc, col, left in exec_cards:
+    add_card(s2, left, Inches(1.5), Inches(2.75), Inches(5.2))
+    tb = s2.shapes.add_textbox(left + Inches(0.2), Inches(1.7), Inches(2.35), Inches(4.7))
     tf = tb.text_frame
     tf.word_wrap = True
     
@@ -243,7 +156,7 @@ for title, desc, left in s4_cards:
     p_t.font.name = "微軟正黑體"
     p_t.font.size = Pt(14)
     p_t.font.bold = True
-    p_t.font.color.rgb = NAVY
+    p_t.font.color.rgb = col
     
     p_d = tf.add_paragraph()
     p_d.text = desc
@@ -251,29 +164,107 @@ for title, desc, left in s4_cards:
     p_d.font.size = Pt(11)
     p_d.font.color.rgb = TEXT_DARK
     p_d.line_spacing = 1.3
-    p_d.space_before = Pt(10)
+    p_d.space_before = Pt(12)
 
 # ==========================================
-# SLIDE 5: 理由 2【實價登錄最新低點定錨，買方無法出高價追價】
+# SLIDE 3: 理由 1【南區大盤暴跌 76.4%】
+# ==========================================
+s3 = prs.slides.add_slide(blank_layout)
+add_header(s3, "說服理由 1：南區大盤暴跌 76.4%，價格正式向下反轉")
+
+mkt_img_path = os.path.join(trend_dir, "00_台中市南區25年以上大型社區_大盤匯總走勢圖.png")
+if os.path.exists(mkt_img_path):
+    s3.shapes.add_picture(mkt_img_path, Inches(0.8), Inches(1.5), Inches(6.8), Inches(5.2))
+
+add_card(s3, Inches(7.8), Inches(1.5), Inches(4.733), Inches(5.2))
+tb_s3 = s3.shapes.add_textbox(Inches(8.1), Inches(1.7), Inches(4.133), Inches(4.7))
+tf_s3 = tb_s3.text_frame
+tf_s3.word_wrap = True
+
+p_s3_t = tf_s3.paragraphs[0]
+p_s3_t.text = "📊 全南區大盤關鍵數據"
+p_s3_t.font.name = "微軟正黑體"
+p_s3_t.font.size = Pt(15)
+p_s3_t.font.bold = True
+p_s3_t.font.color.rgb = NAVY
+
+s3_points = [
+    ("大盤樣本完整", "全南區 53 棟 25 年以上老牌大社區、涵蓋 21,208 戶、累計 7,022 筆成交實價登錄。"),
+    ("歷史見頂反轉", "113 年大盤中位數衝上 26.9 萬/坪歷史極值，第七波信用管制後急速反轉下修至 24.6 萬/坪。"),
+    ("成交量雪崩 76.4%", "年成交量自高峰 738 件崩縮至 115 年僅 174 件，市場動能徹底急凍！"),
+    ("『量先價行』鐵律", "沒有成交量支撐，老屋價格只有緩跌修正一途，不可再心存追高幻想！")
+]
+
+for title, desc in s3_points:
+    p_p = tf_s3.add_paragraph()
+    p_p.text = f"• {title}"
+    p_p.font.name = "微軟正黑體"
+    p_p.font.size = Pt(12)
+    p_p.font.bold = True
+    p_p.font.color.rgb = RED if "雪崩" in title or "鐵律" in title else SLATE
+    p_p.space_before = Pt(8)
+    
+    p_pd = tf_s3.add_paragraph()
+    p_pd.text = desc
+    p_pd.font.name = "微軟正黑體"
+    p_pd.font.size = Pt(10.5)
+    p_pd.font.color.rgb = TEXT_DARK
+    p_pd.space_before = Pt(2)
+
+# ==========================================
+# SLIDE 4: 大盤未來走勢預估
+# ==========================================
+s4 = prs.slides.add_slide(blank_layout)
+add_header(s4, "大盤走勢預估：房市趨冷只會緩跌，房屋年齡越老越便宜")
+
+s4_cards = [
+    ("1. 信用管制掐死市場流動性", "• 央行第七波信用管制全面收緊房貸成數。\n• 銀行鑑價極度保守，放款滿水位持續延燒。\n• 實質房貸利率站穩 2.5%～3.0%，買方負擔能力大幅縮水，只會持續觀望砍價。", Inches(0.8), RED),
+    ("2. 35 年老屋金融大關縮限", "• 長億南園已 34.7 年，跨越 35 年金融門檻。\n• 銀行內規『屋齡＋貸款年限』嚴格受限，無法貸滿 30/40 年長天期。\n• 買方每月還款本金加重，老屋接手門檻越來越高，未來只剩全現金買方。", Inches(4.8), GOLD),
+    ("3. 未來三年價格逐年回測", "• 根據南區大盤模型推估：\n   - 116 年下探：21.1 萬/坪\n   - 117 年下探：18.0 萬/坪\n   - 118 年回測歷史支撐：15.8 萬/坪\n• 趁目前 20 幾萬高檔反轉初期賣出，是資產最佳安全落袋窗口！", Inches(8.8), NAVY)
+]
+
+for title, desc, left, col in s4_cards:
+    add_card(s4, left, Inches(1.5), Inches(3.7), Inches(5.2))
+    tb = s4.shapes.add_textbox(left + Inches(0.2), Inches(1.7), Inches(3.3), Inches(4.7))
+    tf = tb.text_frame
+    tf.word_wrap = True
+    
+    p_t = tf.paragraphs[0]
+    p_t.text = title
+    p_t.font.name = "微軟正黑體"
+    p_t.font.size = Pt(14)
+    p_t.font.bold = True
+    p_t.font.color.rgb = col
+    
+    p_d = tf.add_paragraph()
+    p_d.text = desc
+    p_d.font.name = "微軟正黑體"
+    p_d.font.size = Pt(11)
+    p_d.font.color.rgb = TEXT_DARK
+    p_d.line_spacing = 1.3
+    p_d.space_before = Pt(12)
+
+# ==========================================
+# SLIDE 5: 理由 2【實登最新跌至 21.4 萬/坪，9樓僅782萬】
 # ==========================================
 s5 = prs.slides.add_slide(blank_layout)
 add_header(s5, "說服理由 2：實登最新成交跌至 21.4 萬/坪，同社區9樓僅782萬無法追高")
 
-comm_img = os.path.join(trend_dir, "28_長億南園_成交行情走勢圖.png")
-if os.path.exists(comm_img):
-    s5.shapes.add_picture(comm_img, Inches(0.8), Inches(1.5), width=Inches(7.2))
+cy_img_path = os.path.join(trend_dir, "28_長億南園_成交行情走勢圖.png")
+if os.path.exists(cy_img_path):
+    s5.shapes.add_picture(cy_img_path, Inches(0.8), Inches(1.5), Inches(6.8), Inches(5.2))
 
-add_card(s5, Inches(8.2), Inches(1.5), Inches(4.3), Inches(5.5))
-tb_s5 = s5.shapes.add_textbox(Inches(8.4), Inches(1.7), Inches(3.9), Inches(5.1))
+add_card(s5, Inches(7.8), Inches(1.5), Inches(4.733), Inches(5.2))
+tb_s5 = s5.shapes.add_textbox(Inches(8.1), Inches(1.7), Inches(4.133), Inches(4.7))
 tf_s5 = tb_s5.text_frame
 tf_s5.word_wrap = True
 
-p_s5_h = tf_s5.paragraphs[0]
-p_s5_h.text = "🏢 長億南園最新實登實證"
-p_s5_h.font.name = "微軟正黑體"
-p_s5_h.font.size = Pt(15)
-p_s5_h.font.bold = True
-p_s5_h.font.color.rgb = NAVY
+p_s5_t = tf_s5.paragraphs[0]
+p_s5_t.text = "🏢 長億南園最新實登實證"
+p_s5_t.font.name = "微軟正黑體"
+p_s5_t.font.size = Pt(15)
+p_s5_t.font.bold = True
+p_s5_t.font.color.rgb = NAVY
 
 s5_points = [
     ("115 年 9 月最新成交定錨", "同社區德富路 4 樓，含車位總價僅 825 萬，拆算單價已跌回 21.4 萬/坪（含車均攤僅 22.1 萬）。"),
@@ -283,33 +274,34 @@ s5_points = [
 ]
 
 for title, desc in s5_points:
-    p_t = tf_s5.add_paragraph()
-    p_t.text = f"• {title}"
-    p_t.font.name = "微軟正黑體"
-    p_t.font.size = Pt(12)
-    p_t.font.bold = True
-    p_t.font.color.rgb = RED
-    p_t.space_before = Pt(8)
+    p_p = tf_s5.add_paragraph()
+    p_p.text = f"• {title}"
+    p_p.font.name = "微軟正黑體"
+    p_p.font.size = Pt(12)
+    p_p.font.bold = True
+    p_p.font.color.rgb = RED if "782" in title or "21.4" in title else SLATE
+    p_p.space_before = Pt(8)
     
-    p_d = tf_s5.add_paragraph()
-    p_d.text = desc
-    p_d.font.name = "微軟正黑體"
-    p_d.font.size = Pt(10.5)
-    p_d.font.color.rgb = TEXT_DARK
+    p_pd = tf_s5.add_paragraph()
+    p_pd.text = desc
+    p_pd.font.name = "微軟正黑體"
+    p_pd.font.size = Pt(10.5)
+    p_pd.font.color.rgb = TEXT_DARK
+    p_pd.space_before = Pt(2)
 
 # ==========================================
-# SLIDE 6: 理由 3【同社區4戶競售剖析，周邊數十戶同時競爭】
+# SLIDE 6: 理由 3【同社區即有 4 戶競售】
 # ==========================================
 s6 = prs.slides.add_slide(blank_layout)
 add_header(s6, "說服理由 3：同一社區即有 4 戶同時銷售，周邊更有數十戶在賣")
 
-table_shape = s6.shapes.add_table(5, 5, Inches(0.8), Inches(1.6), Inches(11.733), Inches(4.0))
+table_shape = s6.shapes.add_table(5, 5, Inches(0.8), Inches(1.5), Inches(11.733), Inches(4.0))
 tbl = table_shape.table
 
-tbl.columns[0].width = Inches(1.8)
-tbl.columns[1].width = Inches(2.2)
-tbl.columns[2].width = Inches(2.2)
-tbl.columns[3].width = Inches(2.5)
+tbl.columns[0].width = Inches(2.3)
+tbl.columns[1].width = Inches(2.3)
+tbl.columns[2].width = Inches(1.8)
+tbl.columns[3].width = Inches(2.3)
 tbl.columns[4].width = Inches(3.033)
 
 headers_s6 = ["戶別", "坪數與格局", "目前開價 / 單價", "銷售現況", "市場競爭威脅評估"]
@@ -346,7 +338,7 @@ for row_idx, row_data in enumerate(rows_s6, start=1):
 tb_s6_bot = s6.shapes.add_textbox(Inches(0.8), Inches(5.8), Inches(11.733), Inches(1.1))
 tf_bot = tb_s6_bot.text_frame
 p_b = tf_bot.paragraphs[0]
-p_b.text = "💡 房仲核心建言：同社區即有 4 戶在售，附近社區類似總價物件總計更有數十戶同時銷售！「誰先適度讓利，誰就能先把數百萬現金抱回家」！堅持高價只會變成替其他物件做免費抬轎。"
+p_b.text = "💡 房仲核心建言：同社區即有 4 戶在售，附近社區類似總價物件總計更有數十戶同時銷售！「誰先適度讓利，誰就能先把數百萬現金抱回家」！\n堅持高價只會變成替其他物件做免費抬轎。"
 p_b.font.name = "微軟正黑體"
 p_b.font.size = Pt(12)
 p_b.font.bold = True
@@ -360,7 +352,7 @@ add_header(s7, "說服理由 4：相同價位可買『921 震後宅』，震前�
 
 s7_cards = [
     ("1. 921 震災曾列『需注意建物』紀錄", "• 同社區產調白紙黑字載明：『本物件曾被台中市政府列為需注意建物，雖目前已無列管，但收定後及簽約時勿承諾貸款成數』。\n• 買方是純自住，對震災歷史紀錄非常敏感，存在天然的耐震安全心理抗性。\n• 銀行內部亦有歷史紀錄，鑑價與成數極度保守！", RED, Inches(0.8)),
-    ("2. 相同價位市場可選『921 震後宅』", "• 長億南園民國 80 年興建（屋齡 34.7 年），適用 921 震前舊耐震法規。\n• 買方直言：『在目前 800、900 萬價位，市場上完全可以挑到 921 震後興建、耐震法規提升的中古大樓，對地震疑慮完全消除！』\n• 震前老屋在現行市場上具有無法抹滅的實質折價抗性！", GOLD, Inches(6.8))
+    ("2. 相同價位市場可選『921 震後宅』", "• 長億南園民國 80 年興建（屋齡 34.7 年），適用 921 震前舊耐震法規。\n• 買方直言：『在目前 800、900 萬價位，市場上完全可以挑到 921 震後興建、耐震法規提升的中古大樓(大慶國宅)，對地震疑慮完全消除！』，買方對大慶國宅亦展現高度興趣。\n• 震前老屋在現行市場上具有無法抹滅的實質折價抗性！", GOLD, Inches(6.8))
 ]
 
 for title, desc, col, left in s7_cards:
@@ -420,7 +412,7 @@ for title, desc, left, col in s8_boxes:
 # SLIDE 9: 理由 6【買方曾租住南屯『大墩人文』有感情，信義房屋洽談中】
 # ==========================================
 s9 = prs.slides.add_slide(blank_layout)
-add_header(s9, "說服理由 6：買方曾租住南屯大墩人文有感情，信義房屋洽談中")
+add_header(s9, "說服理由 6：買方曾租住南屯大墩人文有感情，信義房屋正積極洽談中")
 
 table_shape_s9 = s9.shapes.add_table(5, 3, Inches(0.8), Inches(1.6), Inches(11.733), Inches(3.8))
 tbl_s9 = table_shape_s9.table
@@ -428,7 +420,7 @@ tbl_s9.columns[0].width = Inches(2.5)
 tbl_s9.columns[1].width = Inches(4.6)
 tbl_s9.columns[2].width = Inches(4.633)
 
-headers_s9 = ["評估指標", "南屯區【大墩人文】(約 188 戶・信義洽談中)", "南區【長億南園 8 樓】(本案)"]
+headers_s9 = ["評估指標", "南屯區【大墩人文】(約 188 戶・信義積極洽談中)", "南區【長億南園 8 樓】(本案)"]
 for col_idx, h in enumerate(headers_s9):
     cell = tbl_s9.cell(0, col_idx)
     set_cell_bg(cell, NAVY)
@@ -443,7 +435,7 @@ for col_idx, h in enumerate(headers_s9):
 s9_rows = [
     ("地段價值與增值性", "南屯成熟富人商圈，地段保值抗跌性全台中名列前茅。", "南區老舊市區，受十三期新成屋比價排擠。"),
     ("交通與生活機能", "緊鄰文心森林公園商圈、捷運綠線、南屯好市多(Costco)。", "南區德富路商圈，生活機能便利但無大型好市多與精華捷運。"),
-    ("房屋格局與空間", "正三房格局，全社區約 188 戶規模適中，質感佳。", "室內 32 坪超大空間（本戶唯一最大勝出亮點！）。"),
+    ("房屋格局與空間", "正三房格局，全社區約 188 戶規模適中，質感佳，室內達 31.5 坪滿意度高。", "室內 32 坪超大空間（本戶唯一最大勝出亮點！）。"),
     ("買方當下態度", "買方曾租住大墩人文有深厚感情，信義房屋積極洽談中！", "若本戶屋主無意願協調溝通，買家只好轉向買大墩人文！")
 ]
 
@@ -469,14 +461,14 @@ p_w.font.bold = True
 p_w.font.color.rgb = RED
 
 # ==========================================
-# SLIDE 10: 理由 7【雙衛浴無窗＋裝修自然折舊，買方無法追高】
+# SLIDE 10: 理由 7【雙衛浴無窗＋舊裝潢清運泥作工程龐大，買方無法追高】
 # ==========================================
 s10 = prs.slides.add_slide(blank_layout)
-add_header(s10, "說服理由 7：雙衛浴皆無對外窗＋裝修自然折舊，買方無法追高")
+add_header(s10, "說服理由 7：雙衛浴皆無對外窗＋舊裝潢清運泥作工程龐大，買方無法追高")
 
 s10_cards = [
-    ("屋況客觀限制與必備整修款", "• 肯定屋主 6 年前水電衛浴翻新用心，但已有 6 年自然折舊。\n• 雙衛浴皆無對外窗（暗房衛浴），通風排濕不良。\n• 買方入住前仍須備妥工程款：油漆、窗戶更換、加裝衛浴獨立抽風暖風乾燥系統與基礎整理。\n• 這是自住家庭必要支出，扣除後實質預算已達上限。", Inches(0.8)),
-    ("買方無法追高，絕非惡意殺價", "• 買方是純自住家庭，財務預算客觀嚴格。\n• 銀行因 34.7 年高屋齡與 921 歷史，核貸成數極其保守，買方自備款負擔沈重！\n• 面對老屋折舊與暗衛抗性，買方已出到自身的務實極限，真的無法出高價追價！", Inches(6.8))
+    ("屋況客觀限制與必備整修款", "• 肯定屋主 6 年前水電衛浴翻新用心，但已有 6 年自然折舊。\n• 原本舊有裝潢、衣櫃、固定書桌，買方均需拆除清運，重新施作泥作、粉刷、油漆等工程，額外成本負擔沉重！\n• 雙衛浴皆無對外窗（暗房衛浴），通風排濕不良，須加裝獨立抽風暖風乾燥系統。\n• 扣除拆除清運與泥作整修必備支出，買方購屋實質預算已達上限。", Inches(0.8)),
+    ("買方無法追高，絕非惡意殺價", "• 買方是純自住家庭，財務預算客觀嚴格。\n• 銀行因 34.7 年高屋齡與 921 歷史，核貸成數極其保守，買方自備款負擔沈重！\n• 扣除拆除清運、泥作粉刷與水電整修成本後，買方已出到自身務實極限，真的無法出高價追價！", Inches(6.8))
 ]
 
 for title, desc, left in s10_cards:
@@ -495,10 +487,10 @@ for title, desc, left in s10_cards:
     p_d = tf.add_paragraph()
     p_d.text = desc
     p_d.font.name = "微軟正黑體"
-    p_d.font.size = Pt(12)
+    p_d.font.size = Pt(11.5)
     p_d.font.color.rgb = TEXT_DARK
     p_d.line_spacing = 1.3
-    p_d.space_before = Pt(14)
+    p_d.space_before = Pt(12)
 
 # ==========================================
 # SLIDE 11: 理由 8【屋主 107 年 670 萬買入滿 8 年，大賺出場＋享 400 萬免稅額】
@@ -527,7 +519,7 @@ for col_idx, h in enumerate(headers_s11):
 s11_rows = [
     ("屋主當初買入成本", "民國 107 年 6 月購入：670 萬 (15.9 萬/坪)", "本金 670 萬 100% 全數收回"),
     ("產權持有時間", "107 年 7 月登記至今：已整整滿 8 年！", "已度過房地合一高稅率重課期"),
-    ("成交實質獲利評估", "在 700 多萬價位順利成交", "完全覆蓋成本與裝修折舊，淨賺數十萬現金！"),
+    ("成交實質獲利評估", "在較高價位順利成交", "完全覆蓋成本與裝修折舊，淨賺數十萬現金！"),
     ("房地合一自住免稅額", "持有滿 8 年，符合自住設籍滿 6 年條件", "享有 400 萬免稅額，獲利免繳稅，全額現金落袋！")
 ]
 
@@ -546,7 +538,7 @@ for row_idx, r_data in enumerate(s11_rows, start=1):
 tb_s11_p = s11.shapes.add_textbox(Inches(0.8), Inches(5.6), Inches(11.733), Inches(1.3))
 tf_p11 = tb_s11_p.text_frame
 p_p11 = tf_p11.paragraphs[0]
-p_p11.text = "🏆 獲利了結論點：屋主買 670 萬已享受 8 年居住增值，今天賣出保證倒賺幾十萬現金且不用繳房地合一稅！在房市反轉向下之際，及時把數百萬現金抱在身上，比繼續套在 35 年老屋承擔跌價風險聰明太多！"
+p_p11.text = "🏆 獲利了結論點：屋主買 670 萬已享受 8 年居住增值，今天賣出保證倒賺幾十萬現金且不用繳房地合一稅！\n在房市反轉向下之際，及時把現金抱在身上，比繼續套在 35 年老屋承擔跌價風險聰明太多！"
 p_p11.font.name = "微軟正黑體"
 p_p11.font.size = Pt(12)
 p_p11.font.bold = True
@@ -560,7 +552,7 @@ add_header(s12, "說服理由 9 & 10：十三期新案夾擊磁吸，現金落�
 
 s12_cards = [
     ("理由 9：十三期新案交屋潮磁吸比價", "• 南區緊鄰十三期重劃區，周邊大量現代化新成屋陸續完工交屋。\n• 具備高預算的買盤全面被吸走，對比出 34 年老舊大樓在管理、公設與外觀上的巨大折舊落差。\n• 二手老屋市場邊緣化日益嚴重，現在不賣，未來的買家只會越來越少！", Inches(0.8), GOLD),
-    ("理由 10：收回數百萬現金創造穩定收益", "• 目前央行利率與金融收益處於歷史高檔。\n• 賣屋收回 670 萬本金加獲利共七百多萬現金，投入高股息或穩健定存，每年穩領 20～30 萬被動收入！\n• 完全免除老屋折舊、房屋稅、地價稅與管理費，資金效益遠勝套牢在緩跌老屋！", Inches(6.8), GREEN)
+    ("理由 10：收回數百萬現金創造穩定收益", "• 目前央行利率與金融收益處於歷史高檔。\n• 賣屋收回 670 萬本金加獲利，投入高股息或穩健定存，每年穩領 20～30 萬被動收入！\n• 完全免除老屋折舊、房屋稅、地價稅與管理費，資金效益遠勝套牢在緩跌老屋！", Inches(6.8), GREEN)
 ]
 
 for title, desc, left, col in s12_cards:
@@ -607,7 +599,7 @@ p_s13_2.text = (
     "「大哥／大姐，現在市場上光看不買的假客人很多，但真正有誠意的買方少之又少。\n\n"
     "這組自住買方非常有誠意：只要大哥／大姐願意談，買方願意立即下斡旋金，隨時配合我們正式簽約履約！\n\n"
     "您 107 年買 670 萬，現在成交已經讓您穩穩賺錢出場，又享有滿 8 年自住 400 萬免稅優勢，還能完美避開後面南區老屋量縮價跌與新案夾擊的風險。\n\n"
-    "信義房屋那邊今天還在積極催買方去簽南屯的大墩人文，請大哥／大姐今天就痛快做決定，給我們授權簽字，我們立刻幫您把七百多萬的現金穩穩落袋！」"
+    "信義房屋那邊今天還在積極催買方去簽南屯的大墩人文，請大哥／大姐今天就做決定，給我們授權簽字，我們立刻幫您把現金穩穩落袋！」"
 )
 p_s13_2.font.name = "微軟正黑體"
 p_s13_2.font.size = Pt(13)
