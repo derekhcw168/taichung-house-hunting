@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-生成《台中市南區老牌大型社區實價登錄趨勢與後續三年下跌預估分析.pptx》
+生成《台中市南區老牌大型社區實價登錄趨勢與後續三年預估分析.pptx》
 架構：
 1. 全南區 25 年以上老牌大型社區大盤價量走勢圖與歷史週期趨勢剖析（101～115年）
 2. 計量經濟學動態預估模型（量價衰減回歸、流動性衝擊動能、Holt阻尼平滑與IQR價值支撐重力模型）
-3. 價格走勢下跌的四大維度成因深度剖析（供需面、產業經濟面、市場交易心理面、金融信用管制面）
+3. 價格走勢後續三年預估分析的四大維度成因深度剖析（供需面、產業經濟面、市場交易心理面、金融信用管制面）
 4. 全南區 10 大指標老牌大社區實登行情與動態計量預估總對照表
 5. 10 大指標老牌大社區的獨立價量走勢圖與動態計量預估剖析卡片
 6. 買賣雙方理性因應戰略決策指引
@@ -52,7 +52,9 @@ TEXT_MUTED = RGBColor(100, 116, 139)# #64748B
 trend_dir = os.path.join(PROJECT_ROOT, "南區25年以上大型社區走勢圖")
 
 # 1. 載入全量交易資料集
-MASTER_DATA_FILE = os.path.join(SCRATCH_DIR, "all_53_communities_transactions.json")
+MASTER_DATA_FILE = os.path.join(SCRATCH_DIR, "all_54_communities_transactions.json")
+if not os.path.exists(MASTER_DATA_FILE):
+    MASTER_DATA_FILE = os.path.join(SCRATCH_DIR, "all_53_communities_transactions.json")
 if not os.path.exists(MASTER_DATA_FILE):
     raise FileNotFoundError(f"找不到主交易資料庫: {MASTER_DATA_FILE}")
 
@@ -317,7 +319,7 @@ p1.font.bold = True
 p1.font.color.rgb = GOLD
 
 p2 = tf1.add_paragraph()
-p2.text = "實價登錄趨勢與後續三年下跌預估分析報告"
+p2.text = "實價登錄趨勢與後續三年預估分析報告"
 p2.font.name = "微軟正黑體"
 p2.font.size = Pt(32)
 p2.font.bold = True
@@ -336,7 +338,7 @@ set_shape_flat(card_foot, RGBColor(22, 45, 85), RGBColor(40, 75, 130), 1)
 tf_foot = card_foot.text_frame
 tf_foot.vertical_anchor = MSO_ANCHOR.MIDDLE
 p_foot = tf_foot.paragraphs[0]
-p_foot.text = "數據範疇：全南區 53 棟 25 年以上大型集合住宅社區（總計 17,757 戶、整體老屋存量逾 2.1 萬戶、平均屋齡 31.0 年） ｜ 實登總計：7,024 筆（純住宅 5,896 筆） ｜ 分析日期：2026 年 10 月"
+p_foot.text = "數據範疇：全南區 54 棟 25 年以上大型集合住宅社區（總計 17,945 戶、整體老屋存量逾 21,396 戶、平均屋齡 31.0 年） ｜ 實登總計：7,072 筆（純住宅 5,935 筆） ｜ 分析日期：2026 年 10 月"
 p_foot.font.name = "微軟正黑體"
 p_foot.font.size = Pt(11)
 p_foot.font.color.rgb = WHITE
@@ -350,7 +352,7 @@ add_header(s2, "執行摘要：南區老牌大社區房市大盤 4 大核心研�
 
 cards_data_s2 = [
     ("📉 大盤轉折確立・量縮 76.4%", 
-     "全南區 53 棟老牌大案於 113 年衝上 26.9 萬/坪歷史天花板後見頂。央行實施第七波選擇性信用管制後，115 年成交量自高峰期年均 739 件崩縮至 174 件（暴跌 76.4%），『量先價行』鐵律確立市場全面反轉下行。", 
+     "全南區 54 棟老牌大案於 113 年衝上 26.9 萬/坪歷史天花板後見頂。央行實施第七波選擇性信用管制後，115 年成交量自高峰期年均 739 件崩縮至 174 件（暴跌 76.4%），『量先價行』鐵律確立市場全面反轉下行。", 
      RED, Inches(0.8), Inches(1.5)),
     ("📉 計量經濟學動態下修模型", 
      f"捨棄傳統固定跌幅，建立嚴謹計量經濟模型（量價衰減回歸、流動性衝擊動能、Holt阻尼平滑與IQR價值支撐重力模型）：測算大盤中位數 116 年 {m_p116:.1f} 萬 ➜ 117 年 {m_p117:.1f} 萬 ➜ 118 年 {m_p118:.1f} 萬，三年累計跌幅達 {m_cum_drop:.1f}%，理性靠攏長期合理支撐帶。", 
@@ -388,7 +390,7 @@ for title, desc, color, left, top in cards_data_s2:
 # SLIDE 3: 大盤實價登錄全景圖與歷史週期分析
 # ==========================================
 s3 = prs.slides.add_slide(blank_layout)
-add_header(s3, "大盤全景解構：南區 53 棟老牌大社區實登價量全圖與歷史週期剖析")
+add_header(s3, "大盤全景解構：南區 54 棟老牌大社區實登價量全圖與歷史週期剖析")
 
 macro_img = os.path.join(trend_dir, "00_台中市南區25年以上大型社區_大盤匯總走勢圖.png")
 if os.path.exists(macro_img):
@@ -430,14 +432,14 @@ for title, desc, col in cycle_points:
     p_d.line_spacing = 1.25
 
 # ==========================================
-# SLIDE 4: 造成價格走勢下跌的原因分析（四大維度架構總覽）
+# SLIDE 4: 促使價格走勢調整與預估分析成因剖析（四大維度架構總覽）
 # ==========================================
 s4 = prs.slides.add_slide(blank_layout)
 add_header(s4, "成因全景架構：促使老牌大型社區價格持續下修的四大驅動力")
 
 drivers_s4 = [
     ("🏗️ 整體供需面", "龐大老屋存量與新成屋交屋潮夾殺", 
-     "• 53 棟老案庫存逾 2.1 萬戶，市場轉冷後二手委售件數暴增\n• 周邊烏日高鐵、十三期新成屋交屋潮強烈瓜分優質自住客源\n• 年輕首購族排斥老陳屋，自住買盤面臨少子化世代斷層", 
+     "• 54 棟老案庫存逾 2.1 萬戶，市場轉冷後二手委售件數暴增\n• 周邊烏日高鐵、十三期新成屋交屋潮強烈瓜分優質自住客源\n• 年輕首購族排斥老陳屋，自住買盤面臨少子化世代斷層", 
      Inches(0.8), PRIMARY_BLUE),
     ("🏭 產業與經濟面", "實質所得停滯與翻修成本暴增", 
      "• 非高薪科技聚落，一般受薪階級薪資成長停滯無力追價\n• 室內翻修水電工料大漲 30%~50%，翻新費直接反噬老屋殘值\n• 成熟商圈發展飽和，缺乏重磅新增大型產業題材支撐溢價", 
@@ -490,7 +492,7 @@ add_header(s5, "深度成因剖析 1【整體供需面】：龐大老屋存量�
 
 sd_cards = [
     ("1. 逾 2.1 萬戶老屋龐大存量，社區內部削價競爭",
-     "• 供給母體龐大：南區僅這 53 棟 25 年以上老牌大案，總戶數就高達 21,208 戶。如賺錢時代(2,077戶)、廣三大時代(1,214戶)、長億城(1,241戶)動輒數百上千戶。\n"
+     "• 供給母體龐大：南區僅這 54 棟 25 年以上老牌大案，總戶數高達 21,396 戶（統計總戶數 17,945 戶）。如賺錢時代(2,077戶)、廣三大時代(1,214戶)、長億城(1,241戶)動輒數百上千戶。\n"
      "• 委售重疊競爭：房市降溫後，每棟社區平均在售物件由 2~3 戶激增至 8~15 戶。多品牌房仲洗版聯賣，造成同社區屋主彼此搶客削價求現。\n"
      "• 去化時間劇增：平均委售去化天數由過去的 45 天大幅拉長至 180 天以上，中古供給嚴重過剩。", Inches(0.8)),
     ("2. 鄰近新興重劃區交屋潮分流，優質自住買盤被吸走",
@@ -918,17 +920,38 @@ for title, desc in buyer_points:
     p_d.font.color.rgb = TEXT_DARK
     p_d.line_spacing = 1.25
 
-# 儲存簡報至 3 個目標路徑
-out_ppt_name = "台中市南區老牌大型社區實價登錄趨勢與後續三年下跌預估分析.pptx"
+# 儲存簡報至目標路徑並清理舊版檔案
+out_ppt_name = "台中市南區老牌大型社區實價登錄趨勢與後續三年預估分析.pptx"
+old_ppt_name = "台中市南區老牌大型社區實價登錄趨勢與後續三年下跌預估分析.pptx"
+
 out_paths = [
     os.path.join(trend_dir, out_ppt_name),
     os.path.join(PROJECT_ROOT, out_ppt_name),
-    os.path.join(PROJECT_ROOT, "長億南園8樓", out_ppt_name)
 ]
+for candidate in ["長億南園8樓", "長億南園"]:
+    p_dir = os.path.join(PROJECT_ROOT, candidate)
+    if os.path.exists(p_dir) and os.path.isdir(p_dir):
+        out_paths.append(os.path.join(p_dir, out_ppt_name))
 
-for p in out_paths:
+# 刪除舊版含「下跌」檔名之檔案
+for d in [trend_dir, PROJECT_ROOT, os.path.join(PROJECT_ROOT, "長億南園8樓"), os.path.join(PROJECT_ROOT, "長億南園")]:
+    old_p = os.path.join(d, old_ppt_name)
+    if os.path.exists(old_p):
+        try:
+            os.remove(old_p)
+            print(f"🗑️ 已成功刪除舊版簡報檔案: {old_p}")
+        except Exception as e:
+            print(f"⚠️ 無法刪除舊版檔案 {old_p}: {e}")
+
+first_path = out_paths[0]
+os.makedirs(os.path.dirname(first_path), exist_ok=True)
+prs.save(first_path)
+print(f"✅ PowerPoint 簡報已成功生成 ({len(prs.slides)} 頁): {first_path}")
+
+import shutil
+for p in out_paths[1:]:
     os.makedirs(os.path.dirname(p), exist_ok=True)
-    prs.save(p)
-    print(f"✅ PowerPoint 簡報已成功生成 ({len(prs.slides)} 頁): {p}")
+    shutil.copy2(first_path, p)
+    print(f"✅ PowerPoint 簡報已同步拷貝 ({len(prs.slides)} 頁, SHA-256 一致): {p}")
 
-print("\n🎉 全部 3 處 PowerPoint 簡報生成完成！")
+print(f"\n🎉 全部 {len(out_paths)} 處 PowerPoint 簡報生成完成！")
