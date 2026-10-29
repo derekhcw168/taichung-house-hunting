@@ -204,7 +204,7 @@ def run_challenger_audit():
     # -------------------------------------------------------------
     print("\n--- [Audit 8] 卡片結構完整性與速查表對齊審計 ---")
     card_pattern = r"(?:###\s+理由\s+(\d+)[:：]|【理由\s+(\d+)】)"
-    card_ids = re.findall(r"編號識別[:：]\s*(BP-\d+)", content)
+    card_ids = re.findall(r"\*{0,2}編號識別\*{0,2}[:：]\s*(BP-\d+)", content)
     unique_card_ids = sorted(list(set(card_ids)))
 
     record_test("卡片總數達到 52 條 (門檻 >= 50)", len(unique_card_ids) >= 50, f"實質解析出 {len(unique_card_ids)} 張獨立卡片 (BP-01 ~ BP-{len(unique_card_ids):02d})")
