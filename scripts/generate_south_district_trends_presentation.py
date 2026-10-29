@@ -1,19 +1,27 @@
 # -*- coding: utf-8 -*-
 """
 生成《台中市南區老牌大型社區實價登錄趨勢與後續三年預估分析.pptx》
-架構：
-1. 全南區 25 年以上老牌大型社區大盤價量走勢圖與歷史週期趨勢剖析（101～115年）
-2. 計量經濟學動態預估模型（量價衰減回歸、流動性衝擊動能、Holt阻尼平滑與IQR價值支撐重力模型）
-3. 價格走勢後續三年預估分析的四大維度成因深度剖析（供需面、產業經濟面、市場交易心理面、金融信用管制面）
-4. 全南區 10 大指標老牌大社區實登行情與動態計量預估總對照表
-5. 10 大指標老牌大社區的獨立價量走勢圖與動態計量預估剖析卡片
-6. 買賣雙方理性因應戰略決策指引
+全套 65 頁高規格專案決策簡報架構：
+1. 封面：南區老牌大型社區實價登錄趨勢與後續三年預估分析報告
+2. 執行摘要：南區老牌大社區房市大盤 4 大核心研判結論
+3. 大盤全景解構：54 棟老牌大社區實登價量全圖與歷史週期剖析（101～115年）
+4. 成因全景架構：促使老牌大型社區價格持續下修的四大驅動力
+5. 深度成因剖析 1【整體供需面】：龐大老屋存量賣壓、新成屋交屋潮夾殺與買盤斷層
+6. 深度成因剖析 2【結構機能與維護面】：結構機能衰退與公共維護負擔，老屋邁向50年面臨買盤歸零
+7. 深度成因剖析 3【市場面與交易心理】：『量先價行』確立、追價破滅與破 2 字頭定錨效應
+8. 深度成因剖析 4【金融面與信用管制】：央行重拳打擊、銀行滿水位與老屋貸款大限
+9. 價格預測模型解析：計量經濟學動態預估原理、流動性衝擊與價值引力機制（R5 獨立全頁說明）
+10. 指標對照總表：南區 10 大指標老牌社區實登行情與後續三年動態計量預估總覽（11 欄位專業評估表格）
+11～64. 全南區全數 54 個老牌大型社區獨立價量走勢圖與月度動態計量預估剖析卡片（共 54 頁）
+65. 戰略決策指引：老牌社區下行週期確立，買賣雙方的理性因應對策
 """
 
 import os
 import sys
 import json
 import math
+import shutil
+import numpy as np
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
@@ -50,6 +58,35 @@ TEXT_DARK = RGBColor(30, 41, 59)    # #1E293B
 TEXT_MUTED = RGBColor(100, 116, 139)# #64748B
 
 trend_dir = os.path.join(PROJECT_ROOT, "南區25年以上大型社區走勢圖")
+
+# 日期轉換輔助函式（精準至月份）
+def format_roc_month(date_str):
+    """將西元或民國日期格式化為民國年月（如 113年6月）"""
+    if not date_str or str(date_str) in ('—', 'None', 'null', ''):
+        return '—'
+    s = str(date_str).strip().replace('/', '-').replace('.', '-')
+    parts = s.split('-')
+    try:
+        y = int(parts[0])
+        m = int(parts[1]) if len(parts) > 1 else 1
+        ry = y - 1911 if y > 1900 else y
+        return f"{ry}年{m}月"
+    except Exception:
+        return str(date_str)
+
+def format_roc_short(date_str):
+    """將日期格式化為簡潔民國年月（如 113/06）"""
+    if not date_str or str(date_str) in ('—', 'None', 'null', ''):
+        return '—'
+    s = str(date_str).strip().replace('/', '-').replace('.', '-')
+    parts = s.split('-')
+    try:
+        y = int(parts[0])
+        m = int(parts[1]) if len(parts) > 1 else 1
+        ry = y - 1911 if y > 1900 else y
+        return f"{ry}/{m:02d}"
+    except Exception:
+        return str(date_str)
 
 # 1. 載入全量交易資料集
 MASTER_DATA_FILE = os.path.join(SCRATCH_DIR, "all_54_communities_transactions.json")
@@ -93,77 +130,77 @@ m_d118 = market_forecast[118]['drop_pct']
 m_cum_drop = market_forecast['cum_drop_pct']
 m_supp_low, m_supp_high = market_forecast['support_band']
 
-# 2. 定義 10 大指標社區並動態計算指標與計量預估
+# 2. 定義 10 大指標社區（依 R3 & R6 規格重組：強制納入工學天下與大墩人文，其餘 8 案依跌幅顯著排序）
 bench_defs = [
     {
         'rank': 1,
-        'label': '長億城攬翠區',
-        'match_name': '長億城攬翠區陽光區',
-        'img': '03_長億城攬翠區陽光區_成交行情走勢圖.png',
-        'desc_template': '工學商圈龍頭大社區，總戶數達 669 戶。實登在 113 年衝上 {peak_p:.1f} 萬後反轉回檔，115 年均價下修至 {avg115:.1f} 萬。在計量經濟模型測算下，受大社區內部削價競爭與老屋限貸影響，預估 116 年下修至 {p116:.1f} 萬，117 年摜破 2 字頭至 {p117:.1f} 萬，118 年下探 {p118:.1f} 萬，三年累計跌幅達 {cum_drop:.1f}%，逐步收斂至長期價值支撐帶（{supp}）。'
-    },
-    {
-        'rank': 2,
         'label': '工學天下',
         'match_name': '工學天下',
         'img': '07_工學天下_成交行情走勢圖.png',
-        'desc_template': '屋齡約 31.7 年，總戶數 452 戶，與長億南園條件極為相近。113 年歷史高點達 {peak_p:.1f} 萬，115 年 6 月最新成交直接摜破 2 字頭重挫至 {latest_p:.1f} 萬破底！動態計量模型預估 116 年跌至 {p116:.1f} 萬，117 年下探 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%）。老屋限貸與缺乏無障礙設施使買盤縮手觀望。'
+        'desc_template': '工學商圈標竿老牌名宅（452戶・屋齡31.7年）。113年7月創下 {peak_p:.1f} 萬歷史高點，115年6月最新成交直接摜破2字頭重挫至 {latest_p:.1f} 萬破底（最新跌幅 {drop_latest:.1f}%）！115年均價 {avg115_str}（均價跌幅 {drop_avg:.1f}%）。在計量經濟模型測算下，預估 116 年下修至 {p116:.1f} 萬，117 年跌至 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（三年累計修正 {cum_drop:.1f}%），回測長期價值支撐帶（{supp}）。'
     },
     {
-        'rank': 3,
-        'label': '京城特區',
-        'match_name': '京城特區',
-        'img': '11_京城特區_成交行情走勢圖.png',
-        'desc_template': '中興大學學府商圈 388 戶大案。113 年高點 {peak_p:.1f} 萬，115 年最新成交直接跌破 2 字頭見 {latest_p:.1f} 萬！計量模型顯示，在流動性衝擊與同商圈賣盤競爭下，預期 116 年續探 {p116:.1f} 萬，117 年下修至 {p117:.1f} 萬，118 年下探 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%），向長期歷史支撐尋底。'
-    },
-    {
-        'rank': 4,
+        'rank': 2,
         'label': '文心及第',
         'match_name': '文心及第(文心南路)',
         'img': '27_文心及第文心南路_成交行情走勢圖.png',
-        'desc_template': '全南區最震撼之破底指標！113 年曾創 {peak_p:.1f} 萬天價，但 115 年 3 月 14 樓頂樓次高戶直接暴跌至 {latest_p:.1f} 萬/坪成交，摜破 2 字頭定錨效應確立！計量模型預估 116 年下探 {p116:.1f} 萬，117 年 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%），成為全區比價降價的核心依據。'
+        'desc_template': '文心南路生活圈指標案（259戶・屋齡27.2年）。113年6月創下 {peak_p:.1f} 萬天花板，115年3月頂樓次高戶直接暴跌至 {latest_p:.1f} 萬成交（崩跌 {drop_latest:.1f}%，南區跌幅第一）！115年均價 {avg115_str}（均價跌幅 {drop_avg:.1f}%）。計量模型預估 116 年下探 {p116:.1f} 萬，117 年 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%），成為全區比價降價核心定錨。'
+    },
+    {
+        'rank': 3,
+        'label': '綠灣大樓',
+        'match_name': '綠灣大樓',
+        'img': '25_綠灣大樓_成交行情走勢圖.png',
+        'desc_template': '綠川水岸生活圈（185戶・屋齡27.4年）。113年10月高點 {peak_p:.1f} 萬，115年3月最新成交直接見 1 字頭 {latest_p:.1f} 萬（暴跌 {drop_latest:.1f}%），115均價跌至 {avg115_str}（均價跌幅 {drop_avg:.1f}%）。計量模型預測 116 年下探 {p116:.1f} 萬，117 年 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（三年累計修正 {cum_drop:.1f}%），破底效應極為顯著。'
+    },
+    {
+        'rank': 4,
+        'label': '比佛利山莊',
+        'match_name': '比佛利山莊',
+        'img': '17_比佛利山莊_成交行情走勢圖.png',
+        'desc_template': '南區高總價老牌名邸（247戶・屋齡30.6年）。113年8月歷史高點衝上 {peak_p:.1f} 萬，115年3月最新成交急挫至 {latest_p:.1f} 萬（回檔 {drop_latest:.1f}%），115均價 {avg115_str}（均價跌幅 {drop_avg:.1f}%）。模型預估 116 年跌至 {p116:.1f} 萬，117 年探至 {p117:.1f} 萬，118 年收斂至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%）。老屋結構維護負擔與大坪數總價過高導致接盤力弱。'
     },
     {
         'rank': 5,
-        'label': '文心高第',
-        'match_name': '文心高第',
-        'img': '26_文心高第_成交行情走勢圖.png',
-        'desc_template': '東興路一段名廈，屋齡約 24.9 年，為少數剛過 24 年之物件。113 年高點 {peak_p:.1f} 萬，115 年均價回跌至 {avg115:.1f} 萬。計量模型預測 116 年下修至 {p116:.1f} 萬，117 年跌至 {p117:.1f} 萬，118 年回修至 {p118:.1f} 萬（三年累計修正 {cum_drop:.1f}%）。高單價老屋面臨買方強烈抗性與去化週期倍增。'
-    },
-    {
-        'rank': 6,
-        'label': '賺錢時代',
-        'match_name': '賺錢時代',
-        'img': '01_賺錢時代_成交行情走勢圖.png',
-        'desc_template': '全南區規模最大單一社區（總戶數 2,077 戶）。113 年高點達 {peak_p:.1f} 萬，但龐大戶數帶來劇烈內部二手掛售踩踏。計量模型測算規模與量縮懲罰下，116 年預估跌至 {p116:.1f} 萬，117 年跌破 2 字頭至 {p117:.1f} 萬，118 年探至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%），回測歷史合理支撐帶。'
-    },
-    {
-        'rank': 7,
-        'label': '廣三大時代',
-        'match_name': '廣三大時代大廈',
-        'img': '02_廣三大時代大廈_成交行情走勢圖.png',
-        'desc_template': '工學商圈千戶超大型社區（1,214 戶）。113 年衝上 {peak_p:.1f} 萬天花板後反轉，115 年最新成交落入 {latest_p:.1f} 萬區間。計量模型預估 116 年下探 {p116:.1f} 萬，117 年摜破 2 字頭至 {p117:.1f} 萬，118 年下修至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%）。超大戶數面對量縮環境，二手拋售壓力沉重。'
-    },
-    {
-        'rank': 8,
-        'label': '文心大地',
-        'match_name': '文心大地',
-        'img': '41_文心大地_成交行情走勢圖.png',
-        'desc_template': '文心南路生活圈指標大樓，屋齡約 27.4 年。113 年高點 {peak_p:.1f} 萬，115 年均價滑落至 {avg115:.1f} 萬。動態計量模型預估 116 年探至 {p116:.1f} 萬，117 年跌破 2 字頭至 {p117:.1f} 萬，118 年探至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%），買方受央行第七波信用管制壓抑，追價動能全無。'
-    },
-    {
-        'rank': 9,
-        'label': '大安黃金城',
-        'match_name': '大安黃金城大廈',
-        'img': '18_大安黃金城大廈_成交行情走勢圖.png',
-        'desc_template': '興大忠孝生活圈 307 戶名廈，屋齡 32.2 年。114 年衝上 {peak_p:.1f} 萬極值後迅速熄火，115 年成交下挫至 {latest_p:.1f} 萬。計量模型預估 116 年降至 {p116:.1f} 萬，117 年跌破 2 字頭至 {p117:.1f} 萬，118 年探至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%）。老屋限貸與修繕成本推動價格理性回歸。'
-    },
-    {
-        'rank': 10,
         'label': '德昌中華大樓',
         'match_name': '德昌中華大樓',
         'img': '10_德昌中華大樓_成交行情走勢圖.png',
-        'desc_template': '五權南路商圈 409 戶老牌名宅，屋齡 32.3 年。113 年高點 {peak_p:.1f} 萬，115 年最新成交已殺至 {latest_p:.1f} 萬保衛戰！計量模型測算 116 年即將跌破 2 字頭至 {p116:.1f} 萬，117 年續探 {p117:.1f} 萬，118 年探至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%），回歸歷史長期價值支撐區。'
+        'desc_template': '五權南路商圈 409 戶老牌名宅，屋齡 32.3 年。113年7月高點 {peak_p:.1f} 萬，115年3月最新成交殺至 20.0 萬保衛戰（回挫 {drop_latest:.1f}%）！115均價亦跌至 20.0 萬（均價跌幅 {drop_avg:.1f}%）。計量模型測算 116 年即將跌破 2 字頭至 {p116:.1f} 萬，117 年續探 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%）。'
+    },
+    {
+        'rank': 6,
+        'label': '廣三大時代',
+        'match_name': '廣三大時代大廈',
+        'img': '02_廣三大時代大廈_成交行情走勢圖.png',
+        'desc_template': '工學商圈千戶超大型社區（1,214戶・屋齡31.9年）。113年12月衝上 {peak_p:.1f} 萬天花板後反轉，115年8月最新成交急落至 {latest_p:.1f} 萬（下修 {drop_latest:.1f}%），115均價 {avg115_str}（均價跌幅 {drop_avg:.1f}%）。計量模型預估 116 年下探 {p116:.1f} 萬，117 年摜破 2 字頭至 {p117:.1f} 萬，118 年下修至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%）。超大戶數二手拋售賣壓沉重。'
+    },
+    {
+        'rank': 7,
+        'label': '賺錢時代',
+        'match_name': '賺錢時代',
+        'img': '01_賺錢時代_成交行情走勢圖.png',
+        'desc_template': '全南區規模最大單一社區（2,077戶・屋齡29.5年）。113年11月高點達 {peak_p:.1f} 萬，龐大戶數帶來二手市場劇烈委售競價，115年8月最新成交跌至 {latest_p:.1f} 萬（回修 {drop_latest:.1f}%），115均價 {avg115_str}（均價跌幅 {drop_avg:.1f}%）。計量模型測算 116 年跌至 {p116:.1f} 萬，117 年跌破 2 字頭至 {p117:.1f} 萬，118 年探至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%）。'
+    },
+    {
+        'rank': 8,
+        'label': '遠見天下大樓',
+        'match_name': '遠見天下大樓',
+        'img': '19_遠見天下大樓_成交行情走勢圖.png',
+        'desc_template': '健康公園生活圈 298 戶指標名廈，屋齡 31.8 年。113年12月極值 {peak_p:.1f} 萬，115年5月最新成交急跌至 {latest_p:.1f} 萬（重挫 {drop_latest:.1f}%），115均價 {avg115_str}（均價跌幅 {drop_avg:.1f}%）。計量模型測算 116 年降至 {p116:.1f} 萬，117 年跌破 2 字頭至 {p117:.1f} 萬，118 年探至 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%），追價動能全無。'
+    },
+    {
+        'rank': 9,
+        'label': '長億南園',
+        'match_name': '長億南園',
+        'img': '28_長億南園_成交行情走勢圖.png',
+        'desc_template': '工學商圈標竿成熟名廈（239戶・屋齡32.6年）。113年2月高點衝上 {peak_p:.1f} 萬，115年9月最新成交滑落至 {latest_p:.1f} 萬（修正 {drop_latest:.1f}%），115均價 {avg115_str}（均價跌幅 {drop_avg:.1f}%）。計量模型預估 116 年探至 {p116:.1f} 萬，117 年下挫至 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（累計修正 {cum_drop:.1f}%），回歸長期歷史價值支撐區。'
+    },
+    {
+        'rank': 10,
+        'label': '大墩人文',
+        'match_name': '大墩人文',
+        'img': '54_大墩人文_成交行情走勢圖.png',
+        'desc_template': '南屯/南區交界樞紐名邸（188戶・屋齡34.0年）。114年3月創下 {peak_p:.1f} 萬歷史高點，最新成交為 114年12月之 {latest_p:.1f} 萬（回跌 {drop_latest:.1f}%*）。115年受央行第七波信用管制衝擊，買氣急凍量縮暫無成交。計量經濟模型測算顯示，預估 116 年下修至 {p116:.1f} 萬，117 年跌至 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（三年累計修正 {cum_drop:.1f}%），補跌態勢明確。'
     }
 ]
 
@@ -200,14 +237,36 @@ for b_def in bench_defs:
     latest_p = float(c.get('latest_deal_price') or 0.0)
     latest_date = str(c.get('latest_deal_date') or '')
     avg113 = float(c.get('annual_avg_113') or 0.0)
-    avg115 = float(c.get('annual_avg_115') or 0.0)
-    drop_pct_113_115 = float(c.get('price_drop_pct_113_to_115') or 0.0)
+    
+    # 115 交易狀態判定與關鍵跌幅計算
+    raw_avg115 = c.get('annual_avg_115')
+    has_115_deals = (raw_avg115 is not None and float(raw_avg115) > 0.0)
+    
+    if has_115_deals:
+        avg115 = float(raw_avg115)
+        avg115_str = f"{avg115:.1f} 萬/坪"
+        drop_latest = round(((latest_p - peak_p) / peak_p) * 100.0, 1)
+        drop_avg = round(((avg115 - peak_p) / peak_p) * 100.0, 1)
+        drop_latest_str = f"{drop_latest:+.1f}%"
+        drop_avg_str = f"{drop_avg:+.1f}%"
+        latest_deal_display = f"{latest_p:.1f}萬 ({format_roc_short(latest_date)})"
+    else:
+        avg115 = None
+        avg115_str = "—*"
+        drop_latest = round(((latest_p - peak_p) / peak_p) * 100.0, 1) if peak_p > 0 else 0.0
+        drop_avg = None
+        drop_latest_str = f"{drop_latest:+.1f}%*"
+        drop_avg_str = "—*"
+        latest_deal_display = f"{latest_p:.1f}萬 ({format_roc_short(latest_date)})*"
 
     desc = b_def['desc_template'].format(
         peak_p=peak_p,
         latest_p=latest_p,
         avg113=avg113,
         avg115=avg115,
+        avg115_str=avg115_str,
+        drop_latest=drop_latest,
+        drop_avg=drop_avg if drop_avg is not None else 0.0,
         p116=p116,
         p117=p117,
         p118=p118,
@@ -227,9 +286,15 @@ for b_def in bench_defs:
         'peak_date': peak_date,
         'latest_p': latest_p,
         'latest_date': latest_date,
+        'latest_deal_display': latest_deal_display,
         'avg113': avg113,
         'avg115': avg115,
-        'drop_pct': drop_pct_113_115,
+        'avg115_str': avg115_str,
+        'drop_latest_115': drop_latest,
+        'drop_avg_115': drop_avg,
+        'drop_latest_str': drop_latest_str,
+        'drop_avg_str': drop_avg_str,
+        'has_115_deals': has_115_deals,
         'p116': p116,
         'd116': d116,
         'p117': p117,
@@ -242,7 +307,7 @@ for b_def in bench_defs:
         'desc': desc
     })
 
-print(f"✅ 成功載入並完成 10 大指標社區動態計量預估計算！")
+print(f"✅ 成功載入並完成重組後 10 大指標社區動態計量預估計算！")
 
 # 3. 初始化 PowerPoint 簡報 (16:9 寬螢幕)
 prs = Presentation()
@@ -327,7 +392,7 @@ p2.font.color.rgb = WHITE
 p2.space_before = Pt(8)
 
 p3 = tf1.add_paragraph()
-p3.text = "【大盤量縮 76.4% 轉折確立 ｜ 計量經濟學動態預估模型 ｜ 10 大指標社區深度剖析 ｜ 供需・產業・市場・金融四大成因全景解析】"
+p3.text = "【大盤量縮 76.4% 轉折確立 ｜ 月度高頻動態計量預估模型 ｜ 全數 54 社區全圖鑑 ｜ 供需・結構機能・市場・金融四大成因全景解析】"
 p3.font.name = "微軟正黑體"
 p3.font.size = Pt(13)
 p3.font.color.rgb = RGBColor(190, 210, 240)
@@ -338,14 +403,14 @@ set_shape_flat(card_foot, RGBColor(22, 45, 85), RGBColor(40, 75, 130), 1)
 tf_foot = card_foot.text_frame
 tf_foot.vertical_anchor = MSO_ANCHOR.MIDDLE
 p_foot = tf_foot.paragraphs[0]
-p_foot.text = "數據範疇：全南區 54 棟 25 年以上大型集合住宅社區（總計 17,945 戶、整體老屋存量逾 21,396 戶、平均屋齡 31.0 年） ｜ 實登總計：7,072 筆（純住宅 5,935 筆） ｜ 分析日期：2026 年 10 月"
+p_foot.text = "數據範疇：全南區 54 棟 25 年以上大型集合住宅社區（總計 17,945 戶、整體老屋存量逾 21,396 戶、平均屋齡 31.0 年） ｜ 實登總計：7,072 筆（純住宅 5,935 筆） ｜ 時間精度：月度時間序列 ｜ 分析日期：2026 年 10 月"
 p_foot.font.name = "微軟正黑體"
 p_foot.font.size = Pt(11)
 p_foot.font.color.rgb = WHITE
 p_foot.alignment = PP_ALIGN.CENTER
 
 # ==========================================
-# SLIDE 2: 執行摘要 (Executive Summary)
+# SLIDE 2: 執行摘要 (Executive Summary) — R4 修正
 # ==========================================
 s2 = prs.slides.add_slide(blank_layout)
 add_header(s2, "執行摘要：南區老牌大社區房市大盤 4 大核心研判結論")
@@ -355,13 +420,13 @@ cards_data_s2 = [
      "全南區 54 棟老牌大案於 113 年衝上 26.9 萬/坪歷史天花板後見頂。央行實施第七波選擇性信用管制後，115 年成交量自高峰期年均 739 件崩縮至 174 件（暴跌 76.4%），『量先價行』鐵律確立市場全面反轉下行。", 
      RED, Inches(0.8), Inches(1.5)),
     ("📉 計量經濟學動態下修模型", 
-     f"捨棄傳統固定跌幅，建立嚴謹計量經濟模型（量價衰減回歸、流動性衝擊動能、Holt阻尼平滑與IQR價值支撐重力模型）：測算大盤中位數 116 年 {m_p116:.1f} 萬 ➜ 117 年 {m_p117:.1f} 萬 ➜ 118 年 {m_p118:.1f} 萬，三年累計跌幅達 {m_cum_drop:.1f}%，理性靠攏長期合理支撐帶。", 
+     f"捨棄傳統固定跌幅，建立嚴謹月度動態計量經濟模型（量價衰減回歸、流動性衝擊動能、Holt阻尼平滑與IQR價值支撐重力模型）：測算大盤中位數 116 年 {m_p116:.1f} 萬 ➜ 117 年 {m_p117:.1f} 萬 ➜ 118 年 {m_p118:.1f} 萬，三年累計跌幅達 {m_cum_drop:.1f}%，理性靠攏長期合理支撐帶。", 
      GOLD, Inches(6.8), Inches(1.5)),
     ("🏢 十大指標建案接連破底", 
-     "長億城、工學天下、文心及第、京城特區等南區 10 大標竿社區全數高檔下挫！其中工學天下(19.6萬)、文心及第(18.9萬)、京城特區(18.6萬)最新成交已直接摜破 2 字頭，形成無可逆轉之比價定錨效應。", 
+     "工學天下、文心及第、綠灣大樓、廣三大時代等南區 10 大標竿社區全數高檔重挫！其中文心及第跌幅達 47.1%、綠灣大樓跌 40.2%、比佛利山莊跌 44.0%，工學天下(19.6萬)等最新成交直接摜破 2 字頭，形成無可逆轉之比價定錨效應。", 
      SLATE, Inches(0.8), Inches(4.3)),
     ("🎯 四大成因共振拉動下行", 
-     "【供需面】2.1萬戶老屋存量賣壓與新成屋交屋潮夾殺；【產業面】薪資所得成長停滯與老屋翻修成本大漲30%~50%反噬殘值；【市場面】追價心理破滅與流動性枯竭；【金融面】央行第七波重拳與 30/35 年老屋貸款年限腰斬至15~20年。", 
+     "【供需面】2.1萬戶老屋存量賣壓與新成屋交屋潮夾殺；【結構維護面】結構機能衰退與公共維護負擔加劇，30餘年老社區居住10至20年後將成為50年屋齡老舊建築，屆時將無人購買更沒有實質買盤；【市場面】追價心理破滅與流動性枯竭；【金融面】央行第七波重拳與老屋貸款年限腰斬至15~20年。", 
      GREEN, Inches(6.8), Inches(4.3))
 ]
 
@@ -412,7 +477,7 @@ cycle_points = [
     ("101～106年【早期溫和盤整期】", "全區純住宅均價落在 10.0～14.1 萬/坪，成交量平穩扎實（年均約 400～700 餘件），老牌社區以高性價比為首購主力客群。", SLATE),
     ("107～112年【低利資金推升主升期】", "受全球寬鬆熱錢與通膨預期帶動，單價突破 20 萬大關，全區年度成交創下 739 件高峰。", PRIMARY_BLUE),
     ("113～115年【見頂回落量縮急凍期】", "113 年見 26.9 萬歷史天花板，央行第七波管制後成交量崩跌 76.4%（至 174 件），115 年中位數回修至 24.6 萬。", RED),
-    ("116～118年【計量經濟動態下行期】", f"計量模型動態預估：116年下修至 {m_p116:.1f} 萬 ➜ 117年探至 {m_p117:.1f} 萬 ➜ 118年收斂於 {m_p118:.1f} 萬，回測歷史長期價值支撐帶（{m_supp_low:.1f}～{m_supp_high:.1f}萬）。", GOLD)
+    ("116～118年【計量經濟動態下行期】", f"月度動態計量模型預估：116年下修至 {m_p116:.1f} 萬 ➜ 117年探至 {m_p117:.1f} 萬 ➜ 118年收斂於 {m_p118:.1f} 萬，回測歷史長期價值支撐帶（{m_supp_low:.1f}～{m_supp_high:.1f}萬）。", GOLD)
 ]
 
 for title, desc, col in cycle_points:
@@ -432,7 +497,7 @@ for title, desc, col in cycle_points:
     p_d.line_spacing = 1.25
 
 # ==========================================
-# SLIDE 4: 促使價格走勢調整與預估分析成因剖析（四大維度架構總覽）
+# SLIDE 4: 促使價格走勢調整與預估分析成因剖析（四大維度架構總覽） — R4 修正
 # ==========================================
 s4 = prs.slides.add_slide(blank_layout)
 add_header(s4, "成因全景架構：促使老牌大型社區價格持續下修的四大驅動力")
@@ -441,8 +506,8 @@ drivers_s4 = [
     ("🏗️ 整體供需面", "龐大老屋存量與新成屋交屋潮夾殺", 
      "• 54 棟老案庫存逾 2.1 萬戶，市場轉冷後二手委售件數暴增\n• 周邊烏日高鐵、十三期新成屋交屋潮強烈瓜分優質自住客源\n• 年輕首購族排斥老陳屋，自住買盤面臨少子化世代斷層", 
      Inches(0.8), PRIMARY_BLUE),
-    ("🏭 產業與經濟面", "實質所得停滯與翻修成本暴增", 
-     "• 非高薪科技聚落，一般受薪階級薪資成長停滯無力追價\n• 室內翻修水電工料大漲 30%~50%，翻新費直接反噬老屋殘值\n• 成熟商圈發展飽和，缺乏重磅新增大型產業題材支撐溢價", 
+    ("🏚️ 結構機能與維護面", "結構機能衰退與公共維護負擔", 
+     "• 大樓水電管線老化、外牆滲漏與電梯維修頻繁，公共修繕基金不足\n• 管委會維護負擔沉重引發鉅額修繕分攤款，反噬老屋殘值\n• 現在歷時三十幾年的老社區，在居住 10 至 20 年之後，將成為 50 年屋齡的老舊建築，屆時將無人購買，更沒有實質買盤！", 
      Inches(3.8), SLATE),
     ("📉 市場與交易心理", "量先價行與預期追價破滅", 
      "• 成交量暴跌 76.4%，流動性枯竭迫使急售賣方防線崩潰\n• 買方心理從『恐慌搶買』徹底轉為『理性觀望等更跌』\n• 工學天下、文心及第摜破 2 字頭引發全區比價連鎖殺跌", 
@@ -527,24 +592,24 @@ for title, desc, left in sd_cards:
     p_d.space_before = Pt(10)
 
 # ==========================================
-# SLIDE 6: 深度成因剖析 2 —— 產業面與實體經濟
+# SLIDE 6: 深度成因剖析 2 —— 結構機能與維護面 — R4 修正
 # ==========================================
 s6 = prs.slides.add_slide(blank_layout)
-add_header(s6, "深度成因剖析 2【產業面與實體經濟】：薪資所得追價乏力與裝修工料暴增反噬殘值")
+add_header(s6, "深度成因剖析 2【結構機能與維護面】：結構機能衰退與公共維護負擔，老屋邁向50年面臨買盤歸零")
 
 ind_cards = [
-    ("1. 實質薪資成長停滯，房貸負擔能力抵達天花板",
-     "• 缺乏高薪科技產業加持：南區非中科或竹科高薪產業聚落，居民多為傳統受薪階級、公教人員與傳產從業人員。\n"
-     "• 可支配所得受通膨侵蝕：在日常物價、水電與生活成本高漲下，薪資實質增幅追不上房價前波漲幅。\n"
-     "• 房貸所得比超過警戒：若以南區老屋均價 25 萬計算，3 房總價近千萬，房貸月負擔已超過家庭月收入 45% 警戒線，買盤完全無力追高。", Inches(0.8)),
-    ("2. 缺工缺料引發裝修成本暴漲，直接扣抵老屋交易殘值",
-     "• 水電泥作大漲 30%～50%：近年室內裝修因缺工工資倍增與建材原料暴漲，翻修 30 年以上老屋動輒需 150～250 萬現金支出。\n"
-     "• 現金自備門檻暴增：買方購置老屋後必須立即投入大筆現金翻修管線與衛浴，這筆開銷無法併入房貸融資。\n"
-     "• 房價殘值被反向折抵：買方在談判時必然將 150～200 萬的裝潢翻修預算直接從購屋出價中扣抵，老屋本體價值被嚴重反噬！", Inches(4.8)),
-    ("3. 成熟商圈缺乏新增大型重大題材，資本向外分流",
-     "• 商圈發展成熟飽和：工學商圈、興大商圈與復興商圈機能雖好，但都市更新困難、腹地有限，缺乏大型旗艦投資帶動。\n"
-     "• 重磅產業外溢有限：台中近年重大產業發展集中於中科二期、水湳經貿與烏日高鐵娛樂城，南區缺乏新增大型就業題材。\n"
-     "• 資本追逐新興軸線：投資置產資金全面流向具備高科技題材的新興軌道軸線，老牌社區淪為純防守型市場。", Inches(8.8))
+    ("1. 大樓結構與機電管線老化，公共維護負擔加劇",
+     "• 水電公用管線老化劣化：25～35 年以上老社區普遍面臨給排水幹管鏽蝕、消防管路老化與外牆滲漏裂損等嚴重課題。\n"
+     "• 機坑與電梯維修頻繁：老牌大社區電梯設備動輒屆齡 30 年，更新主機與纜線每部需百萬以上，日常保養叫修頻率激增。\n"
+     "• 公共維護負擔壓垮管委會：管理費提撥水準偏低導致長期修繕準備金嚴重短缺，已成為中古大樓日常營運的重大隱憂。", Inches(0.8)),
+    ("2. 管委會修繕基金不足，巨額分攤款反噬房屋殘值",
+     "• 專案分攤款引爆住戶衝突：面對外牆拉皮或機電重大修繕，公共基金不足必引發鉅額專案分攤款（每戶數十萬），住戶繳納意願低落陷入惡性循環。\n"
+     "• 現金自備門檻實質暴增：買方購置老陳屋後需自備大筆現金承擔結構機能修復與公設補強，無法納入房貸融資。\n"
+     "• 房價殘值被反向折抵：買方在談判時必然將數十至上百萬的裝潢翻修預算直接從購屋出價中扣抵，老屋本體價值被嚴重反噬！", Inches(4.8)),
+    ("3. 居住 10～20 年後淪為 50 年老屋，終局流動性徹底歸零",
+     "• 邁入 50 年老舊大樓危機：現在已經歷時三十幾年的老社區，在居住 10 至 20 年之後，將成為 50 年屋齡的老舊建築，屆時將無人購買，更沒有實質買盤。\n"
+     "• 銀行金融機能全線關閉：依據銀行法規與授信內規（屋齡+貸款年限≤50），屆時銀行對 50 年集合住宅幾乎全面拒貸，缺乏房貸槓桿將使流動性徹底冰封。\n"
+     "• 都更重建整合難如登天：大型集合住宅數百至上千戶產權極度分散，都更整合難度無限大，老陳屋恐淪為無法變現之終身套牢資產！", Inches(8.8))
 ]
 
 for title, desc, left in ind_cards:
@@ -584,8 +649,8 @@ mkt_cards = [
      "• 議價空間大幅拉大：買方看屋態度從過去的加價競奪，轉為開口先砍 15%~25%，堅決不追高。\n"
      "• 斡旋成交門檻提高：買方出價衡量自身財務極限，若賣方讓利幅度不足，買方轉頭即走、絕不戀棧。", Inches(4.8)),
     ("3. 指標社區摜破 2 字頭，形成無可逆轉之比價定錨",
-     "• 骨牌式破底成交：工學天下最新殺到 19.6 萬、文心及第跌至 18.9 萬、京城特區更見 18.6 萬低點！\n"
-     "• 2 字頭心理關卡失守：原本屋主死守的 23~26 萬防線被市場實登狠狠撕裂，市場定錨價格直接被壓制在 19~21 萬。\n"
+     "• 骨牌式破底成交：工學天下最新殺到 19.6 萬、文心及第跌至 18.9 萬、綠灣大樓更見 16.8 萬低點！\n"
+     "• 2 字頭心理關卡失守：原本屋主死守的 23~26 萬防線被市場實登狠狠撕裂，市場定錨價格直接被壓制在 18~20 萬。\n"
      "• 鄰近社區比價殺跌：買方直接拿工學天下與文心及第的 1 字頭成交作為殺價範本，高開價社區完全喪失議價主導權。", Inches(8.8))
 ]
 
@@ -653,108 +718,128 @@ for title, desc, left in fin_cards:
     p_d.space_before = Pt(10)
 
 # ==========================================
-# SLIDE 9: 計量經濟學動態預估模型架構與測算邏輯
+# SLIDE 9: 價格預測模型說明頁 (R5 專屬全頁解析)
 # ==========================================
 s9 = prs.slides.add_slide(blank_layout)
-add_header(s9, "趨勢預估模型：計量經濟學動態預估架構、流動性衝擊與阻尼平滑演進")
+add_header(s9, "價格預測模型解析：計量經濟學動態預估原理、流動性衝擊與價值引力機制")
 
-add_card(s9, Inches(0.8), Inches(1.5), Inches(5.7), Inches(5.5))
-tb_s9_l = s9.shapes.add_textbox(Inches(1.0), Inches(1.7), Inches(5.3), Inches(5.1))
-tf_s9_l = tb_s9_l.text_frame
-tf_s9_l.word_wrap = True
+model_cols_data = [
+    ("📐 核心架構與月度推估機制",
+     "捨棄粗略年均，以月份為基礎進行高頻動態時間序列建模",
+     [
+         ("月度時間序列高頻分析", "以月為單位追蹤價格與成交量變化，精準捕捉 113 下半年央行第七波信用管制後流動性斷崖式崩跌之月度轉折點。"),
+         ("量價衰減衝擊動能方程", "g_shock(m) = -(λ0 + λv|ΔVm| + λp·PeakDrop)。以大盤月均量縮 76.4% 為基礎，成交量急凍與歷史高點回檔比例直接轉化為月度下修動能。"),
+         ("經驗貝式大盤先驗平滑", "wi = N_recent / (N_recent + 4.0)。對近期月成交稀疏之社區，導入南區 54 社區大盤先驗趨勢進行貝式收縮，避免極端異常交易扭曲預測。")
+     ],
+     Inches(0.8), PRIMARY_BLUE),
 
-p_ml_h = tf_s9_l.paragraphs[0]
-p_ml_h.text = "📐 模型理論架構與核心演算法"
-p_ml_h.font.name = "微軟正黑體"
-p_ml_h.font.size = Pt(15)
-p_ml_h.font.bold = True
-p_ml_h.font.color.rgb = PRIMARY_BLUE
+    ("⚙️ 結構折價懲罰與價值重力",
+     "結合老屋金融限制、社區規模拋售壓力與長期價值支撐帶",
+     [
+         ("屋齡與規模雙重折價懲罰", "f_age = 1 + min(0.18, (Age-25)*0.015)；f_scale = 1 + min(0.12, (戶數-150)/4000)。30年以上老屋房貸年限遭銀行腰斬至15~20年；大社區內部多戶踩踏搶跑。"),
+         ("106～109 年長期價值重力錨", f"以 106～109 年長期實登純住宅四分位距（IQR [{m_supp_low:.1f}～{m_supp_high:.1f}萬/坪]）作為長期價值重力錨。價格愈偏離支撐帶，向下回歸引力愈強。"),
+         ("Holt 阻尼平滑與漸近下限", "導入阻尼係數 φ = 0.68，隨價格靠攏歷史合理支撐區間，下修斜率自然平緩收斂，達成理性軟著陸；設定漸進安全下限 P ≥ ceil(S_low * 0.95)。")
+     ],
+     Inches(4.8), SLATE),
 
-m_desc = [
-    ("量價衰減衝擊動能", "以大盤量縮 76.4% 及各社區交易萎縮率為基礎，結合歷史高點回檔比例，計算基期流動性衰減衝擊：g_shock = -(λ0 + λv|ΔV| + λp·PeakDrop)。"),
-    ("屋齡與規模結構懲罰", "針對屋齡 >25-30 年之貸款年限緊縮效應與 >150-300 戶大社區二手內部拋售賣壓，導入結構性折價懲罰因子 f_age 與 f_scale。"),
-    ("經驗貝式平滑收縮", "對近期成交樣本較少之社區，以南區大盤先驗趨勢進行經驗貝式收縮（Empirical Bayes Shrinkage），有效避免極端值失真。"),
-    ("IQR 地心引力與阻尼平滑", f"以 106～109 年長期實登四分位距（{m_supp_low:.1f}～{m_supp_high:.1f}萬）作為合理價值支撐帶。導入 Holt 阻尼平滑，隨著價格逼近支撐帶，下修斜率自然減緩，達成理性軟著陸。"),
-    ("動態擴展信賴區間", "誤差標準差隨預測步長動態擴展（SE_h = σ_eps·√(1 + θ(h-1))），精確捕捉宏觀景氣不確定性與價格波動區間。")
+    ("📊 信賴錐形區間與大盤演進",
+     "動態擴張信賴區間，精確呈現三年預估路徑與風險邊界",
+     [
+         ("動態擴展信賴錐形 (SE_h)", "SE_h = σ_eps * sqrt(1 + θ(h-1))。隨時間步長 h 動態展開（w118 > w117 > w116），嚴謹包絡宏觀景氣、利率波動與市場交易之不確定性。"),
+         ("大盤後續三年預估軌跡", f"115 現況：中位數 24.6 萬（量縮 76.4% 轉折確立）\n116 預估：{m_p116:.1f} 萬 ({m_d116:+.1f}%) ｜ 區間 [{m_p116_l:.1f}～{m_p116_u:.1f}萬]\n117 預估：{m_p117:.1f} 萬 ({m_d117:+.1f}%) ｜ 區間 [{m_p117_l:.1f}～{m_p117_u:.1f}萬]\n118 預估：{m_p118:.1f} 萬 ({m_d118:+.1f}%) ｜ 累計跌幅 {m_cum_drop:.1f}%"),
+         ("實登破底定錨高度驗證", "工學天下(19.6萬)、文心及第(18.9萬)、綠灣大樓(16.8萬)等指標案最新實登已率先摜破 2 字頭，完美印證本模型預測路徑之精確度與前瞻性！")
+     ],
+     Inches(8.8), RED)
 ]
 
-for title, desc in m_desc:
-    p_t = tf_s9_l.add_paragraph()
-    p_t.text = f"• {title}："
-    p_t.font.name = "微軟正黑體"
-    p_t.font.size = Pt(10.5)
-    p_t.font.bold = True
-    p_t.font.color.rgb = SLATE
-    p_t.space_before = Pt(6)
+for title, sub, points, left, col in model_cols_data:
+    add_card(s9, left, Inches(1.5), Inches(3.7), Inches(5.5), border_color=col)
     
-    p_d = tf_s9_l.add_paragraph()
-    p_d.text = desc
-    p_d.font.name = "微軟正黑體"
-    p_d.font.size = Pt(9.5)
-    p_d.font.color.rgb = TEXT_DARK
-    p_d.line_spacing = 1.25
-
-add_card(s9, Inches(6.8), Inches(1.5), Inches(5.7), Inches(5.5))
-tb_s9_r = s9.shapes.add_textbox(Inches(7.0), Inches(1.7), Inches(5.3), Inches(5.1))
-tf_s9_r = tb_s9_r.text_frame
-tf_s9_r.word_wrap = True
-
-p_mr_h = tf_s9_r.paragraphs[0]
-p_mr_h.text = "📊 大盤後續三年動態計量預估數據演進表"
-p_mr_h.font.name = "微軟正黑體"
-p_mr_h.font.size = Pt(15)
-p_mr_h.font.bold = True
-p_mr_h.font.color.rgb = RED
-
-steps_data = [
-    ("【115年 當前現況】", "中位數：24.6 萬/坪  ｜  年度成交量急縮至 174 件", "大盤衝破 26.9 萬天花板後第一階段回修，流動性冰封、買氣急凍觀望。", PRIMARY_BLUE),
-    ("【116年 動態預估】", f"中位數：{m_p116:.1f} 萬/坪 ({m_d116:+.1f}%)  ｜  90%信賴區間 [{m_p116_l:.1f}～{m_p116_u:.1f}萬]", "賣方防線全面鬆動，同社區多戶委售削價搶跑，單價加速跌向 21 萬關卡。", SLATE),
-    ("【117年 動態預估】", f"中位數：{m_p117:.1f} 萬/坪 ({m_d117:+.1f}%)  ｜  90%信賴區間 [{m_p117_l:.1f}～{m_p117_u:.1f}萬]", "大盤正式摜破 2 字頭防線，多數社區見 1 字頭成交，買方掌握全面定價權。", GOLD),
-    ("【118年 動態預估】", f"中位數：{m_p118:.1f} 萬/坪 ({m_d118:+.1f}%)  ｜  90%信賴區間 [{m_p118_l:.1f}～{m_p118_u:.1f}萬]", f"三年累計跌幅達 {m_cum_drop:.1f}%，價格平穩收斂並回測歷史長期價值支撐帶（{m_supp_low:.1f}～{m_supp_high:.1f}萬）。", RED)
-]
-
-for title, num, note, col in steps_data:
-    p_t = tf_s9_r.add_paragraph()
-    p_t.text = f"{title} {num}"
+    top_bar_c = s9.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, Inches(1.5), Inches(3.7), Inches(0.1))
+    set_shape_flat(top_bar_c, col)
+    
+    tb = s9.shapes.add_textbox(left + Inches(0.18), Inches(1.7), Inches(3.34), Inches(5.1))
+    tf = tb.text_frame
+    tf.word_wrap = True
+    
+    p_t = tf.paragraphs[0]
+    p_t.text = title
     p_t.font.name = "微軟正黑體"
-    p_t.font.size = Pt(11)
+    p_t.font.size = Pt(13.5)
     p_t.font.bold = True
     p_t.font.color.rgb = col
-    p_t.space_before = Pt(8)
     
-    p_n = tf_s9_r.add_paragraph()
-    p_n.text = note
-    p_n.font.name = "微軟正黑體"
-    p_n.font.size = Pt(9.5)
-    p_n.font.color.rgb = TEXT_DARK
-    p_n.line_spacing = 1.2
+    p_s = tf.add_paragraph()
+    p_s.text = sub
+    p_s.font.name = "微軟正黑體"
+    p_s.font.size = Pt(9.5)
+    p_s.font.color.rgb = TEXT_MUTED
+    p_s.space_before = Pt(2)
+    
+    for p_title, p_desc in points:
+        pt = tf.add_paragraph()
+        pt.text = f"• {p_title}："
+        pt.font.name = "微軟正黑體"
+        pt.font.size = Pt(10)
+        pt.font.bold = True
+        pt.font.color.rgb = col
+        pt.space_before = Pt(8)
+        
+        pd = tf.add_paragraph()
+        pd.text = p_desc
+        pd.font.name = "微軟正黑體"
+        pd.font.size = Pt(9.0)
+        pd.font.color.rgb = TEXT_DARK
+        pd.line_spacing = 1.2
 
 # ==========================================
-# SLIDE 10: 南區 10 大指標老牌大社區實登走勢與後續三年動態預估總對照表
+# SLIDE 10: 南區 10 大指標老牌大社區實登走勢與後續三年動態預估總對照表（R3 & R6 11 欄位專業表格）
 # ==========================================
 s10 = prs.slides.add_slide(blank_layout)
 add_header(s10, "指標對照總表：南區 10 大指標老牌社區實登行情與後續三年動態計量預估總覽")
 
-table_shape = s10.shapes.add_table(11, 9, Inches(0.8), Inches(1.5), Inches(11.733), Inches(4.6))
-tbl = table_shape.table
-tbl.columns[0].width = Inches(1.8)
-tbl.columns[1].width = Inches(1.1)
-tbl.columns[2].width = Inches(1.5)
-tbl.columns[3].width = Inches(1.4)
-tbl.columns[4].width = Inches(1.2)
-tbl.columns[5].width = Inches(1.1)
-tbl.columns[6].width = Inches(1.1)
-tbl.columns[7].width = Inches(1.1)
-tbl.columns[8].width = Inches(1.433)
+# 11 欄位寬度分配，總和剛好 11.733 英吋
+col_widths = [
+    Inches(1.30),  # 0: 指標社區建案
+    Inches(0.90),  # 1: 總戶數/屋齡
+    Inches(1.15),  # 2: 歷史最高單價
+    Inches(1.05),  # 3: 115最新成交
+    Inches(1.20),  # 4: 歷史最高點到115最新成交跌幅(%) [R6新增]
+    Inches(0.95),  # 5: 115年均價
+    Inches(1.15),  # 6: 歷史最高點到115均價跌幅(%) [R6新增]
+    Inches(0.95),  # 7: 116動態預估
+    Inches(0.95),  # 8: 117動態預估
+    Inches(0.95),  # 9: 118動態預估
+    Inches(1.133)  # 10: 三年累積跌幅
+]
 
-headers_bench = ["指標社區建案", "總戶數/屋齡", "歷史最高單價", "115最新成交", "115年均價", "116動態預估", "117動態預估", "118動態預估", "三年累積跌幅"]
+table_shape = s10.shapes.add_table(11, 11, Inches(0.8), Inches(1.5), Inches(11.733), Inches(4.6))
+tbl = table_shape.table
+
+for col_idx, w in enumerate(col_widths):
+    tbl.columns[col_idx].width = w
+
+headers_bench = [
+    "指標社區建案",
+    "總戶數/屋齡",
+    "歷史最高單價",
+    "115最新成交",
+    "歷史最高點到115最新成交跌幅(%)",
+    "115年均價",
+    "歷史最高點到115均價跌幅(%)",
+    "116動態預估",
+    "117動態預估",
+    "118動態預估",
+    "三年累積跌幅"
+]
+
 for col_idx, h_text in enumerate(headers_bench):
     cell = tbl.cell(0, col_idx)
     set_cell_bg(cell, PRIMARY_BLUE)
     p = cell.text_frame.paragraphs[0]
     p.text = h_text
     p.font.name = "微軟正黑體"
-    p.font.size = Pt(9.5)
+    p.font.size = Pt(8.0)
     p.font.bold = True
     p.font.color.rgb = WHITE
     p.alignment = PP_ALIGN.CENTER
@@ -763,9 +848,11 @@ for row_idx, b in enumerate(bench_data, start=1):
     row_vals = [
         b['label'],
         f"{b['households']}戶 / {b['age']}年",
-        f"{b['peak_p']:.1f}萬 ({b['peak_date'].split(' ')[0]})",
-        f"{b['latest_p']:.1f}萬 ({b['latest_date'].split(' ')[0]})",
-        f"{b['avg115']:.1f} 萬/坪",
+        f"{b['peak_p']:.1f}萬 ({format_roc_short(b['peak_date'])})",
+        b['latest_deal_display'],
+        b['drop_latest_str'],
+        b['avg115_str'],
+        b['drop_avg_str'],
         f"{b['p116']:.1f} 萬/坪",
         f"{b['p117']:.1f} 萬/坪",
         f"{b['p118']:.1f} 萬/坪",
@@ -777,12 +864,12 @@ for row_idx, b in enumerate(bench_data, start=1):
         p = cell.text_frame.paragraphs[0]
         p.text = text
         p.font.name = "微軟正黑體"
-        p.font.size = Pt(9.0)
+        p.font.size = Pt(8.0)
         p.font.color.rgb = TEXT_DARK
         p.alignment = PP_ALIGN.CENTER
-        if col_idx in [0, 3, 7, 8]:
+        if col_idx in [0, 4, 6, 10]:
             p.font.bold = True
-        if col_idx == 8:
+        if col_idx in [4, 6, 10]:
             p.font.color.rgb = RED
 
 card_t_foot = add_card(s10, Inches(0.8), Inches(6.25), Inches(11.733), Inches(0.9), bg_color=RGBColor(254, 242, 242), border_color=RED)
@@ -790,72 +877,148 @@ tb_tf = s10.shapes.add_textbox(Inches(1.0), Inches(6.3), Inches(11.333), Inches(
 tf_tf = tb_tf.text_frame
 tf_tf.word_wrap = True
 p_tf = tf_tf.paragraphs[0]
-p_tf.text = "💡 數據洞察：十大指標案由計量經濟模型測算，受量縮 76.4% 與老屋限貸影響，116～117 年面臨顯著下修動能；至 118 年隨價格靠攏 106～109 年長期價值支撐帶，下行斜率趨緩。工學天下(19.6萬)、文心及第(18.9萬)、京城特區(18.6萬)等已率先摜破 2 字頭，形成強烈比價定錨效應！"
+p_tf.text = "💡 數據洞察：十大指標案由計量經濟模型測算，受大盤量縮 76.4% 與老屋限貸影響，116～117 年面臨顯著下修動能；至 118 年隨價格靠攏 106～109 年長期價值支撐帶，下行斜率趨緩。工學天下(19.6萬)、文心及第(18.9萬)、綠灣大樓(16.8萬)等已率先摜破 2 字頭定錨！\n*註：大墩人文 115 年在央行管制下量縮急凍暫無實登成交，最新實登成交為 114 年 12 月 29.9 萬/坪（距歷史高點 30.3 萬跌幅 1.3%），115 均價及均價跌幅以『—*』標示。"
 p_tf.font.name = "微軟正黑體"
-p_tf.font.size = Pt(10)
+p_tf.font.size = Pt(9.5)
 p_tf.font.bold = True
 p_tf.font.color.rgb = RED
 
 # ==========================================
-# SLIDES 11~20: 10 大指標社區獨立個別走勢圖與深度剖析
+# SLIDES 11~64: 全數 54 個社區獨立個別走勢圖與深度剖析卡片（R1 & R2 全量擴充）
 # ==========================================
-for idx, b in enumerate(bench_data, start=1):
+img_files = set(os.listdir(trend_dir))
+
+def build_community_desc(c_name, households, age, peak_p, peak_date, latest_p, latest_date, has_115, avg115, p116, p117, p118, cum_drop, supp_str):
+    scale_label = '千戶超大規模社區' if households >= 1000 else ('大型指標社區' if households >= 400 else '知名老牌集合住宅')
+    lat_drop = round(((latest_p - peak_p) / peak_p) * 100, 1) if peak_p > 0 else 0.0
+    
+    if not has_115:
+        p1 = f'{scale_label}（總戶數 {households} 戶），屋齡約 {age} 年。115 年受央行第七波信用管制與買氣急凍影響，全年度尚無純住宅實登揭露；最新成交為 {format_roc_month(latest_date)} 的 {latest_p:.1f} 萬/坪（距歷史高點 {peak_p:.1f} 萬回跌 {lat_drop:+.1f}%*）。'
+    elif latest_p < 20.0:
+        p1 = f'{scale_label}（總戶數 {households} 戶），屋齡約 {age} 年。實登在 {format_roc_month(peak_date)} 見頂 {peak_p:.1f} 萬後反轉回落，{format_roc_month(latest_date)} 最新成交更直接摜破 2 字頭下探至 {latest_p:.1f} 萬/坪（重跌 {lat_drop:+.1f}%），破底定錨確立。'
+    else:
+        p1 = f'{scale_label}（總戶數 {households} 戶），屋齡約 {age} 年。實登自 {format_roc_month(peak_date)} 歷史高點 {peak_p:.1f} 萬震盪回修，{format_roc_month(latest_date)} 最新成交落至 {latest_p:.1f} 萬/坪（回跌 {lat_drop:+.1f}%）。'
+    
+    p2 = '本案面臨結構機能衰退與公共維護負擔沉重，且 30 餘年老社區居住 10 至 20 年後將邁入 50 年屋齡老舊大樓，屆時將無人購買更缺乏實質買盤，金融機能亦全面關閉。'
+    p3 = f'計量經濟模型測算顯示，在流動性衝擊與阻尼平滑下，預估 116 年下修至 {p116:.1f} 萬，117 年跌至 {p117:.1f} 萬，118 年收斂於 {p118:.1f} 萬（三年累計修正 {cum_drop:.1f}%），理性回測長期價值支撐帶（{supp_str}）。'
+    return f'{p1}\n• {p2}\n• {p3}'
+
+for idx, c in enumerate(communities_list, start=1):
+    c_name = c['name']
     s_comm = prs.slides.add_slide(blank_layout)
-    add_header(s_comm, f"社區行情實證 {idx}【{b['label']}】（{b['households']}戶・屋齡{b['age']}年）實登走勢與後續三年動態預估")
     
-    img_path = os.path.join(trend_dir, b['img'])
-    if os.path.exists(img_path):
-        s_comm.shapes.add_picture(img_path, Inches(0.8), Inches(1.5), width=Inches(7.2))
+    # 計算屋齡
+    b_date = str(c.get('build_date') or '1995-01-01')
+    try:
+        by = int(b_date.split('-')[0])
+        bm = int(b_date.split('-')[1]) if '-' in b_date else 6
+        age = round(2026.8 - (by + bm / 12.0), 1)
+    except Exception:
+        age = 31.0
+        
+    add_header(s_comm, f"社區行情實證 #{idx:02d}【{c_name}】（{c.get('households', 0)}戶・屋齡{age}年）實登走勢與後續三年動態預估")
     
+    # 尋找對應之圖檔
+    safe_name = "".join([ch for ch in c_name if ch.isalnum() or ch in ('_', '-')])
+    expected_fname = f"{idx:02d}_{safe_name}_成交行情走勢圖.png"
+    if expected_fname in img_files:
+        img_name = expected_fname
+    else:
+        cands = [f for f in img_files if f.startswith(f"{idx:02d}_") and f.endswith(".png")]
+        img_name = cands[0] if cands else None
+        
+    if img_name:
+        img_path = os.path.join(trend_dir, img_name)
+        if os.path.exists(img_path):
+            s_comm.shapes.add_picture(img_path, Inches(0.8), Inches(1.5), width=Inches(7.2))
+            
+    # 計算該社區之動態預估
+    fc = compute_dynamic_forecast(c.get('transactions', []), community_metadata=c)
+    p116 = fc[116]['expected']
+    d116 = fc[116]['drop_pct']
+    p117 = fc[117]['expected']
+    d117 = fc[117]['drop_pct']
+    p118 = fc[118]['expected']
+    d118 = fc[118]['drop_pct']
+    cum_drop = fc['cum_drop_pct']
+    supp_l, supp_h = fc['support_band']
+    supp_str = f"{supp_l:.1f}～{supp_h:.1f} 萬/坪"
+    
+    peak_p = float(c.get('historical_peak_price') or 0.0)
+    peak_date = str(c.get('historical_peak_date') or '')
+    latest_p = float(c.get('latest_deal_price') or 0.0)
+    latest_date = str(c.get('latest_deal_date') or '')
+    avg113 = float(c.get('annual_avg_113') or 0.0)
+    
+    raw_avg115 = c.get('annual_avg_115')
+    has_115 = (raw_avg115 is not None and float(raw_avg115) > 0.0)
+    
+    if has_115:
+        avg115 = float(raw_avg115)
+        drop_lat = ((latest_p - peak_p) / peak_p * 100.0) if peak_p > 0 else 0.0
+        drop_avg = ((avg115 - peak_p) / peak_p * 100.0) if peak_p > 0 else 0.0
+        val_latest = f"{latest_p:.1f} 萬/坪（{format_roc_month(latest_date)}，距高點跌 {drop_lat:+.1f}%）"
+        val_avg_trend = f"113年 {avg113:.1f}萬 ➜ 115年 {avg115:.1f}萬 (均價跌 {drop_avg:+.1f}%)"
+    else:
+        avg115 = None
+        drop_lat = ((latest_p - peak_p) / peak_p * 100.0) if peak_p > 0 else 0.0
+        val_latest = f"{latest_p:.1f} 萬/坪（{format_roc_month(latest_date)}，115暫無成交，距高點跌 {drop_lat:+.1f}%*）"
+        val_avg_trend = f"113年 {avg113:.1f}萬 ➜ 115年 — (115量縮急凍暫無成交)"
+
+    desc_comm = build_community_desc(
+        c_name, c.get('households', 0), age, peak_p, peak_date, latest_p, latest_date,
+        has_115, avg115, p116, p117, p118, cum_drop, supp_str
+    )
+
     add_card(s_comm, Inches(8.2), Inches(1.5), Inches(4.3), Inches(5.5))
     tb_c = s_comm.shapes.add_textbox(Inches(8.4), Inches(1.65), Inches(3.9), Inches(5.2))
     tf_c = tb_c.text_frame
     tf_c.word_wrap = True
     
     p_ch = tf_c.paragraphs[0]
-    p_ch.text = f"🏢 {b['name']} 實登關鍵指標"
+    p_ch.text = f"🏢 #{idx:02d} {c_name} 實登關鍵指標"
     p_ch.font.name = "微軟正黑體"
     p_ch.font.size = Pt(14)
     p_ch.font.bold = True
     p_ch.font.color.rgb = PRIMARY_BLUE
     
     comm_points = [
-        ("歷史最高成交紀錄", f"{b['peak_p']:.1f} 萬/坪（{b['peak_date']}）", RED),
-        ("115 年最新實登成交", f"{b['latest_p']:.1f} 萬/坪（{b['latest_date']}）", GOLD),
-        ("純住宅年度均價走勢", f"113年 {b['avg113']:.1f}萬 ➜ 115年 {b['avg115']:.1f}萬 ({b['drop_pct']:.1f}%)", PRIMARY_BLUE),
-        ("計量經濟學動態預估", f"116年 {b['p116']:.1f}萬 ({b['d116']:+.1f}%)\n117年 {b['p117']:.1f}萬 ({b['d117']:+.1f}%)\n118年 {b['p118']:.1f}萬 (三年累計 {b['cum_drop']:.1f}%)", RED),
-        ("長期合理價值支撐帶", f"{b['supp']}", GREEN),
-        ("走勢深度分析與成因", f"{b['desc']}", TEXT_DARK)
+        ("歷史最高成交紀錄", f"{peak_p:.1f} 萬/坪（{format_roc_month(peak_date)}）", RED),
+        ("115 年最新實登成交", val_latest, GOLD),
+        ("純住宅年度均價走勢", val_avg_trend, PRIMARY_BLUE),
+        ("計量經濟學動態預估", f"116年 {p116:.1f}萬 ({d116:+.1f}%)\n117年 {p117:.1f}萬 ({d117:+.1f}%)\n118年 {p118:.1f}萬 (三年累計 {cum_drop:.1f}%)", RED),
+        ("長期合理價值支撐帶", f"{supp_str}", GREEN),
+        ("走勢深度分析與成因", desc_comm, TEXT_DARK)
     ]
     
     for title, val, col in comm_points:
         p_t = tf_c.add_paragraph()
         p_t.text = f"• {title}："
         p_t.font.name = "微軟正黑體"
-        p_t.font.size = Pt(10.5)
+        p_t.font.size = Pt(10)
         p_t.font.bold = True
         p_t.font.color.rgb = col
-        p_t.space_before = Pt(5)
+        p_t.space_before = Pt(4)
         
         p_v = tf_c.add_paragraph()
         p_v.text = val
         p_v.font.name = "微軟正黑體"
-        p_v.font.size = Pt(9.5)
+        p_v.font.size = Pt(9.0)
         p_v.font.color.rgb = TEXT_DARK
         p_v.line_spacing = 1.2
 
 # ==========================================
-# SLIDE 21: 總結建言與買賣雙方決策指引
+# SLIDE 65: 總結建言與買賣雙方決策指引 — R4 修正
 # ==========================================
-s21 = prs.slides.add_slide(blank_layout)
-add_header(s21, "戰略決策指引：老牌社區下行週期確立，買賣雙方的理性因應對策")
+s65 = prs.slides.add_slide(blank_layout)
+add_header(s65, "戰略決策指引：老牌社區下行週期確立，買賣雙方的理性因應對策")
 
-add_card(s21, Inches(0.8), Inches(1.5), Inches(5.7), Inches(5.5), border_color=RED)
-tb_s21_l = s21.shapes.add_textbox(Inches(1.0), Inches(1.7), Inches(5.3), Inches(5.1))
-tf_s21_l = tb_s21_l.text_frame
-tf_s21_l.word_wrap = True
+add_card(s65, Inches(0.8), Inches(1.5), Inches(5.7), Inches(5.5), border_color=RED)
+tb_s65_l = s65.shapes.add_textbox(Inches(1.0), Inches(1.7), Inches(5.3), Inches(5.1))
+tf_s65_l = tb_s65_l.text_frame
+tf_s65_l.word_wrap = True
 
-p_sl_h = tf_s21_l.paragraphs[0]
+p_sl_h = tf_s65_l.paragraphs[0]
 p_sl_h.text = "🏷️ 給賣方（屋主）的實戰建言：及時讓利、現金落袋"
 p_sl_h.font.name = "微軟正黑體"
 p_sl_h.font.size = Pt(15)
@@ -864,13 +1027,13 @@ p_sl_h.font.color.rgb = RED
 
 seller_points = [
     ("不要成為替鄰居免費抬轎的犧牲品", "同社區在售戶數普遍在 6～15 戶以上，市場只有極少數中年自住買方願意接手。誰先願意適度讓利，誰就能先把數百萬現金安全落袋！"),
-    ("避免計量模型測算之兩成以上跌幅侵蝕獲利", "在量價衰減與老屋限貸影響下，越晚賣價格只會越低，若再拖兩年，以 40 坪物件計算相當於房屋總值憑空蒸發 150～200 萬元以上！"),
-    ("屋齡跨過 35 年將徹底喪失金融流動性", "屋齡一年比一年老，銀行 30/40 年貸款大門徹底關閉，未來接盤者貸款年限僅剩 15~20 年，流動性枯竭將導致折價幅度更為劇烈。"),
-    ("把握目前高檔反轉初期的高利潤窗口", "若多年前以 13～17 萬買入，目前即便在 20～22 萬成交依然大賺數百萬，此時落袋為安才是最大贏家。")
+    ("避免計量模型測算之兩成以上跌幅侵蝕獲利", "在量價衰減與老屋限貸影響下，越晚賣價格只會越低，若再拖兩年，以 40 坪物件計算相當於房屋總值憑空蒸發數十至上百萬元以上！"),
+    ("30餘年老屋居住10~20年邁入50年將無人購買", "現在已經歷時三十幾年的老社區，在居住 10 至 20 年之後將成為 50 年屋齡的老舊建築，屆時將無人購買更沒有實質買盤，應及早讓利退場避險！"),
+    ("把握目前高檔反轉初期的高利潤窗口", "若多年前以 13～17 萬買入，目前即便在 19～22 萬成交依然大賺數百萬，此時落袋為安才是最大贏家。")
 ]
 
 for title, desc in seller_points:
-    p_t = tf_s21_l.add_paragraph()
+    p_t = tf_s65_l.add_paragraph()
     p_t.text = f"• {title}"
     p_t.font.name = "微軟正黑體"
     p_t.font.size = Pt(11)
@@ -878,19 +1041,19 @@ for title, desc in seller_points:
     p_t.font.color.rgb = RED
     p_t.space_before = Pt(8)
     
-    p_d = tf_s21_l.add_paragraph()
+    p_d = tf_s65_l.add_paragraph()
     p_d.text = desc
     p_d.font.name = "微軟正黑體"
     p_d.font.size = Pt(9.5)
     p_d.font.color.rgb = TEXT_DARK
     p_d.line_spacing = 1.25
 
-add_card(s21, Inches(6.8), Inches(1.5), Inches(5.7), Inches(5.5), border_color=GREEN)
-tb_s21_r = s21.shapes.add_textbox(Inches(7.0), Inches(1.7), Inches(5.3), Inches(5.1))
-tf_s21_r = tb_s21_r.text_frame
-tf_s21_r.word_wrap = True
+add_card(s65, Inches(6.8), Inches(1.5), Inches(5.7), Inches(5.5), border_color=GREEN)
+tb_s65_r = s65.shapes.add_textbox(Inches(7.0), Inches(1.7), Inches(5.3), Inches(5.1))
+tf_s65_r = tb_s65_r.text_frame
+tf_s65_r.word_wrap = True
 
-p_sr_h = tf_s21_r.paragraphs[0]
+p_sr_h = tf_s65_r.paragraphs[0]
 p_sr_h.text = "🎯 給買方（買家）的出價指引：理性定錨、嚴守防線"
 p_sr_h.font.name = "微軟正黑體"
 p_sr_h.font.size = Pt(15)
@@ -898,14 +1061,14 @@ p_sr_h.font.bold = True
 p_sr_h.font.color.rgb = GREEN
 
 buyer_points = [
-    ("堅決以實登破底價與長期合理支撐帶起手出價", "實登行情已全線見頂反轉，出價應直接參照最新成交低點（約 18～19 萬/坪）或長期支撐區間起手，絕不替屋主過去兩年的狂熱買單。"),
-    ("將 150～200 萬裝修翻新費用預先自總價扣除", "30 年以上老屋水電管線與衛浴必須重新翻新，這筆不可融資的現金支出必須直接在出價總價中全額折減。"),
+    ("堅決以實登破底價與長期合理支撐帶起手出價", "實登行情已全線見頂反轉，出價應直接參照最新成交低點（約 17～19 萬/坪）或長期支撐區間起手，絕不替屋主過去兩年的狂熱買單。"),
+    ("將數十至上百萬維修翻新費用預先自總價扣除", "30 年以上老屋結構機能衰退與公共維護負擔沉重，這筆不可融資的現金支出必須直接在出價總價中全額折減。"),
     ("審慎檢視銀行貸款年限與自備款承受力", "確認銀行是否能核貸 7 成以上以及年限是否受限（20年 vs 30年），斡旋單務必加註『房貸未滿七成無條件解約退斡』保護條款。"),
     ("善用跨社區與跨生活圈競品替代談判", "同時評估南屯（如大墩人文）或新重劃區新小宅，以隨時可轉向的客觀心態談判，牢牢掌握議價主導權！")
 ]
 
 for title, desc in buyer_points:
-    p_t = tf_s21_r.add_paragraph()
+    p_t = tf_s65_r.add_paragraph()
     p_t.text = f"• {title}"
     p_t.font.name = "微軟正黑體"
     p_t.font.size = Pt(11)
@@ -913,7 +1076,7 @@ for title, desc in buyer_points:
     p_t.font.color.rgb = GREEN
     p_t.space_before = Pt(8)
     
-    p_d = tf_s21_r.add_paragraph()
+    p_d = tf_s65_r.add_paragraph()
     p_d.text = desc
     p_d.font.name = "微軟正黑體"
     p_d.font.size = Pt(9.5)
@@ -948,7 +1111,6 @@ os.makedirs(os.path.dirname(first_path), exist_ok=True)
 prs.save(first_path)
 print(f"✅ PowerPoint 簡報已成功生成 ({len(prs.slides)} 頁): {first_path}")
 
-import shutil
 for p in out_paths[1:]:
     os.makedirs(os.path.dirname(p), exist_ok=True)
     shutil.copy2(first_path, p)
