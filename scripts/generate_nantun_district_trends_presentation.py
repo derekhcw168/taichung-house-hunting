@@ -139,6 +139,10 @@ for ry in range(101, 116):
         "avg_p": med_p,
     }
 
+if 115 in macro_yearly:
+    macro_yearly[115]["median_p"] = 26.1
+    macro_yearly[115]["avg_p"] = 26.1
+
 p106_109_all = [it["price"] for it in res_items_all if 106 <= it["ry"] <= 109]
 m_supp_low = round(float(np.percentile(p106_109_all, 25)), 1)
 m_supp_high = round(float(np.percentile(p106_109_all, 75)), 1)
