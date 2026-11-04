@@ -1,30 +1,30 @@
-# TEST_READY.md — 歌德堡出價分析與全社區行情套件 E2E 驗收規範手冊
+# TEST_READY.md — 大慶國宅(大慶中山) 出價分析與全社區行情套件 E2E 驗收規範手冊
 
-**專案名稱**：台中市南區「歌德堡」社區特定待售戶出價分析與全社區整體行情評估套件  
-**發布里程碑**：Milestone M_TEST (獨立自動化驗證套件發布與 TEST_READY)  
-**測試設計者**：`test_writer_goteborg` (Specialist / QA)  
-**主要驗證腳本**：`scripts/verify_goteborg_suite.py`  
-**建立時間**：2026-11-04T16:32:00Z  
+**專案名稱**：台中市南區「大慶國宅(大慶中山)」社區特定待售戶出價分析與全社區整體行情評估套件  
+**發布里程碑**：Milestone M_TEST (獨立自動化驗證套件發布與 TEST_READY 就緒證明)  
+**測試架構實作**：`scripts/verify_daqing_suite.py`  
+**測試設計者**：`test_writer_daqing` (Specialist / QA)  
+**建立時間**：2026-11-04T17:01:00Z  
 
 ---
 
 ## 1. 執行方式與 CLI 指令說明 (Test Execution Commands)
 
-本驗證套件為獨立、不依賴外部服務、無副作用之自動化 CLI 診斷工具，支援全量嚴格驗收、里程碑階段演進驗收 (Progressive Check)、各 Tier 獨立檢驗、JSON 機器可讀報表，以及內建單元自我檢驗（Self-Test Suite）：
+本驗證套件為獨立、無副作用、自包含之全自動化 CLI 診斷驗收工具，支援全量嚴格驗收（Strict Acceptance）、里程碑階段演進驗收（Progressive Check）、多層級組合執行（`--tier 1,2`）、JSON 機器可讀報表，以及內建單元自我檢驗（Self-Test Suite）：
 
 ### 1.1 全量嚴格 E2E 驗收執行（Milestone M4 最終發布門檻）
 ```bash
-python scripts/verify_goteborg_suite.py
+python scripts/verify_daqing_suite.py
 ```
-- **目標目錄**：`歌德堡/`、`scratch/`、`南區25年以上大型社區走勢圖/`
+- **目標目錄**：`大慶國宅(大慶中山)/`、`scratch/`、`南區25年以上大型社區走勢圖/`
 - **執行行為**：對專案所有交付產物進行 Tier 1～Tier 4 全量無死角檢驗。
 - **Exit Code**：
-  - `0`：全部 Tier 1～4 斷言 100% 通過（全案驗收完工）。
-  - `1`：任何文件、簡報、報告或數據指標存在瑕疵或缺失，立即輸出精確定位診斷訊息。
+  - `0`：全部 Tier 1～4 斷言 100% 通過（全案完工驗收標準）。
+  - `1`：任何文件、簡報、報告或數據指標存在瑕疵或缺失，立即輸出定位錯誤訊息。
 
 ### 1.2 里程碑階段演進驗收模式 (Progressive Execution Mode)
 ```bash
-python scripts/verify_goteborg_suite.py --progressive
+python scripts/verify_daqing_suite.py --progressive
 ```
 - **適用場景**：開發過程中（M1 數據庫建立、M2 Markdown/Word 報告撰寫、M3 PowerPoint 簡報產製）隨時執行。
 - **執行行為**：動態偵測當前已產出之交付物進行品質驗證，尚未產出之階段成果標記為 `[WARN]`（待開發）而不阻斷流程，唯有在現有成果出現瑕疵時才會阻斷。
@@ -32,172 +32,117 @@ python scripts/verify_goteborg_suite.py --progressive
   - `0`：當前已產出的階段產物 100% 驗證通過，無任何阻礙性缺陷。
   - `1`：已產出產物中存在規格違規（如：數據不一致、格式錯誤、圖表解析度不足等）。
 
-### 1.3 分層專屬驗證指令 (Tier-Specific Checks)
+### 1.3 分層專屬與組合驗證指令 (Tier-Specific & Multi-Tier Checks)
 ```bash
-# 僅驗證 Tier 1 產物存在性與檔案容量
-python scripts/verify_goteborg_suite.py --tier 1
+# 僅驗證 Tier 1 功能覆蓋與核心估價數學
+python scripts/verify_daqing_suite.py --tier 1
 
-# 僅驗證 Tier 2 文件格式與內部結構完整性 (DOCX 表格/單元格, PPTX 16:9 頁數, MD 章節標題)
-python scripts/verify_goteborg_suite.py --tier 2
+# 同時指定驗證 Tier 1 與 Tier 2
+python scripts/verify_daqing_suite.py --tier 1,2
 
 # 僅驗證 Tier 3 跨交付物核心數據一致性 (坪數、開價、三段出價、歷史行情、競品)
-python scripts/verify_goteborg_suite.py --tier 3
+python scripts/verify_daqing_suite.py --tier 3
 
 # 僅驗證 Tier 4 圖表資產存在性、PIL 影像鑑識與 GitHub 同步腳本就緒度
-python scripts/verify_goteborg_suite.py --tier 4
+python scripts/verify_daqing_suite.py --tier 4
 ```
 
 ### 1.4 內部單元自我檢驗模式 (Self-Test Suite)
 ```bash
-python scripts/verify_goteborg_suite.py --test-self
+python scripts/verify_daqing_suite.py --test-self
 ```
 - **執行行為**：在暫存環境中自動生成合成假資料、Mock DOCX/PPTX/MD/JSON 與模擬走勢圖，測試驗證器本體的 8 項獨立抓漏單元測試，防禦虛假測試與作弊行為。
 - **涵蓋用例**：
   - `TC1`：正常 Mock 交付物滿分通過（Tier 1～4 100% PASS）。
-  - `TC2`：缺少交付物（如缺少 PPTX）精準攔截。
-  - `TC3`：DOCX 表格數量不足（< 5 表格）精準攔截。
-  - `TC4`：PPTX 比例非 16:9 寬螢幕或頁數不足精準攔截。
-  - `TC5`：Markdown 報告缺少必要章節標題精準攔截。
-  - `TC6`：跨交付物出價數字或行情數據不一致精準攔截。
-  - `TC7`：缺少走勢圖 PNG 或解析度過低精準攔截。
-  - `TC8`：GitHub 同步腳本缺少 `歌德堡` 目錄精準攔截。
+  - `TC2`：缺少主資料庫 JSON 精準攔截。
+  - `TC3`：最新 3 樓車位拆算數學錯誤（如車位價值非 120 萬）精準攔截。
+  - `TC4`：Markdown 報告缺少必要 8 大核心章節標題精準攔截。
+  - `TC5`：PPTX 比例非 16:9 寬螢幕或頁數不足（< 14 頁）精準攔截。
+  - `TC6`：Word 文件容量不足（< 50KB）精準攔截。
+  - `TC7`：跨交付物出價數字或行情數據不一致精準攔截。
+  - `TC8`：GitHub 同步腳本缺少 `大慶國宅(大慶中山)` 目錄精準攔截。
 
 ### 1.5 JSON 報表輸出模式
 ```bash
-python scripts/verify_goteborg_suite.py --json
-python scripts/verify_goteborg_suite.py --progressive --json
+python scripts/verify_daqing_suite.py --json
+python scripts/verify_daqing_suite.py --progressive --json
 ```
 
 ---
 
 ## 2. 四層級驗證覆蓋矩陣 (4-Tier Verification Matrix)
 
-依據 `ORIGINAL_REQUEST.md`、`PROJECT.md`、`TEST_INFRA.md` 與調查成果，本測試套件設定了嚴格的四層級驗收門檻：
+依據 `PROJECT.md`、`ORIGINAL_REQUEST.md` 與 `TEST_INFRA.md`，本測試套件設定了嚴格的四層級驗收門檻：
 
 | Tier | 驗證層級 | 驗證項目 | 權威依據 / Oracle | 驗證斷言與成功標準 (Assertions) |
 |---|---|---|---|---|
-| **Tier 1** | **產物存在性與檔案容量** | **Markdown 分析報告** | `PROJECT.md` § Deliverables | `歌德堡/歌德堡_特定待售戶別出價分析與社區整體行情報告.md` 存在且容量 $\ge 15 \text{ KB}$。 |
-| **Tier 1** | **產物存在性與檔案容量** | **Word 分析報告 (.docx)** | `PROJECT.md` § Deliverables | `歌德堡/歌德堡_特定待售戶別出價分析與社區整體行情報告.docx` 存在且容量 $\ge 30 \text{ KB}$。 |
-| **Tier 1** | **產物存在性與檔案容量** | **PowerPoint 簡報 (.pptx)** | `PROJECT.md` § Deliverables | `歌德堡/歌德堡_特定待售戶別出價分析與社區整體行情報告.pptx` 存在且容量 $\ge 300 \text{ KB}$。 |
-| **Tier 1** | **產物存在性與檔案容量** | **估價主資料庫 (.json)** | `PROJECT.md` § Engine Layer | `scratch/goteborg_valuation_master.json` 存在且容量 $\ge 5 \text{ KB}$。 |
-| **Tier 2** | **格式與結構完整性** | **Word (.docx) 結構與表格** | `ORIGINAL_REQUEST` R3 | 可由 `docx.Document` 無損解析，表格數 $\ge 5$ 個，總單元格 $\ge 50$ 格，段落文字完整且字數充足。 |
-| **Tier 2** | **格式與結構完整性** | **PowerPoint (.pptx) 結構** | `ORIGINAL_REQUEST` R3 | 可由 `pptx.Presentation` 無損解析，總頁數 $\ge 10$ 頁，投影片寬高嚴格符合 **16:9 寬螢幕** (13.333" $\times$ 7.5")。 |
-| **Tier 2** | **格式與結構完整性** | **Markdown 核心章節架構** | `PROJECT.md` § Contract | 完整涵蓋 6 大核心章節：**物件現況**、**社區歷程**、**競品比價**、**車位拆算**、**出價三道防線**、**談判話術**。 |
-| **Tier 3** | **跨交付物數據一致性** | **目標物件產調規格** | `explorer_survey_goteborg_1` | 樓層 **8F (次頂樓)**、總權狀 **29.98 坪** (主建 20.03, 附屬 2.04, 公設 7.91, 公設比 26.38%)、**無汽車車位 (機車位 B1-59)**、開價 **988 萬 (32.96 萬/坪)** 在 MD/DOCX/PPTX/JSON 100% 一致。 |
-| **Tier 3** | **跨交付物數據一致性** | **三段式出價策略精算** | `explorer_survey_goteborg_3` | **保守底標價 810 萬 (27.0 萬/坪)**、**合理目標價 870~885 萬 (29.0~29.5 萬/坪)**、**上限天花板價 930 萬 (31.0 萬/坪)** 在所有產物中完全一致。 |
-| **Tier 3** | **跨交付物數據一致性** | **社區實價登錄歷史行情** | `explorer_survey_goteborg_2` | 純住宅有效交易 **83 筆** (排除 11 筆非典型/店面)、2024 年頂峰均價 **31.13 萬/坪**、2026 年最新成交均價 **26.65 萬/坪** (回檔 **-14.4%**) 嚴格吻合。 |
-| **Tier 3** | **跨交付物數據一致性** | **周邊同型核心競品比價** | `PROJECT.md` § Feature 4 | **公園苑**、**椰城**、**長億南園**、**廣三大時代** 在各分析文檔與資料庫中完整對比且數據一致。 |
-| **Tier 4** | **圖表資產與 Git 就緒度** | **走勢圖檔案與解析度** | `PROJECT.md` § Code Layout | `南區25年以上大型社區走勢圖/29_歌德堡_成交行情走勢圖.png` 存在，PIL 影像鑑識無損且解析度 $\ge 1000 \times 600$（實際 2925x2035 超高解析度）。周邊競品總圖均存在。 |
-| **Tier 4** | **圖表資產與 Git 就緒度** | **GitHub 自動同步腳本配置** | `PROJECT.md` § Layer 5 / `GEMINI.md` | `scripts/sync_to_github.py` 目錄清單必須包含 `"歌德堡"`，確保成果能自動推播至 `main` 與 `gh-pages`。 |
-| **Tier 4** | **圖表資產與 Git 就緒度** | **文件內嵌圖表元件檢驗** | `TEST_INFRA.md` § Coverage | DOCX 具備圖片媒體關聯，PPTX 包含獨立圖片形狀元件，確認無破圖或漏嵌。 |
+| **Tier 1** | **功能規格覆蓋** | **待售物件精準規格** | 591 S20888586 / `explorer_survey_1` | 樓層 10F/12F、總建坪 44.5 坪 (主建 25.365, 附屬 2.405, 公設 16.726, 室內實坪 27.77, 公設比 37.59%)、開價 998 萬 (降價 82 萬, 原開價 1080 萬, 單價 22.43 萬/坪)、承租管委會平車 1,500 元/月。 |
+| **Tier 1** | **功能規格覆蓋** | **49 筆實登清洗分流** | `scratch/data/20513_大慶中山.json` | 原始 49 筆採集全量，純住宅正常市價樣本 33 筆，2024 年頂峰 27.0 萬/坪 (12F 1038萬)、2025 年 20.5 萬/坪 (2F 850萬)、2026-05 最新 22.7 萬/坪 (3F 980萬)。 |
+| **Tier 1** | **功能規格覆蓋** | **車位拆算法則推導** | `ORIGINAL_REQUEST` R2 / `explorer_survey_2` | 最新 3 樓實登：$(980 - 120) \div (43.17 - 7.6) = 860 \div 35.57 = 24.17768\dots \approx 24.18 \text{ 萬/坪}$。 |
+| **Tier 1** | **功能規格覆蓋** | **6 大競品社區收錄** | `PROJECT.md` § Feature 4 | 歌德堡、長億南園、工學天下、大安紫金城、劃江山、大墩人文全數收錄於競品矩陣。 |
+| **Tier 1** | **功能規格覆蓋** | **三段式出價策略** | `explorer_survey_3` / `PROJECT.md` | 保守底標價 780~800 萬 (17.53~17.98萬/坪)、合理目標價 860~890 萬 (19.33~20.00萬/坪)、上限天花板價 920~930 萬 (20.67~20.90萬/坪)。 |
+| **Tier 1** | **功能規格覆蓋** | **105 萬修繕工程預算** | `ORIGINAL_REQUEST` R2 / `PROJECT.md` | 水電(18萬)+衛浴泥作(28萬)+衛浴設備(12萬)+廚房(16萬)+門窗油漆(14萬)+地板(10萬)+清潔(7萬) $= 105 \text{ 萬元}$ 精確守恆。 |
+| **Tier 2** | **邊界極限與結構** | **折價比率數學邊界** | 開價 998 萬基準推導 | 780/998=~0.78 (78折)、860/998=~0.86 (86折)、920/998=~0.92 (92折)；單調遞增約束：$780 < 800 \le 860 < 890 \le 920 < 930 < 998$。 |
+| **Tier 2** | **邊界極限與結構** | **建物面積幾何守恆** | 地政登記簿謄本邏輯 | $25.365 + 2.405 = 27.770 \text{ 坪}$；$27.770 + 16.726 = 44.496 \text{ 坪}$；$16.726 / 44.496 = 37.59\%$ 幾何守恆。 |
+| **Tier 2** | **邊界極限與結構** | **產物檔案容量門檻** | `PROJECT.md` § Verification | MD $\ge 15 \text{ KB}$、DOCX $\ge 50 \text{ KB}$、PPTX $\ge 500 \text{ KB}$、JSON $\ge 5 \text{ KB}$。 |
+| **Tier 2** | **邊界極限與結構** | **PPTX 投影片規格** | `PROJECT.md` § Interface Contract | 投影片總頁數 $\ge 14$ 頁，比例嚴格符合 16:9 寬螢幕規格 ($13.333" \times 7.5"$)。 |
+| **Tier 2** | **邊界極限與結構** | **Markdown 核心章節** | `PROJECT.md` § Invariants | 完整包含 8 大核心章節：物件產調、社區歷程、競品比價、車位拆算、調整矩陣、出價防線、談判說帖、修繕預算。 |
+| **Tier 3** | **跨交付物一致性** | **核心估價數據一致** | `scratch/daqing_valuation_master.json` | 樓層 10F、總建坪 44.5 坪、開價 998 萬 (22.43萬/坪)、三段出價 (780~800 / 860~890 / 920~930)、105 萬修繕款、49 筆實登、最新 3F 24.18 萬在 MD/DOCX/PPTX/JSON 100% 一致。 |
+| **Tier 4** | **實體驗收與同步** | **交付產物實體存在** | `大慶國宅(大慶中山)/` | MD、DOCX、PPTX 三大實體檔案完整存在於目標目錄中。 |
+| **Tier 4** | **實體驗收與同步** | **Office 格式無損解析** | `python-docx` / `python-pptx` | DOCX 表格數 $\ge 5$、單元格 $\ge 50$、內嵌圖片 $\ge 1$；PPTX 包含獨立圖片元件。 |
+| **Tier 4** | **實體驗收與同步** | **走勢圖資產鑑識** | `南區25年以上大型社區走勢圖/` | `12_大慶中山_成交行情走勢圖.png` 存在，PIL 解析度無損且 $\ge 1000 \times 600$ (實際 $2925 \times 2035$)。 |
+| **Tier 4** | **實體驗收與同步** | **GitHub 自動同步配置** | `scripts/sync_to_github.py` | 同步目錄陣列中明確包含 `"大慶國宅(大慶中山)"`。 |
 
 ---
 
-## 3. 當前基線測試結果 (Baseline Execution Results)
+## 3. 測試套件實作與基線驗證結果 (Baseline Execution Results)
 
 ### 3.1 內部單元自我檢驗 (`--test-self`)
-執行 `python scripts/verify_goteborg_suite.py --test-self`：
+執行指令：
+```bash
+python scripts/verify_daqing_suite.py --test-self
+```
+**執行結果**：
 ```
 ================================================================================
-【執行 verify_goteborg_suite.py 內部單元自我測試 (Self-Test Suite)】
+【執行 verify_daqing_suite.py 內部單元自我測試 (Self-Test Suite)】
 ================================================================================
   [PASS] TC1: Valid mock deliverables passed Tier 1 ~ 4 full acceptance 100%.
-  [PASS] TC2: Missing PPTX deliverable correctly caught and failed by Tier 1.
-  [PASS] TC3: Insufficient DOCX table count correctly caught and failed by Tier 2.
-  [PASS] TC4: Non-16:9 PPTX aspect ratio correctly caught and failed by Tier 2.
-  [PASS] TC5: Missing required MD section headers correctly caught and failed by Tier 2.
-  [PASS] TC6: Valuation pricing tier mismatch correctly caught and failed by Tier 3.
-  [PASS] TC7: Missing primary chart image correctly caught and failed by Tier 4.
-  [PASS] TC8: Sync script missing '歌德堡' correctly caught and failed by Tier 4.
+  [PASS] TC2: Missing master JSON correctly caught and failed by Tier 1.
+  [PASS] TC3: Incorrect car space separation math correctly caught and failed by Tier 1.
+  [PASS] TC4: Missing required MD chapters correctly caught and failed by Tier 2.
+  [PASS] TC5: PPTX insufficient slides (<14) and non-16:9 ratio correctly caught and failed by Tier 2.
+  [PASS] TC6: Insufficient DOCX file size (<50KB) correctly caught and failed by Tier 2.
+  [PASS] TC7: Cross-deliverable pricing discrepancy correctly caught and failed by Tier 3.
+  [PASS] TC8: Sync script missing '大慶國宅(大慶中山)' correctly caught and failed by Tier 4.
 ================================================================================
 🎉 [SELF-TEST SUCCESS] All 8/8 internal verification tests passed successfully!
 ================================================================================
 ```
-- **結論**：自我測試 8/8 全數通過，驗證套件具備強大抓漏與鑑識敏感度。
+- **結論**：內部單元測試全數 8/8 通過，證實測試器具備完整嚴密的抓漏與規格防禦能力。
 
-### 3.2 階段演進模式基線檢驗 (`--progressive`)
-執行 `python scripts/verify_goteborg_suite.py --progressive`：
+### 3.2 專案現況階段演進模式檢驗 (`--progressive`)
+執行指令：
+```bash
+python scripts/verify_daqing_suite.py --progressive
 ```
-================================================================================
-【台中市南區歌德堡特定待售戶出價分析與社區行情 — 自動化驗證套件】
-Project Root : D:\GoogleDrive\01_個人_家庭與生活\02_家庭_安莉的資料\小寶的買房子資料
-Target Dir   : D:\GoogleDrive\01_個人_家庭與生活\02_家庭_安莉的資料\小寶的買房子資料\歌德堡
-Execute Mode : PROGRESSIVE (階段演進模式)
-Active Tiers : [1, 2, 3, 4]
-================================================================================
-
-✅ PASS Tier 1: File Existence & Basic Checks (產物存在性與檔案容量檢驗)
-  [WARN] [Markdown 分析報告] 尚未產生：`歌德堡\歌德堡_特定待售戶別出價分析與社區整體行情報告.md` (Progressive Mode 略過阻斷)
-  [WARN] [Word 分析報告 (.docx)] 尚未產生：`歌德堡\歌德堡_特定待售戶別出價分析與社區整體行情報告.docx` (Progressive Mode 略過阻斷)
-  [WARN] [PowerPoint 簡報 (.pptx)] 尚未產生：`歌德堡\歌德堡_特定待售戶別出價分析與社區整體行情報告.pptx` (Progressive Mode 略過阻斷)
-
-✅ PASS Tier 2: Format & Structural Integrity (檔案格式與內部結構完整性)
-  [WARN] Word 文件尚未產生，略過 Tier 2 DOCX 檢驗
-  [WARN] PowerPoint 簡報尚未產生，略過 Tier 2 PPTX 檢驗
-  [WARN] Markdown 分析報告尚未產生，略過 Tier 2 MD 檢驗
-
-✅ PASS Tier 3: Data Consistency Across Artifacts (跨交付物核心數據一致性)
-  [WARN] 所有文檔交付物 (MD/DOCX/PPTX) 均未產生，略過文檔間一致性驗證
-
-✅ PASS Tier 4: Visual Assets & Git Sync Readiness (圖表資產與 GitHub 同步就緒度)
-  [WARN] GitHub 自動同步腳本 (`scripts/sync_to_github.py`) 尚未將 `歌德堡` 加入同步目錄清單 (Pending M4)
-
-================================================================================
-🎉【驗收結論：PROGRESSIVE PASS】現有已產出產物通過檢驗！(尚有待完成交付物由工作者產製中)
-================================================================================
-```
-- **Exit Code**：`0`。
-- **結論**：現有數據資產與走勢圖完全通過驗證，守門員已正確就位。
-
-### 3.3 全量嚴格驗收基線檢驗（無參數執行）
-執行 `python scripts/verify_goteborg_suite.py`：
-- **Exit Code**：`1`（預期防禦行為）。
-- **結論**：在工作者產製出合格產物前，嚴格攔截未完工狀態，防止虛假交付。
+- **執行結論**：`PROGRESSIVE PASS`（Exit Code 0）。
+- **當前已通過之靜態資產與數學邏輯**：
+  - 走勢圖 `12_大慶中山_成交行情走勢圖.png` 存在且解析度達 $2925 \times 2035$。
+  - 周邊 4 張競品與大盤總圖資產完整存在。
+  - 面積幾何守恆（$25.365 + 2.405 = 27.770$, $27.770 + 16.726 = 44.496$, 公設比 $37.59\%$）通過檢驗。
+  - 折價率邊界數學（78折、86折、92折）通過檢驗。
+- **待後續里程碑產出之交付物 (標記為 WARN，待工作者產製)**：
+  - M1：`scratch/daqing_valuation_master.json`
+  - M2：Markdown 報告與 Word 報告 (`.docx`)
+  - M3：PowerPoint 簡報 (`.pptx`)
+  - M4：`scripts/sync_to_github.py` 目錄納入
 
 ---
 
-## 4. 下游里程碑 (M1 ~ M4) 驗收與交付準則 (Milestone Exit Criteria)
+## 4. 里程碑 M_TEST 驗收簽署 (Sign-off)
 
-### 4.1 Milestone M1（估價主資料庫產製）
-- **產出物**：`scratch/goteborg_valuation_master.json`
-- **驗收指令**：
-  ```bash
-  python scripts/verify_goteborg_suite.py --tier 1 --progressive
-  python scripts/verify_goteborg_suite.py --tier 3 --progressive
-  ```
-- **通過門檻**：JSON 檔案 $\ge 5 \text{ KB}$，包含 8F、29.98坪、988萬、810/870-885/930萬、83筆純住、公園苑/椰城/長億南園/廣三大時代。
-
-### 4.2 Milestone M2（Markdown 分析報告與 Word 文件產製）
-- **產出物**：`歌德堡/歌德堡_特定待售戶別出價分析與社區整體行情報告.md`、`.docx`
-- **驗收指令**：
-  ```bash
-  python scripts/verify_goteborg_suite.py --tier 1 --progressive
-  python scripts/verify_goteborg_suite.py --tier 2 --progressive
-  python scripts/verify_goteborg_suite.py --tier 3 --progressive
-  ```
-- **通過門檻**：MD $\ge 15 \text{ KB}$ 且含 6 大核心章節；DOCX $\ge 30 \text{ KB}$ 且表格數 $\ge 5$、單元格 $\ge 50$、內嵌圖表；數據 100% 一致。
-
-### 4.3 Milestone M3（PowerPoint 簡報檔產製）
-- **產出物**：`歌德堡/歌德堡_特定待售戶別出價分析與社區整體行情報告.pptx`
-- **驗收指令**：
-  ```bash
-  python scripts/verify_goteborg_suite.py --tier 1 --progressive
-  python scripts/verify_goteborg_suite.py --tier 2 --progressive
-  python scripts/verify_goteborg_suite.py --tier 3 --progressive
-  ```
-- **通過門檻**：PPTX $\ge 300 \text{ KB}$，頁數 $\ge 10$ 頁，16:9 寬螢幕規格，內嵌圖表，數據 100% 一致。
-
-### 4.4 Milestone M4（全套件 E2E 最終交付與 GitHub 雙分支同步）
-- **執行指令**：
-  ```bash
-  # 1. 執行嚴格全量驗證 (Exit Code 必須為 0)
-  python scripts/verify_goteborg_suite.py
-
-  # 2. 執行 GitHub 雙分支同步 (依 GEMINI.md 核心規範)
-  python scripts/sync_to_github.py "feat(goteborg): 交付歌德堡特定待售戶出價分析與全社區行情評估套件"
-  ```
-- **最終驗收門檻**：
-  1. `python scripts/verify_goteborg_suite.py` 輸出：
-     `🎉【驗收結論：FULL SUITE PASS】全 4 個驗證層級 (Tier 1 ~ 4) 100% 驗收通過！符合專案最高交付標準。`
-  2. Exit Code 為 `0`。
-  3. GitHub `main` 與 `gh-pages` 分支完成同步推播。
+- **測試套件狀態**：`READY & OPERATIONAL`
+- **測試入口**：`python scripts/verify_daqing_suite.py`
+- **覆蓋度**：14/14 功能特性全量映射，4/4 驗證層級完備。
+- **後續里程碑交接說明**：後續 M1、M2、M3、M4 工作者與審計員（Auditor、Reviewer、Challenger）均可依據本手冊指令執行獨立查核。
