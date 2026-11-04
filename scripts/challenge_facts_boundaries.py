@@ -413,7 +413,7 @@ class GoteborgAdversarialChallenge:
         cmd = [sys.executable, SUITE_SCRIPT_PATH]
         print(f"執行指令: {' '.join(cmd)}")
         try:
-            res = subprocess.run(cmd, capture_output=True, text=True, cwd=PROJECT_ROOT)
+            res = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace', cwd=PROJECT_ROOT)
             exit_code = res.returncode
             stdout_output = res.stdout
             stderr_output = res.stderr
@@ -423,8 +423,9 @@ class GoteborgAdversarialChallenge:
 
         print(f"測試套件 Exit Code: {exit_code}")
         print("\n[測試套件標準輸出摘錄]:")
-        for line in stdout_output.splitlines()[-15:]:
-            print("  " + line)
+        if stdout_output:
+            for line in stdout_output.splitlines()[-15:]:
+                print("  " + line)
 
         suite_passed = (exit_code == 0)
         if exit_code != 0:
