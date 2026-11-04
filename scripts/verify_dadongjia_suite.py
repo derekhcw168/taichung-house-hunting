@@ -356,6 +356,40 @@ def verify_tier2(paths: Dict[str, str], progressive: bool = False, verbose: bool
                     res.ok(f"PowerPoint 簡報 (.pptx) 比例符合 16:9 寬螢幕規格 ({width_in:.2f}\" x {height_in:.2f}\")")
                 else:
                     res.fail(f"PowerPoint 簡報 (.pptx) 比例不符合 16:9：寬度 {width_in:.3f}\" (預期 13.333\"), 高度 {height_in:.3f}\" (預期 7.5\")")
+
+                # Slide 8 Comparables Table Inspection (strict non-empty, non-zero checks)
+                prs_obj = Presentation(pptx_path)
+                if len(prs_obj.slides) >= 8:
+                    s8 = prs_obj.slides[7]
+                    s8_tables = [s.table for s in s8.shapes if s.has_table]
+                    if s8_tables:
+                        empty_cells = []
+                        zero_hh_cells = []
+                        zero_price_cells = []
+                        total_s8_cells = 0
+                        for t in s8_tables:
+                            for r_idx, row in enumerate(t.rows):
+                                for c_idx, cell in enumerate(row.cells):
+                                    total_s8_cells += 1
+                                    c_txt = cell.text.strip()
+                                    if not c_txt:
+                                        empty_cells.append(f"第 {r_idx+1} 列第 {c_idx+1} 欄")
+                                    if "0 戶" in c_txt or c_txt == "0戶":
+                                        zero_hh_cells.append(f"第 {r_idx+1} 列第 {c_idx+1} 欄")
+                                    if "0.0 萬" in c_txt or c_txt == "0.0萬":
+                                        zero_price_cells.append(f"第 {r_idx+1} 列第 {c_idx+1} 欄")
+
+                        if empty_cells:
+                            res.fail(f"PowerPoint 簡報 Slide 8 競品比價表包含空白單元格 ({len(empty_cells)} 格，如: {', '.join(empty_cells[:5])})")
+                        if zero_hh_cells:
+                            res.fail(f"PowerPoint 簡報 Slide 8 競品比價表包含未綁定戶數 '0 戶' ({len(zero_hh_cells)} 格，如: {', '.join(zero_hh_cells[:5])})")
+                        if zero_price_cells:
+                            res.fail(f"PowerPoint 簡報 Slide 8 競品比價表包含未綁定均價 '0.0 萬' ({len(zero_price_cells)} 格，如: {', '.join(zero_price_cells[:5])})")
+
+                        if not empty_cells and not zero_hh_cells and not zero_price_cells:
+                            res.ok(f"PowerPoint 簡報 Slide 8 競品比價表單元格完整性驗證通過 (共 {total_s8_cells} 格，無空白格、無 '0 戶'、無 '0.0 萬')")
+                    else:
+                        res.fail("PowerPoint 簡報 Slide 8 未找到競品比價表格")
             except Exception as e:
                 res.fail(f"PowerPoint 簡報 (.pptx) 解析發生錯誤：{str(e)}")
     else:
@@ -793,6 +827,14 @@ def run_self_tests(verbose: bool = False) -> bool:
                 slide = prs.slides.add_slide(blank_layout)
                 tx_box = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(11), Inches(5))
                 tx_box.text_frame.text = f"Slide {i+1}: {all_keys_text}"
+                if i == 7:
+                    tbl_shape = slide.shapes.add_table(2, 6, Inches(1), Inches(1), Inches(11), Inches(3))
+                    headers = ["社區名稱", "屋齡(年)", "總戶數", "近年均價(萬)", "近期實登與走勢", "社區產品定位與優劣勢綜合評析"]
+                    row_data = ["長億南園", "34.7 年", "250 戶", "22.6 萬", "走勢修正 -14.6%", "同商圈同齡老屋指標"]
+                    for c_i, h in enumerate(headers):
+                        tbl_shape.table.cell(0, c_i).text = h
+                    for c_i, d in enumerate(row_data):
+                        tbl_shape.table.cell(1, c_i).text = d
                 if os.path.exists(mock_paths["dadongjia_chart"]):
                     slide.shapes.add_picture(mock_paths["dadongjia_chart"], Inches(1), Inches(1), width=Inches(4))
             prs.save(mock_paths["pptx"])
@@ -805,7 +847,7 @@ def run_self_tests(verbose: bool = False) -> bool:
         if t1.passed and t2.passed and t3.passed and t4.passed:
             print("  [PASS] TC1: Valid mock deliverables passed Tier 1 ~ 4 full acceptance 100%.")
         else:
-            print(f"  [FAIL] TC1: Valid mock deliverables failed! T1={t1.passed}, T2={t2.passed}, T3={t3.passed}, T4={t4.passed}")
+            print(f"  [FAIL] TC1: Valid mock deliverables failed! T1={t1.passed}, T2={t2.passed}, T3={t3.passed}, T4={t4.passed}; T2 errs: {t2.errors}")
             all_passed = False
 
         # Test Case 2: Tier 1 catches missing deliverable
