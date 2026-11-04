@@ -374,9 +374,9 @@ def verify_tier2(paths: Dict[str, str], progressive: bool = False, verbose: bool
                                     c_txt = cell.text.strip()
                                     if not c_txt:
                                         empty_cells.append(f"第 {r_idx+1} 列第 {c_idx+1} 欄")
-                                    if "0 戶" in c_txt or c_txt == "0戶":
+                                    if bool(re.search(r'(?<![\d.])0\s*戶', c_txt)) or c_txt in ["0 戶", "0戶"]:
                                         zero_hh_cells.append(f"第 {r_idx+1} 列第 {c_idx+1} 欄")
-                                    if "0.0 萬" in c_txt or c_txt == "0.0萬":
+                                    if bool(re.search(r'(?<![\d.])0(?:\.0+)?\s*萬', c_txt)) or c_txt in ["0.0 萬", "0.0萬", "0.0"]:
                                         zero_price_cells.append(f"第 {r_idx+1} 列第 {c_idx+1} 欄")
 
                         if empty_cells:
@@ -847,7 +847,7 @@ def run_self_tests(verbose: bool = False) -> bool:
         if t1.passed and t2.passed and t3.passed and t4.passed:
             print("  [PASS] TC1: Valid mock deliverables passed Tier 1 ~ 4 full acceptance 100%.")
         else:
-            print(f"  [FAIL] TC1: Valid mock deliverables failed! T1={t1.passed}, T2={t2.passed}, T3={t3.passed}, T4={t4.passed}; T2 errs: {t2.errors}")
+            print(f"  [FAIL] TC1: Valid mock deliverables failed! T1={t1.passed}, T2={t2.passed}, T3={t3.passed}, T4={t4.passed}")
             all_passed = False
 
         # Test Case 2: Tier 1 catches missing deliverable
