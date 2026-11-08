@@ -89,13 +89,25 @@ def main(commit_msg=None):
         for file in glob.glob(os.path.join(base_dir, pattern)):
             shutil.copy2(file, os.path.join(repo_dir, os.path.basename(file)))
 
-    # D. Markdown documentation & checklists
+    # D. Markdown documentation & checklists (sync and remove deleted root .md files)
+    valid_root_mds = set()
     for pattern in ["*.md", "*.txt"]:
         for file in glob.glob(os.path.join(base_dir, pattern)):
-            # Don't overwrite README if already specialized, unless user modified root
-            dest_file = os.path.join(repo_dir, os.path.basename(file))
-            if os.path.basename(file).lower() != 'readme.md' or not os.path.exists(dest_file):
+            bname = os.path.basename(file)
+            # Guard against Linux 255-byte filename limit that breaks GitHub Pages checkout
+            if len(bname.encode('utf-8')) > 200:
+                continue
+            valid_root_mds.add(bname)
+            dest_file = os.path.join(repo_dir, bname)
+            if bname.lower() != 'readme.md' or not os.path.exists(dest_file):
                 shutil.copy2(file, dest_file)
+    for existing_md in glob.glob(os.path.join(repo_dir, "*.md")):
+        ebname = os.path.basename(existing_md)
+        if ebname.lower() != 'readme.md' and ebname not in valid_root_mds:
+            try:
+                os.remove(existing_md)
+            except Exception:
+                pass
 
     # E. Specialty folders (e.g. 大墩人文, 長億南園8樓, 工學天下15樓, 歌德堡, 比佛利山莊13樓, 大東家南園9樓 dossiers, 南區25年以上大型社區走勢圖, 南區25年以上大型社區線上互動圖鑑, 南屯區30年以上大型社區走勢圖)
     for folder_name in ["大墩人文", "長億南園8樓", "工學天下15樓", "歌德堡", "比佛利山莊13樓", "大東家南園9樓", "大慶國宅(大慶中山)", "南區25年以上大型社區走勢圖", "南區25年以上大型社區線上互動圖鑑", "南屯區30年以上大型社區走勢圖"]:

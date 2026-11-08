@@ -2,8 +2,9 @@
 
 ## 核心規則：自動版本控管與 GitHub 即時同步 (Mandatory Git & GitHub Sync)
 
-1. **每次程式碼或資料異動後自動同步至 GitHub**：
-   - 凡是程式碼、HTML 網頁、CSS 樣式、JavaScript 功能、Python 腳本或資料庫有任何新增、修改或刪除，**在每次任務完成回報給使用者之前，必須主動執行 `python scripts/sync_to_github.py "<清晰具體的 Commit 說明>"`**。
+1. **每次程式碼或資料異動後自動同步至 GitHub（單次同步、禁止無限迴圈）**：
+   - 凡是程式碼、HTML 網頁、CSS 樣式、JavaScript 功能、Python 腳本或資料庫有任何新增、修改或刪除，**在每次任務完成回報給使用者之前，必須主動執行一次 `python scripts/sync_to_github.py "<清晰具體的 Commit 說明>"`**（執行 `run_command` 時必須設定 `WaitMsBeforeAsync: 10000` 以確保同步完成，避免轉入背景任務觸發重複喚醒）。
+   - **嚴禁自動衍生任務或無限迴圈**：當單次修改與 GitHub 同步完成後，必須立即結束該回合（End Turn，不再呼叫任何工具）。在沒有收到使用者明確的新指令前，嚴禁自行腦補下一步、嚴禁自動連續生成新 Markdown 檔案（如「第 X 部全書」），亦嚴禁在側邊提問（Side Question）中執行背景同步。
    - 必須確保：
      - 本機 Git 倉庫保持最新版本。
      - GitHub `main` 分支（全專案原始碼版本控管）已完成推播。
