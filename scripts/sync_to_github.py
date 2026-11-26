@@ -109,8 +109,14 @@ def main(commit_msg=None):
             except Exception:
                 pass
 
-    # E. Specialty folders (e.g. 大墩人文, 長億南園8樓, 工學天下15樓, 歌德堡, 比佛利山莊13樓, 大東家南園9樓 dossiers, 南區25年以上大型社區走勢圖, 南區25年以上大型社區線上互動圖鑑, 南屯區30年以上大型社區走勢圖)
-    for folder_name in ["大墩人文", "長億南園8樓", "工學天下15樓", "歌德堡", "比佛利山莊13樓", "大東家南園9樓", "大慶國宅(大慶中山)", "南區25年以上大型社區走勢圖", "南區25年以上大型社區線上互動圖鑑", "南屯區30年以上大型社區走勢圖"]:
+    # E. Specialty folders (sync standardized 30yr folders and clean deprecated 25yr folders from Git repo)
+    for deprecated_folder in ["南區25年以上大型社區走勢圖", "南區25年以上大型社區線上互動圖鑑"]:
+        dep_dst = os.path.join(repo_dir, deprecated_folder)
+        if os.path.exists(dep_dst):
+            shutil.rmtree(dep_dst, ignore_errors=True)
+            print(f"🗑️ 已自 Git 倉庫清除舊資料夾: {deprecated_folder}")
+
+    for folder_name in ["大墩人文", "長億南園8樓", "工學天下15樓", "歌德堡", "比佛利山莊13樓", "大東家南園9樓", "大慶國宅(大慶中山)", "南區30年以上大型社區走勢圖", "南屯區30年以上大型社區走勢圖"]:
         folder_src = os.path.join(base_dir, folder_name)
         folder_dst = os.path.join(repo_dir, folder_name)
         if os.path.exists(folder_src):
